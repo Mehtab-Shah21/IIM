@@ -24,7 +24,10 @@ function initDrawer() {
     drawer.inert = false;
     document.body.classList.add('drawer-open');
     openers.forEach((o) => o.setAttribute('aria-expanded', 'true'));
+    // Focus once the drawer is visible (an element hidden by visibility cannot take focus).
     const first = panel.querySelector(FOCUSABLE);
+    // Flush styles so visibility is applied now (rAF would not fire in a background tab).
+    getComputedStyle(drawer).visibility;
     if (first) first.focus();
     document.addEventListener('keydown', onKey);
   };

@@ -60,6 +60,9 @@ blockquote {
 
 p { text-wrap: pretty; }
 
+/* The hidden attribute always wins over component display rules. */
+[hidden] { display: none !important; }
+
 img,
 svg,
 video {

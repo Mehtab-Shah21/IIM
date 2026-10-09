@@ -3,6 +3,7 @@
 /* How it works: numbered steps */
 .steps {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--grid-gap);
   margin: 0;
   padding: 0;
@@ -87,6 +88,7 @@
 /* Before / after gallery */
 .ba-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--grid-gap);
 }
 
@@ -191,6 +193,7 @@
 /* FAQ accordion (native details: works without JS, content indexable) */
 .faq {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3);
   max-width: var(--measure);
 }
@@ -238,6 +241,7 @@
 /* CTA band */
 .cta-band {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   padding: var(--space-7) var(--card-pad);
   border-radius: var(--radius-lg);
@@ -300,6 +304,7 @@
 /* Direct answer box (AEO) */
 .answer-box {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2);
   max-width: var(--measure);
   padding: var(--card-pad);
@@ -344,6 +349,7 @@
 /* Content layout with sidebar (service, area, guide) */
 .content-layout {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-7);
 }
 
@@ -354,9 +360,9 @@
   .content-layout__aside > .sticky { position: sticky; top: calc(var(--header-h) + var(--space-5)); }
 }
 
-.content-layout__main { display: grid; gap: var(--space-8); align-content: start; }
+.content-layout__main { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-8); align-content: start; }
 
-.content-block { display: grid; gap: var(--space-4); }
+.content-block { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
 .content-block > h2 { margin-bottom: var(--space-1); }
 
 .media-text {
@@ -382,6 +388,7 @@
 /* Side panel (aside CTA) */
 .panel {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   padding: var(--card-pad);
   background: var(--c-white);
@@ -458,3 +465,29 @@
 }
 
 .stats--spaced { margin-top: var(--space-8); }
+
+/* Emergency band under the services grid */
+.emergency-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: center;
+  margin-top: var(--grid-gap);
+  padding: var(--card-pad);
+  border-radius: var(--radius-md);
+  background: var(--c-navy-800);
+  color: var(--c-on-dark-muted);
+}
+
+.emergency-band .icon-tile { background: var(--c-amber-500); color: var(--c-navy-800); }
+.emergency-band h3 { font-size: var(--fs-h3); color: var(--c-on-dark); }
+.emergency-band h3 a { color: inherit; text-decoration: none; }
+.emergency-band h3 a:hover { text-decoration: underline; }
+.emergency-band__text { display: grid; gap: var(--space-1); }
+
+@media (min-width: 768px) {
+  .emergency-band { grid-template-columns: var(--icon-tile) 1fr auto; gap: var(--space-5); }
+}
+
+.contact-list a,
+.footer-list a { overflow-wrap: anywhere; }

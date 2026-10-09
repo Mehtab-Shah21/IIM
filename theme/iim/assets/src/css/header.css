@@ -252,10 +252,11 @@
   transition: transform var(--dur-base) var(--ease);
 }
 
+/* Open: visible immediately (no visibility transition), so focus can move into the panel. */
 .drawer:target,
 .drawer.is-open {
   visibility: visible;
-  transition-delay: 0s;
+  transition: none;
 }
 
 .drawer:target .drawer__scrim,

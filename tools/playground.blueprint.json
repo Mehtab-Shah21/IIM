@@ -1,0 +1,29 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "secure-custom-fields"
+      }
+    },
+    {
+      "step": "activatePlugin",
+      "pluginPath": "iim-core/iim-core.php"
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "iim"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require '/wordpress/wp-load.php'; $r = iim_core_seed( false, function ( $m ) { echo $m, \"\n\"; } ); echo is_wp_error( $r ) ? $r->get_error_message() : 'SEED OK';"
+    }
+  ]
+}

@@ -54,11 +54,40 @@ $iim_promise  = iim_field( 'hero_subhead', $iim_id, __( 'Book in three steps on 
 			<h2 id="services-title"><?php echo esc_html( iim_field( 'services_heading', $iim_id, __( 'One team for every repair in your home or business', 'iim' ) ) ); ?></h2>
 			<p class="lead"><?php echo esc_html( iim_field( 'services_intro', $iim_id, __( 'From a tripped breaker to a full bathroom refit, our technicians handle the job end to end across Dubai.', 'iim' ) ) ); ?></p>
 		</div>
+		<?php
+		// Emergency gets its own band so the trade services form a clean 3 x 2 grid.
+		$iim_emergency = null;
+		$iim_trades    = array();
+		foreach ( iim_services() as $iim_service ) {
+			if ( ! $iim_emergency && false !== strpos( $iim_service->post_name, 'emergency' ) ) {
+				$iim_emergency = $iim_service;
+			} else {
+				$iim_trades[] = $iim_service;
+			}
+		}
+		?>
 		<div class="cards cards--3">
-			<?php foreach ( iim_services() as $iim_service ) : ?>
+			<?php foreach ( $iim_trades as $iim_service ) : ?>
 				<?php get_template_part( 'template-parts/service-card', null, array( 'post' => $iim_service ) ); ?>
 			<?php endforeach; ?>
 		</div>
+		<?php if ( $iim_emergency ) : ?>
+			<div class="emergency-band" data-reveal data-track-zone="emergency-band">
+				<span class="icon-tile"><?php echo iim_icon( iim_service_icon( $iim_emergency->ID ) ); // phpcs:ignore ?></span>
+				<div class="emergency-band__text">
+					<h3><a href="<?php echo esc_url( get_permalink( $iim_emergency ) ); ?>"><?php echo esc_html( get_the_title( $iim_emergency ) ); ?></a></h3>
+					<p><?php echo esc_html( iim_field( 'card_summary', $iim_emergency->ID ) ); ?></p>
+				</div>
+				<div class="btn-row">
+					<?php if ( iim_tel_href() ) : ?>
+						<a class="btn btn--primary" href="<?php echo esc_url( iim_tel_href() ); ?>"><?php echo iim_icon( 'phone' ); // phpcs:ignore ?><?php esc_html_e( 'Call now', 'iim' ); ?></a>
+					<?php endif; ?>
+					<?php if ( iim_wa_href() ) : ?>
+						<a class="btn btn--whatsapp" href="<?php echo esc_url( iim_wa_href( __( 'Hi IIM, I have an urgent problem and need help in Dubai.', 'iim' ) ) ); ?>" target="_blank" rel="noopener"><?php echo iim_icon( 'whatsapp' ); // phpcs:ignore ?><?php esc_html_e( 'WhatsApp', 'iim' ); ?></a>
+					<?php endif; ?>
+				</div>
+			</div>
+		<?php endif; ?>
 	</div>
 </section>
 

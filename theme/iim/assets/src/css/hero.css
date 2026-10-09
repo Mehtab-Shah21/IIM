@@ -23,12 +23,14 @@
 .hero__inner {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-7);
   align-items: center;
 }
 
 .hero__copy {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   align-content: start;
 }
@@ -115,6 +117,7 @@
 
 .page-hero__inner {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   max-width: var(--measure);
 }

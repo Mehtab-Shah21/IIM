@@ -16,7 +16,9 @@
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    /* none, not 0.01ms: a near-zero transition still makes inherited visibility
+       briefly "hidden", which blocks focus moving into the menu drawer. */
+    transition: none !important;
     scroll-behavior: auto !important;
   }
 

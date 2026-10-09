@@ -17,6 +17,7 @@
 
 .footer-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-7);
 }
 
@@ -32,7 +33,7 @@
   .footer-grid > :nth-child(4) { grid-column: span 3; }
 }
 
-.footer-brand { display: grid; gap: var(--space-4); align-content: start; }
+.footer-brand { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); align-content: start; }
 .footer-brand .site-logo { height: auto; color: var(--c-on-dark); }
 
 .footer-list {

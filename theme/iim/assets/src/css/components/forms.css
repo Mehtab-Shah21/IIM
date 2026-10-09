@@ -17,6 +17,7 @@
 
 .form-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
 }
 
@@ -27,6 +28,7 @@
 
 .field {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2);
   align-content: start;
 }
@@ -173,6 +175,7 @@
 /* File input */
 .file-drop {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2);
   justify-items: start;
   padding: var(--space-4);
@@ -181,7 +184,7 @@
   background: var(--c-surface);
 }
 
-.file-drop input[type="file"] { max-width: 100%; font-size: var(--fs-small); }
+.file-drop input[type="file"] { width: 100%; min-width: 0; max-width: 100%; font-size: var(--fs-small); }
 
 .file-list {
   display: grid;
@@ -205,6 +208,7 @@
 /* Multi-step behaviour (only when JS is running; without JS all steps show as one page) */
 .form-step {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   margin: 0;
   padding: 0;

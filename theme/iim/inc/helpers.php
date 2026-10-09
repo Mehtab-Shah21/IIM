@@ -213,7 +213,7 @@ function iim_page_url( $path ) {
  */
 function iim_quote_url( $service = '' ) {
 	$url = iim_page_url( 'get-a-quote' );
-	return $service ? add_query_arg( 'service', rawurlencode( $service ), $url ) : $url;
+	return $service ? add_query_arg( 'need', rawurlencode( $service ), $url ) : $url;
 }
 
 /**

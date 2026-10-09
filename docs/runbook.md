@@ -40,6 +40,15 @@ wp rewrite flush
 
 WordPress creates a draft "Privacy Policy" page on install; run `wp iim seed --update` or delete it first so the seeded draft replaces it.
 
+### No Docker? WordPress Playground (PHP in Node, nothing to install)
+
+```bash
+npm i -g @wp-playground/cli     # or run from a local install
+wp-playground-cli server --port=9400 --login   --mount-dir "<repo>/theme/iim" "/wordpress/wp-content/themes/iim"   --mount-dir "<repo>/plugins/iim-core" "/wordpress/wp-content/plugins/iim-core"   --blueprint "<repo>/tools/playground.blueprint.json"
+```
+
+The blueprint installs Secure Custom Fields (the free, API-compatible ACF build), activates the plugin and theme, and runs the seed. Production uses ACF Pro. One Playground quirk: it sets `PHP_SELF` to the request path, so single-segment 404 URLs (e.g. `/about-us`) resolve to the home page there. Test legacy redirects on staging or Docker, where `PHP_SELF` is `/index.php`.
+
 ## 4. Hostinger setup (once)
 
 1. Plan: Business or Cloud (LiteSpeed, PHP 8.3+, SSH, Git). Data centre: the lowest-latency option to the UAE offered in hPanel. Check plan limits against this spec before buying.

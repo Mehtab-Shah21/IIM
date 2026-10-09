@@ -126,7 +126,9 @@ $iim_i18n = array(
 			<?php $iim_error( 'consent' ); ?>
 		</div>
 		<div class="field field--full">
-			<div class="cf-turnstile" aria-label="<?php esc_attr_e( 'Spam check', 'iim' ); ?>"></div>
+			<?php if ( defined( 'IIM_TURNSTILE_SITE_KEY' ) && IIM_TURNSTILE_SITE_KEY ) : ?>
+					<div class="cf-turnstile" aria-label="<?php esc_attr_e( 'Spam check', 'iim' ); ?>"></div>
+				<?php endif; ?>
 		</div>
 		<div class="field field--full">
 			<button class="btn btn--primary btn--block" type="submit"><?php esc_html_e( 'Apply for a contract', 'iim' ); ?></button>

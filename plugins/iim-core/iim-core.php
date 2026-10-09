@@ -26,7 +26,7 @@ define( 'IIM_CORE_DIR', plugin_dir_path( __FILE__ ) );
  * See server/wp-config-additions.php.
  */
 
-foreach ( array( 'options', 'post-types', 'fields', 'roles', 'form-security', 'uploads', 'leads', 'mail', 'webhook', 'rest', 'schema', 'redirects', 'hardening', 'seo', 'admin' ) as $iim_core_file ) {
+foreach ( array( 'options', 'post-types', 'fields', 'roles', 'form-security', 'uploads', 'leads', 'mail', 'webhook', 'rest', 'schema', 'redirects', 'hardening', 'seo', 'admin', 'seed' ) as $iim_core_file ) {
 	require_once IIM_CORE_DIR . 'includes/' . $iim_core_file . '.php';
 }
 unset( $iim_core_file );

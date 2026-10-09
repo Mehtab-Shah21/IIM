@@ -18,7 +18,7 @@ if ( ! function_exists( 'iim_core_form_state' ) ) {
 $iim_state  = iim_core_form_state( 'quote' );
 $iim_values = $iim_state['values'] ?? array();
 $iim_errors = $iim_state['errors'] ?? array();
-$iim_pre    = sanitize_title( $iim_values['service'] ?? ( $args['preselect'] ?? ( isset( $_GET['service'] ) ? wp_unslash( $_GET['service'] ) : '' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- read-only preselect, sanitised.
+$iim_pre    = sanitize_title( $iim_values['service'] ?? ( $args['preselect'] ?? ( isset( $_GET['need'] ) ? wp_unslash( $_GET['need'] ) : '' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- read-only preselect, sanitised.
 $iim_val    = fn( $k ) => $iim_values[ $k ] ?? '';
 
 /**
@@ -195,7 +195,9 @@ $iim_props = array(
 				<?php $iim_error( 'consent' ); ?>
 			</div>
 			<div class="field field--full">
-				<div class="cf-turnstile" aria-label="<?php esc_attr_e( 'Spam check', 'iim' ); ?>"></div>
+				<?php if ( defined( 'IIM_TURNSTILE_SITE_KEY' ) && IIM_TURNSTILE_SITE_KEY ) : ?>
+					<div class="cf-turnstile" aria-label="<?php esc_attr_e( 'Spam check', 'iim' ); ?>"></div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</fieldset>
