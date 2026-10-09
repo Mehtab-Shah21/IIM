@@ -2371,34 +2371,26 @@
   {
     "_id": "redirect-027",
     "_type": "redirect",
-    "from": "/ar",
-    "to": "/",
-    "type": "301",
-    "note": "Arabic copy; Arabic is out of scope this phase"
-  },
-  {
-    "_id": "redirect-028",
-    "_type": "redirect",
     "from": "/product-page/*",
     "type": "410",
     "note": "Wix demo store (12 URLs: eyeglasses"
   },
   {
-    "_id": "redirect-029",
+    "_id": "redirect-028",
     "_type": "redirect",
     "from": "/category/all-products",
     "type": "410",
     "note": "Wix demo store"
   },
   {
-    "_id": "redirect-030",
+    "_id": "redirect-029",
     "_type": "redirect",
     "from": "/pricing-plans/list",
     "type": "410",
     "note": "Empty Wix plans page"
   },
   {
-    "_id": "redirect-031",
+    "_id": "redirect-030",
     "_type": "redirect",
     "from": "/ar",
     "to": "/",
@@ -2406,7 +2398,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-032",
+    "_id": "redirect-031",
     "_type": "redirect",
     "from": "/ar/contact",
     "to": "/contact/",
@@ -2414,7 +2406,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-033",
+    "_id": "redirect-032",
     "_type": "redirect",
     "from": "/ar/privacy-policy",
     "to": "/privacy-policy/",
@@ -2422,7 +2414,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-034",
+    "_id": "redirect-033",
     "_type": "redirect",
     "from": "/ar/copy-of-handyman-services",
     "to": "/services/emergency-electrician-plumber-dubai/",
@@ -2430,7 +2422,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-035",
+    "_id": "redirect-034",
     "_type": "redirect",
     "from": "/ar/coming-soon-01",
     "to": "/",
@@ -2438,7 +2430,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-036",
+    "_id": "redirect-035",
     "_type": "redirect",
     "from": "/ar/services-4-1",
     "to": "/services/ac-services-dubai/",
@@ -2446,7 +2438,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-037",
+    "_id": "redirect-036",
     "_type": "redirect",
     "from": "/ar/copy-of-ac-services",
     "to": "/services/electrical-services-dubai/",
@@ -2454,7 +2446,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-038",
+    "_id": "redirect-037",
     "_type": "redirect",
     "from": "/ar/accessibility-statement",
     "to": "/accessibility/",
@@ -2462,7 +2454,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-039",
+    "_id": "redirect-038",
     "_type": "redirect",
     "from": "/ar/lead-collection",
     "to": "/annual-maintenance-contract/residential/",
@@ -2470,7 +2462,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-040",
+    "_id": "redirect-039",
     "_type": "redirect",
     "from": "/ar/book-online",
     "to": "/services/",
@@ -2478,7 +2470,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-041",
+    "_id": "redirect-040",
     "_type": "redirect",
     "from": "/ar/copy-of-painting-services",
     "to": "/services/handyman-services-dubai/",
@@ -2486,7 +2478,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-042",
+    "_id": "redirect-041",
     "_type": "redirect",
     "from": "/ar/copy-of-electrical-services",
     "to": "/services/plumbing-services-dubai/",
@@ -2494,7 +2486,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-043",
+    "_id": "redirect-042",
     "_type": "redirect",
     "from": "/ar/about-us",
     "to": "/about/",
@@ -2502,7 +2494,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-044",
+    "_id": "redirect-043",
     "_type": "redirect",
     "from": "/ar/registration",
     "to": "/annual-maintenance-contract/commercial/",
@@ -2510,7 +2502,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-045",
+    "_id": "redirect-044",
     "_type": "redirect",
     "from": "/ar/inquiry-services-page",
     "to": "/services/",
@@ -2518,7 +2510,7 @@
     "note": "Arabic copy of the old Wix site"
   },
   {
-    "_id": "redirect-046",
+    "_id": "redirect-045",
     "_type": "redirect",
     "from": "/ar/copy-of-plumbing-services",
     "to": "/services/painting-services-dubai/",

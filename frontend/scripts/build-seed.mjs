@@ -353,7 +353,7 @@ const redirects = []
 for (const line of csv) {
   const [from, to, code, note] = line.split(',')
   if (!from || from === '/contact' || from === '/privacy-policy') continue // the trailing-slash rule handles these
-  if (from === '/ar/*') continue // expanded below
+  if (from === '/ar/*' || from === '/ar') continue // expanded below
   if (code === '410') redirects.push({from: from.replace('/*', '/*'), type: '410', note})
   else redirects.push({from, to, type: '301', note})
 }

@@ -7,7 +7,12 @@ const isDev = process.env.NODE_ENV === 'development'
 const nextConfig: NextConfig = {
   // URLs in the brief end with a slash (/services/, /about/ …).
   trailingSlash: true,
+  // The proxy adds the trailing slash itself, after checking redirects, so old URLs such as
+  // /about-us resolve in one hop instead of /about-us -> /about-us/ -> /about/.
+  skipTrailingSlashRedirect: true,
   poweredByHeader: false,
+  // Do not write AGENTS.md during `next dev` (CLAUDE.md is the project's agent guide).
+  agentRules: false,
   reactStrictMode: true,
   images: {
     // CMS images are resized by Sanity's CDN, local images are pre-optimised:

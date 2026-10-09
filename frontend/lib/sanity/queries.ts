@@ -169,4 +169,14 @@ export const sitemapQuery = defineQuery(`{
   "guides": *[_type == "guide" && defined(slug.current)]{"slug": slug.current, _updatedAt, "noindex": seo.noindex}
 }`)
 
+/** Everything that exists, for the proxy's routing-level 404s (see lib/redirects/source.ts). */
+export const routingQuery = defineQuery(`{
+  "redirects": *[_type == "redirect"]{from, to, type},
+  "pages": *[_type == "page" && defined(key)].key,
+  "service": *[_type == "service" && defined(slug.current)].slug.current,
+  "area": *[_type == "area" && defined(slug.current)].slug.current,
+  "project": *[_type == "project" && defined(slug.current)].slug.current,
+  "guide": *[_type == "guide" && defined(slug.current)].slug.current
+}`)
+
 export const slugsQuery = defineQuery(`*[_type == $type && defined(slug.current)].slug.current`)

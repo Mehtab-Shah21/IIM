@@ -20,4 +20,4 @@ export function newReference(now: Date = new Date(), exists: (ref: string) => bo
   throw new Error('Could not generate a unique reference')
 }
 
-export const REFERENCE_PATTERN = /^IIM-\d{6}-[0-9A-HJKMNP-TV-Z]{4}$/
+export {REFERENCE_PATTERN} from './reference-pattern'

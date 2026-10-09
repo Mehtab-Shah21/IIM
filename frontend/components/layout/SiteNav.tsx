@@ -40,20 +40,19 @@ export function SiteNav({
       <DesktopNav items={items} services={services} isCurrent={isCurrent} />
       <div className="flex items-center gap-3">
         {telHref ? (
-          <a
-            href={telHref}
-            className={clsx(buttonClasses({variant: 'secondary', tone: 'dark'}), 'hidden lg:inline-flex')}
-            data-track="phone_click"
-            data-track-location="header"
-          >
-            <Icon name="phone" size="sm" />
-            <span className="hidden xl:inline">{phoneDisplay}</span>
-            <span className="sr-only xl:hidden">Call {phoneDisplay}</span>
-          </a>
+          <div className="hidden lg:block">
+            <a href={telHref} className={buttonClasses({variant: 'secondary', tone: 'dark'})} data-track="phone_click" data-track-location="header">
+              <Icon name="phone" size="sm" />
+              <span className="hidden xl:inline">{phoneDisplay}</span>
+              <span className="sr-only xl:hidden">Call {phoneDisplay}</span>
+            </a>
+          </div>
         ) : null}
-        <Link href={quoteHref} className={clsx(buttonClasses({variant: 'primary'}), 'hidden md:inline-flex')} data-track="cta_click" data-track-location="header">
-          Get a Quote
-        </Link>
+        <div className="hidden md:block">
+          <Link href={quoteHref} className={buttonClasses({variant: 'primary'})} data-track="cta_click" data-track-location="header">
+            Get a Quote
+          </Link>
+        </div>
         <MobileDrawer
           items={items}
           services={services}

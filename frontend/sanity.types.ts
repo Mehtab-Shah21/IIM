@@ -2335,6 +2335,40 @@ export type SitemapQueryResult = {
 }
 
 // Source: lib/sanity/queries.ts
+// Variable: routingQuery
+// Query: {  "redirects": *[_type == "redirect"]{from, to, type},  "pages": *[_type == "page" && defined(key)].key,  "service": *[_type == "service" && defined(slug.current)].slug.current,  "area": *[_type == "area" && defined(slug.current)].slug.current,  "project": *[_type == "project" && defined(slug.current)].slug.current,  "guide": *[_type == "guide" && defined(slug.current)].slug.current}
+export type RoutingQueryResult = {
+  redirects: Array<{
+    from: string
+    to: string | null
+    type: '301' | '302' | '410'
+  }>
+  pages: Array<
+    | 'about'
+    | 'accessibility'
+    | 'amc-commercial'
+    | 'amc-residential'
+    | 'amc'
+    | 'areas'
+    | 'contact'
+    | 'faq'
+    | 'get-a-quote'
+    | 'guides'
+    | 'home'
+    | 'privacy-policy'
+    | 'projects'
+    | 'reviews'
+    | 'services'
+    | 'terms'
+    | 'thank-you'
+  >
+  service: Array<string>
+  area: Array<string>
+  project: Array<string>
+  guide: Array<string>
+}
+
+// Source: lib/sanity/queries.ts
 // Variable: slugsQuery
 // Query: *[_type == $type && defined(slug.current)].slug.current
 export type SlugsQueryResult = Array<string>
@@ -2358,6 +2392,7 @@ declare global {
     '*[_type == "guide" && slug.current == $slug][0]{\n  _id,\n  _updatedAt,\n  title,\n  "slug": slug.current,\n  excerpt,\n  "coverImage": coverImage{\n  ...,\n  "alt": coalesce(alt, ""),\n  asset->{_id, url, "width": metadata.dimensions.width, "height": metadata.dimensions.height, "lqip": metadata.lqip}\n},\n  directAnswer,\n  body,\n  faqs,\n  author,\n  reviewer,\n  publishedAt,\n  lastReviewed,\n  "relatedServices": relatedServices[]->{\n  _id,\n  title,\n  "slug": slug.current,\n  icon,\n  menuSummary,\n  cardSummary,\n  isEmergency,\n  whatsappNoun,\n  "cardImage": cardImage{\n  ...,\n  "alt": coalesce(alt, ""),\n  asset->{_id, url, "width": metadata.dimensions.width, "height": metadata.dimensions.height, "lqip": metadata.lqip}\n}\n},\n  seo{metaTitle, metaDescription, noindex, canonicalOverride, extraJsonLd, "ogImage": ogImage{\n  ...,\n  "alt": coalesce(alt, ""),\n  asset->{_id, url, "width": metadata.dimensions.width, "height": metadata.dimensions.height, "lqip": metadata.lqip}\n}}\n}': GuideQueryResult
     '*[_type == "redirect"]{from, to, type}': RedirectsQueryResult
     '{\n  "pages": *[_type == "page" && defined(key)]{key, _updatedAt, "noindex": seo.noindex},\n  "services": *[_type == "service" && defined(slug.current)]{"slug": slug.current, _updatedAt, "noindex": seo.noindex},\n  "areas": *[_type == "area" && defined(slug.current)]{"slug": slug.current, _updatedAt, "noindex": seo.noindex},\n  "projects": *[_type == "project" && defined(slug.current)]{"slug": slug.current, _updatedAt, "noindex": seo.noindex},\n  "guides": *[_type == "guide" && defined(slug.current)]{"slug": slug.current, _updatedAt, "noindex": seo.noindex}\n}': SitemapQueryResult
+    '{\n  "redirects": *[_type == "redirect"]{from, to, type},\n  "pages": *[_type == "page" && defined(key)].key,\n  "service": *[_type == "service" && defined(slug.current)].slug.current,\n  "area": *[_type == "area" && defined(slug.current)].slug.current,\n  "project": *[_type == "project" && defined(slug.current)].slug.current,\n  "guide": *[_type == "guide" && defined(slug.current)].slug.current\n}': RoutingQueryResult
     '*[_type == $type && defined(slug.current)].slug.current': SlugsQueryResult
   }
 }

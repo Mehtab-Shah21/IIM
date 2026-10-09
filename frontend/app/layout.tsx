@@ -57,7 +57,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body>
         <a
           href="#main"
-          className="focus-on-accent fixed top-2 left-4 z-50 -translate-y-full rounded-sm bg-accent px-5 py-3 font-semibold text-ink-900 no-underline focus:translate-y-0"
+          className="skip-link focus-on-accent rounded-sm bg-accent px-5 py-3 font-semibold text-ink-900 no-underline"
         >
           Skip to content
         </a>
