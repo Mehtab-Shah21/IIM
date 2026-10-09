@@ -32,7 +32,13 @@ export function buildCsp({studioUrl, allowInlineScripts, isDev}: CspOptions): st
       'https://www.googletagmanager.com',
     ],
     'style-src': ["'self'", "'unsafe-inline'"],
-    'img-src': ["'self'", 'data:', 'blob:', 'https://cdn.sanity.io', 'https://www.google-analytics.com'],
+    'img-src': [
+      "'self'",
+      'data:',
+      'blob:',
+      'https://cdn.sanity.io',
+      'https://www.google-analytics.com',
+    ],
     'font-src': ["'self'"],
     'connect-src': [
       "'self'",
@@ -63,7 +69,10 @@ export function securityHeaders(opts: CspOptions & {cspMode: 'report-only' | 'en
   const csp = buildCsp(opts)
   return [
     {
-      key: opts.cspMode === 'enforce' ? 'Content-Security-Policy' : 'Content-Security-Policy-Report-Only',
+      key:
+        opts.cspMode === 'enforce'
+          ? 'Content-Security-Policy'
+          : 'Content-Security-Policy-Report-Only',
       value: csp,
     },
     {key: 'X-Content-Type-Options', value: 'nosniff'},

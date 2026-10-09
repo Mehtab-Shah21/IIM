@@ -47,23 +47,40 @@ export type PageKey =
 
 export const getSettings = cache(async () => {
   const settings = await sanityQuery(settingsQuery, {}, {tags: ['siteSettings']})
-  if (!settings) throw new Error('The siteSettings document is missing. Run the seed import (docs/MANUAL_TASKS.md T2).')
+  if (!settings)
+    throw new Error(
+      'The siteSettings document is missing. Run the seed import (docs/MANUAL_TASKS.md T2).',
+    )
   return settings
 })
 
 export const getServices = cache(() => sanityQuery(servicesQuery, {}, {tags: ['service']}))
-export const getService = cache((slug: string) => sanityQuery(serviceQuery, {slug}, {tags: ['service', 'project']}))
-export const getPage = cache((key: PageKey) => sanityQuery(pageQuery, {key}, {tags: ['page', 'project', 'service']}))
-export const getPublishedPageKeys = cache(async () => new Set(await sanityQuery(publishedPageKeysQuery, {}, {tags: ['page']})))
+export const getService = cache((slug: string) =>
+  sanityQuery(serviceQuery, {slug}, {tags: ['service', 'project']}),
+)
+export const getPage = cache((key: PageKey) =>
+  sanityQuery(pageQuery, {key}, {tags: ['page', 'project', 'service']}),
+)
+export const getPublishedPageKeys = cache(
+  async () => new Set(await sanityQuery(publishedPageKeysQuery, {}, {tags: ['page']})),
+)
 export const getAmcPlans = cache(() => sanityQuery(amcPlansQuery, {}, {tags: ['page']}))
 export const getFaqs = cache(() => sanityQuery(faqsQuery, {}, {tags: ['faq']}))
-export const getTestimonials = cache(() => sanityQuery(testimonialsQuery, {}, {tags: ['testimonial']}))
+export const getTestimonials = cache(() =>
+  sanityQuery(testimonialsQuery, {}, {tags: ['testimonial']}),
+)
 export const getAreas = cache(() => sanityQuery(areasQuery, {}, {tags: ['area']}))
-export const getArea = cache((slug: string) => sanityQuery(areaQuery, {slug}, {tags: ['area', 'service']}))
+export const getArea = cache((slug: string) =>
+  sanityQuery(areaQuery, {slug}, {tags: ['area', 'service']}),
+)
 export const getProjects = cache(() => sanityQuery(projectsQuery, {}, {tags: ['project']}))
-export const getProject = cache((slug: string) => sanityQuery(projectQuery, {slug}, {tags: ['project', 'service']}))
+export const getProject = cache((slug: string) =>
+  sanityQuery(projectQuery, {slug}, {tags: ['project', 'service']}),
+)
 export const getGuides = cache(() => sanityQuery(guidesQuery, {}, {tags: ['guide']}))
-export const getGuide = cache((slug: string) => sanityQuery(guideQuery, {slug}, {tags: ['guide', 'service']}))
+export const getGuide = cache((slug: string) =>
+  sanityQuery(guideQuery, {slug}, {tags: ['guide', 'service']}),
+)
 export const getRedirects = cache(() => sanityQuery(redirectsQuery, {}, {tags: ['redirect']}))
 export const getSitemapData = cache(() =>
   sanityQuery(sitemapQuery, {}, {tags: ['page', 'service', 'area', 'project', 'guide']}),

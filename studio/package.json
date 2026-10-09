@@ -6,7 +6,7 @@
     "dev": "sanity dev",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "schema:extract": "sanity schema extract --enforce-required-fields --path ../sanity.schema.json",
+    "schema:extract": "sanity schema extract --enforce-required-fields --force --path ../sanity.schema.json",
     "typecheck": "tsc --noEmit",
     "seed:export": "sanity exec scripts/export-seed.ts",
     "seed:import": "sanity dataset import seed/seed.ndjson production --replace"

@@ -10,9 +10,17 @@ import {routes} from '@/lib/routes'
  */
 export function ActionBar({tel, whatsapp}: {tel: string | null; whatsapp: string | null}) {
   return (
-    <nav aria-label="Quick actions" className="action-bar fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 gap-2 border-t border-neutral-200 bg-white p-2 shadow-lg lg:hidden">
+    <nav
+      aria-label="Quick actions"
+      className="action-bar fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 gap-2 border-t border-neutral-200 bg-white p-2 shadow-lg lg:hidden"
+    >
       {tel ? (
-        <a href={tel} className={buttonClasses({variant: 'secondary', size: 'bar'})} data-track="phone_click" data-track-location="action_bar">
+        <a
+          href={tel}
+          className={buttonClasses({variant: 'secondary', size: 'bar'})}
+          data-track="phone_click"
+          data-track-location="action_bar"
+        >
           <Icon name="phone" size="sm" />
           Call
         </a>
@@ -34,7 +42,12 @@ export function ActionBar({tel, whatsapp}: {tel: string | null; whatsapp: string
       ) : (
         <span />
       )}
-      <Link href={routes.quote} className={buttonClasses({variant: 'primary', size: 'bar'})} data-track="cta_click" data-track-location="action_bar">
+      <Link
+        href={routes.quote}
+        className={buttonClasses({variant: 'primary', size: 'bar'})}
+        data-track="cta_click"
+        data-track-location="action_bar"
+      >
         Get a Quote
       </Link>
     </nav>

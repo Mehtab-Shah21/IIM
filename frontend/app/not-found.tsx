@@ -19,7 +19,9 @@ export default async function NotFound() {
       <section className="bg-ink-900 pt-7 pb-8 text-cream">
         <div className="container-content grid max-w-prose gap-5">
           <h1 className="text-h1 font-extrabold text-cream">We could not find that page</h1>
-          <p className="text-lead text-cream-muted">The link may be old or mistyped. These pages should help you find what you need.</p>
+          <p className="text-lead text-cream-muted">
+            The link may be old or mistyped. These pages should help you find what you need.
+          </p>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href={routes.home} variant="primary">
               Go to the homepage

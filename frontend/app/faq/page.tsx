@@ -26,7 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
     path: routes.faq,
     seo: page?.seo,
     fallbackTitle: 'FAQs | Maintenance & Repair Services in Dubai | IIM',
-    fallbackDescription: 'Answers on booking, pricing, payment, emergency visits and annual contracts.',
+    fallbackDescription:
+      'Answers on booking, pricing, payment, emergency visits and annual contracts.',
     defaultOgImage: settings.defaultOgImage,
   })
 }
@@ -40,9 +41,20 @@ export default async function FaqPage() {
   return (
     <>
       <JsonLd
-        data={await pageGraph({path: routes.faq, name: page?.heroHeadline ?? 'FAQ', crumbs, extra: [faqNode(absoluteUrl(routes.faq), faqs)], modified: page?._updatedAt})}
+        data={await pageGraph({
+          path: routes.faq,
+          name: page?.heroHeadline ?? 'FAQ',
+          crumbs,
+          extra: [faqNode(absoluteUrl(routes.faq), faqs)],
+          modified: page?._updatedAt,
+        })}
       />
-      <PageHero title={page?.heroHeadline ?? 'Frequently asked questions'} eyebrow="FAQ" lead={page?.heroSubhead} crumbs={crumbs} />
+      <PageHero
+        title={page?.heroHeadline ?? 'Frequently asked questions'}
+        eyebrow="FAQ"
+        lead={page?.heroSubhead}
+        crumbs={crumbs}
+      />
       <Section>
         <div className="grid gap-8">
           {topics.map((t) => {
@@ -58,7 +70,14 @@ export default async function FaqPage() {
           })}
         </div>
       </Section>
-      <CtaBand heading="Did not find your answer?" text="Send us your question on WhatsApp with a photo of the issue and we will reply." quoteHref={quoteUrl()} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />
+      <CtaBand
+        heading="Did not find your answer?"
+        text="Send us your question on WhatsApp with a photo of the issue and we will reply."
+        quoteHref={quoteUrl()}
+        whatsappHref={links.whatsapp}
+        telHref={links.tel}
+        phoneDisplay={links.phoneDisplay}
+      />
       <ContactDock message={message} />
     </>
   )

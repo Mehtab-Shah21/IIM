@@ -4,7 +4,15 @@
  */
 import {z} from 'zod'
 
-import {addDays, dubaiToday, emirates, normaliseUaePhone, plans, preferredTimes, propertyTypes} from './constants'
+import {
+  addDays,
+  dubaiToday,
+  emirates,
+  normaliseUaePhone,
+  plans,
+  preferredTimes,
+  propertyTypes,
+} from './constants'
 
 export * from './constants'
 
@@ -37,14 +45,17 @@ const email = z
   .pipe(z.email('Enter a valid email address, or leave it empty.').optional())
 
 const consent = z
-  .union([z.literal('on'), z.literal('true'), z.literal(true)], {error: 'Please agree so we can contact you about this request.'})
+  .union([z.literal('on'), z.literal('true'), z.literal(true)], {
+    error: 'Please agree so we can contact you about this request.',
+  })
   .transform(() => true as const)
 
 const emirate = z.enum(emirates, {error: 'Please choose an emirate.'})
 
 /** Fields used for spam checks; validated separately from the visible fields. */
 export const antiSpamSchema = z.object({
-  website: z.string().max(0).optional().default(''),
+  // Honeypot: any value is accepted here so processLead can quietly drop the bot.
+  website: z.string().max(500).optional().default(''),
   startedAt: z.coerce.number().int().positive(),
   turnstileToken: z.string().max(4096).optional().default(''),
   pageUrl: z.string().max(500).optional().default(''),
@@ -58,11 +69,18 @@ export function quoteSchema(serviceSlugs: readonly string[], now: Date = new Dat
   const last = addDays(today, 60)
   return z.object({
     type: z.literal('quote'),
-    service: z.string({error: 'Please choose a service.'}).refine((v) => serviceSlugs.includes(v) || v === 'other', 'Please choose a service.'),
+    service: z
+      .string({error: 'Please choose a service.'})
+      .refine((v) => serviceSlugs.includes(v) || v === 'other', 'Please choose a service.'),
     description: text(10, 1000, 'a short description'),
     emirate,
     area: text(2, 80, 'your area'),
-    address: z.string().trim().max(200, 'Please keep this under 200 characters.').optional().default(''),
+    address: z
+      .string()
+      .trim()
+      .max(200, 'Please keep this under 200 characters.')
+      .optional()
+      .default(''),
     preferredDate: z
       .string({error: 'Please choose a date.'})
       .regex(/^\d{4}-\d{2}-\d{2}$/, 'Please choose a date.')

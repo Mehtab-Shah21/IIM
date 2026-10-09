@@ -24,7 +24,8 @@ const errorMessages: Record<string, string> = {
   bad_form: 'Your session expired. Please try again.',
   origin: 'Your session expired. Please try again.',
   rate: 'Too many requests from your connection. Please message us on WhatsApp instead.',
-  delivery: 'We could not send your request right now. Please call or WhatsApp us and quote your reference.',
+  delivery:
+    'We could not send your request right now. Please call or WhatsApp us and quote your reference.',
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -33,7 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
     path: routes.quote,
     seo: page?.seo,
     fallbackTitle: 'Get a Quote | IIM Technical Services Dubai',
-    fallbackDescription: 'Tell us the issue and choose a time. We reply quickly and you pay after the service.',
+    fallbackDescription:
+      'Tell us the issue and choose a time. We reply quickly and you pay after the service.',
     defaultOgImage: settings.defaultOgImage,
   })
 }
@@ -42,7 +44,11 @@ const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v)
 
 export default async function QuotePage({searchParams}: Props) {
   const params = await searchParams
-  const [page, settings, services] = await Promise.all([getPage('get-a-quote'), getSettings(), getServices()])
+  const [page, settings, services] = await Promise.all([
+    getPage('get-a-quote'),
+    getSettings(),
+    getServices(),
+  ])
   const message = settings.defaultWhatsappMessage || defaultWhatsappMessage
   const links = contactLinks(settings, message)
   const crumbs = [homeCrumb, {name: 'Get a Quote'}]
@@ -58,31 +64,70 @@ export default async function QuotePage({searchParams}: Props) {
   const errorKey = one(params.error)
   const ref = one(params.ref)
   const safeRef = ref && REFERENCE_PATTERN.test(ref) ? ref : undefined
-  const formMessage = errorKey && errorMessages[errorKey] ? errorMessages[errorKey] : Object.keys(fieldErrors).length ? 'Please check the highlighted fields.' : undefined
+  const formMessage =
+    errorKey && errorMessages[errorKey]
+      ? errorMessages[errorKey]
+      : Object.keys(fieldErrors).length
+        ? 'Please check the highlighted fields.'
+        : undefined
   const preselect = one(params.need)
 
   return (
     <>
-      <JsonLd data={await pageGraph({path: routes.quote, name: page?.heroHeadline ?? 'Get a quote', crumbs, modified: page?._updatedAt})} />
-      <PageHero title={page?.heroHeadline ?? 'Get a quote'} eyebrow="Get a Quote" lead={page?.heroSubhead} crumbs={crumbs} />
+      <JsonLd
+        data={await pageGraph({
+          path: routes.quote,
+          name: page?.heroHeadline ?? 'Get a quote',
+          crumbs,
+          modified: page?._updatedAt,
+        })}
+      />
+      <PageHero
+        title={page?.heroHeadline ?? 'Get a quote'}
+        eyebrow="Get a Quote"
+        lead={page?.heroSubhead}
+        crumbs={crumbs}
+      />
       <ContentLayout
         asideLabel="Other ways to book"
         aside={
           <div className="grid gap-4 rounded-md border border-neutral-200 bg-white p-card shadow-md">
             <h2 className="text-h3 font-bold">Prefer WhatsApp?</h2>
-            <p>Send a photo or short video of the issue with your location. It is the quickest way to book.</p>
+            <p>
+              Send a photo or short video of the issue with your location. It is the quickest way to
+              book.
+            </p>
             {links.whatsapp ? (
-              <ButtonLink href={links.whatsapp} external variant="whatsapp" icon="whatsapp" block data-track="whatsapp_click" data-track-location="quote_aside">
+              <ButtonLink
+                href={links.whatsapp}
+                external
+                variant="whatsapp"
+                icon="whatsapp"
+                block
+                data-track="whatsapp_click"
+                data-track-location="quote_aside"
+              >
                 WhatsApp Us
               </ButtonLink>
             ) : null}
             {links.tel ? (
-              <ButtonLink href={links.tel} variant="secondary" icon="phone" block data-track="phone_click" data-track-location="quote_aside">
+              <ButtonLink
+                href={links.tel}
+                variant="secondary"
+                icon="phone"
+                block
+                data-track="phone_click"
+                data-track-location="quote_aside"
+              >
                 {links.phoneDisplay}
               </ButtonLink>
             ) : null}
             <ul className="m-0 grid list-none gap-3 p-0">
-              {['You pay after the service', ...(settings.freeQuotes ? ['Quotes are free'] : []), ...(settings.responseTime ? [settings.responseTime] : [])].map((t) => (
+              {[
+                'You pay after the service',
+                ...(settings.freeQuotes ? ['Quotes are free'] : []),
+                ...(settings.responseTime ? [settings.responseTime] : []),
+              ].map((t) => (
                 <li key={t} className="flex items-start gap-3">
                   <Icon name="circle-check" size="sm" className="mt-1 text-success" />
                   {t}
@@ -93,12 +138,25 @@ export default async function QuotePage({searchParams}: Props) {
         }
       >
         <div className="rounded-md border border-neutral-200 bg-white p-card shadow-md md:p-6">
-          <h2 className="sr-only">{type === 'amc' ? 'Annual contract application' : 'Quote request form'}</h2>
+          <h2 className="sr-only">
+            {type === 'amc' ? 'Annual contract application' : 'Quote request form'}
+          </h2>
           {safeRef ? <p className="mb-4 font-semibold">Your reference: {safeRef}</p> : null}
           {type === 'amc' ? (
-            <AmcForm idPrefix="amc-quote" siteKey={turnstileSiteKey} initialErrors={fieldErrors} initialMessage={formMessage} />
+            <AmcForm
+              idPrefix="amc-quote"
+              siteKey={turnstileSiteKey}
+              initialErrors={fieldErrors}
+              initialMessage={formMessage}
+            />
           ) : (
-            <QuoteForm services={formServices(services)} preselect={preselect} siteKey={turnstileSiteKey} initialErrors={fieldErrors} initialMessage={formMessage} />
+            <QuoteForm
+              services={formServices(services)}
+              preselect={preselect}
+              siteKey={turnstileSiteKey}
+              initialErrors={fieldErrors}
+              initialMessage={formMessage}
+            />
           )}
         </div>
       </ContentLayout>

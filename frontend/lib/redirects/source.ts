@@ -57,12 +57,18 @@ export async function getRoutingData(now = Date.now()): Promise<RoutingData | nu
   inflight ??= load()
     .then((raw) => {
       const data = build(raw)
-      for (const p of data.redirects.problems) console.warn(JSON.stringify({event: 'redirect_rule', problem: p}))
+      for (const p of data.redirects.problems)
+        console.warn(JSON.stringify({event: 'redirect_rule', problem: p}))
       cache = {at: Date.now(), data}
       return data
     })
     .catch((err: unknown) => {
-      console.error(JSON.stringify({event: 'routing_load_failed', error: err instanceof Error ? err.message : 'unknown'}))
+      console.error(
+        JSON.stringify({
+          event: 'routing_load_failed',
+          error: err instanceof Error ? err.message : 'unknown',
+        }),
+      )
       // Never block the site: keep the last good data, or skip routing checks entirely.
       return cache?.data ?? null
     })
@@ -89,6 +95,8 @@ export function isMissingContent(data: RoutingData, normalisedPath: string): boo
   if (key) return !data.pages.has(key)
   const m = /^\/(services|areas|projects|guides)\/([^/]+)$/.exec(normalisedPath)
   if (!m) return false
-  const type = ({services: 'service', areas: 'area', projects: 'project', guides: 'guide'} as const)[m[1] as 'services' | 'areas' | 'projects' | 'guides']
+  const type = (
+    {services: 'service', areas: 'area', projects: 'project', guides: 'guide'} as const
+  )[m[1] as 'services' | 'areas' | 'projects' | 'guides']
   return !data.slugs[type].has(m[2]!)
 }

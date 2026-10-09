@@ -9,7 +9,15 @@ import type {ServiceCard} from '@/lib/content'
 import {ServiceGrid} from './Blocks'
 
 /** Main column (8 of 12) with a sticky aside (4 of 12) from 1024px. */
-export function ContentLayout({children, aside, asideLabel}: {children: ReactNode; aside?: ReactNode; asideLabel?: string}) {
+export function ContentLayout({
+  children,
+  aside,
+  asideLabel,
+}: {
+  children: ReactNode
+  aside?: ReactNode
+  asideLabel?: string
+}) {
   return (
     <section className="section bg-white">
       <div className="container-content">
@@ -46,7 +54,10 @@ export function AsideCta({
     ['calendar-check', 'Send your location and the date that suits you.'],
   ]
   return (
-    <div className="grid gap-4 rounded-md bg-ink-900 p-card text-cream shadow-md" data-track-zone="aside">
+    <div
+      className="grid gap-4 rounded-md bg-ink-900 p-card text-cream shadow-md"
+      data-track-zone="aside"
+    >
       <h2 className="text-h3 font-bold text-cream">{heading}</h2>
       <ol className="m-0 grid list-none gap-3 p-0">
         {steps.map(([icon, text]) => (
@@ -57,16 +68,38 @@ export function AsideCta({
         ))}
       </ol>
       <p className="font-semibold text-cream">You pay after the service.</p>
-      <ButtonLink href={quoteHref} variant="primary" block data-track="cta_click" data-track-location="aside">
+      <ButtonLink
+        href={quoteHref}
+        variant="primary"
+        block
+        data-track="cta_click"
+        data-track-location="aside"
+      >
         Get a Quote
       </ButtonLink>
       {whatsappHref ? (
-        <ButtonLink href={whatsappHref} external variant="whatsapp" icon="whatsapp" block data-track="whatsapp_click" data-track-location="aside">
+        <ButtonLink
+          href={whatsappHref}
+          external
+          variant="whatsapp"
+          icon="whatsapp"
+          block
+          data-track="whatsapp_click"
+          data-track-location="aside"
+        >
           WhatsApp Us
         </ButtonLink>
       ) : null}
       {telHref ? (
-        <ButtonLink href={telHref} variant="secondary" tone="dark" icon="phone" block data-track="phone_click" data-track-location="aside">
+        <ButtonLink
+          href={telHref}
+          variant="secondary"
+          tone="dark"
+          icon="phone"
+          block
+          data-track="phone_click"
+          data-track-location="aside"
+        >
           {phoneDisplay}
         </ButtonLink>
       ) : null}
@@ -80,7 +113,12 @@ export function PriceList({
   visible,
   note,
 }: {
-  prices?: Array<{name?: string | null; priceFrom?: number | null; note?: string | null; _key?: string}> | null
+  prices?: Array<{
+    name?: string | null
+    priceFrom?: number | null
+    note?: string | null
+    _key?: string
+  }> | null
   visible: boolean
   note?: string | null
 }) {
@@ -93,12 +131,17 @@ export function PriceList({
       </h2>
       <ul className="m-0 grid list-none overflow-hidden rounded-md border border-neutral-200 p-0">
         {list.map((p) => (
-          <li key={p._key ?? p.name} className="flex justify-between gap-4 border-b border-neutral-200 px-card py-4 last:border-b-0">
+          <li
+            key={p._key ?? p.name}
+            className="flex justify-between gap-4 border-b border-neutral-200 px-card py-4 last:border-b-0"
+          >
             <span>
               {p.name}
               {p.note ? <small className="block text-neutral-600">{p.note}</small> : null}
             </span>
-            <strong className="whitespace-nowrap">From AED {new Intl.NumberFormat('en').format(p.priceFrom!)}</strong>
+            <strong className="whitespace-nowrap">
+              From AED {new Intl.NumberFormat('en').format(p.priceFrom!)}
+            </strong>
           </li>
         ))}
       </ul>
@@ -107,7 +150,13 @@ export function PriceList({
   )
 }
 
-export function ChipLinks({items, icon}: {items: Array<{href: string; label: string}>; icon?: IconName}) {
+export function ChipLinks({
+  items,
+  icon,
+}: {
+  items: Array<{href: string; label: string}>
+  icon?: IconName
+}) {
   if (!items.length) return null
   return (
     <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
@@ -126,7 +175,15 @@ export function ChipLinks({items, icon}: {items: Array<{href: string; label: str
   )
 }
 
-export function RelatedServices({services, title = 'Related services', areas}: {services: ServiceCard[]; title?: string; areas?: Array<{href: string; label: string}>}) {
+export function RelatedServices({
+  services,
+  title = 'Related services',
+  areas,
+}: {
+  services: ServiceCard[]
+  title?: string
+  areas?: Array<{href: string; label: string}>
+}) {
   if (!services.length && !areas?.length) return null
   return (
     <Section surface="neutral" labelledBy="related-title">

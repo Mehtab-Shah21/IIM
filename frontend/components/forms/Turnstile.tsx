@@ -31,7 +31,15 @@ function loadScript(): Promise<void> {
   return window.__iimTurnstile
 }
 
-export function Turnstile({siteKey, formRef, resetSignal}: {siteKey?: string; formRef: React.RefObject<HTMLFormElement | null>; resetSignal: number}) {
+export function Turnstile({
+  siteKey,
+  formRef,
+  resetSignal,
+}: {
+  siteKey?: string
+  formRef: React.RefObject<HTMLFormElement | null>
+  resetSignal: number
+}) {
   const box = useRef<HTMLDivElement>(null)
   const widgetId = useRef<string | null>(null)
 
@@ -60,7 +68,8 @@ export function Turnstile({siteKey, formRef, resetSignal}: {siteKey?: string; fo
   }, [siteKey, formRef])
 
   useEffect(() => {
-    if (resetSignal && widgetId.current && window.turnstile) window.turnstile.reset(widgetId.current)
+    if (resetSignal && widgetId.current && window.turnstile)
+      window.turnstile.reset(widgetId.current)
   }, [resetSignal])
 
   if (!siteKey) return null

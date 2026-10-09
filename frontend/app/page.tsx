@@ -1,14 +1,36 @@
 import type {Metadata} from 'next'
 
 import {AmcForm} from '@/components/forms/AmcForm'
-import {ArrowLink, BeforeAfter, Checklist, CtaBand, FaqList, ProofPoints, ServiceGrid, Steps} from '@/components/sections/Blocks'
+import {
+  ArrowLink,
+  BeforeAfter,
+  Checklist,
+  CtaBand,
+  FaqList,
+  ProofPoints,
+  ServiceGrid,
+  Steps,
+} from '@/components/sections/Blocks'
 import {ContactDock} from '@/components/sections/ContactDock'
-import {EmergencyBand, HomeHero, RatingSummary, Stats, Testimonials} from '@/components/sections/HomeSections'
+import {
+  EmergencyBand,
+  HomeHero,
+  RatingSummary,
+  Stats,
+  Testimonials,
+} from '@/components/sections/HomeSections'
 import {JsonLd} from '@/components/seo/JsonLd'
 import {ButtonLink} from '@/components/ui/Button'
 import {PhotoPlaceholder} from '@/components/ui/Card'
 import {Section, SectionHeader} from '@/components/ui/Layout'
-import {getFaqs, getPage, getProjects, getServices, getSettings, getTestimonials} from '@/lib/content'
+import {
+  getFaqs,
+  getPage,
+  getProjects,
+  getServices,
+  getSettings,
+  getTestimonials,
+} from '@/lib/content'
 import {defaultWhatsappMessage} from '@/lib/contact'
 import {contactLinks, showPlaceholders, turnstileSiteKey} from '@/lib/page-data'
 import {quoteUrl, routes} from '@/lib/routes'
@@ -79,7 +101,9 @@ export default async function HomePage() {
           lead={home?.servicesIntro}
         />
         <ServiceGrid services={trades} />
-        {emergency ? <EmergencyBand service={emergency} telHref={links.tel} whatsappHref={links.whatsapp} /> : null}
+        {emergency ? (
+          <EmergencyBand service={emergency} telHref={links.tel} whatsappHref={links.whatsapp} />
+        ) : null}
       </Section>
 
       {/* 3. How it works */}
@@ -93,7 +117,12 @@ export default async function HomePage() {
 
       {/* 4–5. Why IIM and numbers (numbers hidden until real figures are entered) */}
       <Section surface="dark" labelledBy="why-title">
-        <SectionHeader id="why-title" eyebrow="Why IIM" title={home?.whyHeading ?? 'Straightforward maintenance, done properly'} tone="dark" />
+        <SectionHeader
+          id="why-title"
+          eyebrow="Why IIM"
+          title={home?.whyHeading ?? 'Straightforward maintenance, done properly'}
+          tone="dark"
+        />
         <ProofPoints items={home?.whyItems ?? []} />
         <Stats stats={settings.stats ?? []} />
       </Section>
@@ -101,7 +130,12 @@ export default async function HomePage() {
       {/* 6. Before and after (placeholder frames on staging only) */}
       {gallery.length || showPlaceholders ? (
         <Section labelledBy="work-title">
-          <SectionHeader id="work-title" eyebrow="Our work" title="Before and after" lead="Real jobs completed by our team in Dubai homes and businesses." />
+          <SectionHeader
+            id="work-title"
+            eyebrow="Our work"
+            title="Before and after"
+            lead="Real jobs completed by our team in Dubai homes and businesses."
+          />
           {gallery.length ? (
             <BeforeAfter projects={gallery} />
           ) : (
@@ -125,13 +159,20 @@ export default async function HomePage() {
       <Section surface="cream" id="annual-contract" labelledBy="amc-title">
         <div className="grid items-start gap-7 lg:grid-cols-12 lg:gap-gap">
           <div className="grid content-start gap-6 lg:col-span-6">
-            <SectionHeader id="amc-title" eyebrow="Annual Maintenance Contract" title={home?.amcHeading ?? 'Premium care, all year round'} lead={home?.amcText} />
+            <SectionHeader
+              id="amc-title"
+              eyebrow="Annual Maintenance Contract"
+              title={home?.amcHeading ?? 'Premium care, all year round'}
+              lead={home?.amcText}
+            />
             <Checklist items={home?.amcBullets ?? []} columns={1} />
             <ArrowLink href={routes.amc}>Compare residential and commercial plans</ArrowLink>
           </div>
           <div className="rounded-md border border-neutral-200 bg-white p-card shadow-md md:p-6 lg:col-span-5 lg:col-start-8">
             <h3 className="mb-2 text-h3 font-bold">Apply for a contract</h3>
-            <p className="mb-5 text-neutral-600">Leave your details and we will call you to plan the right package.</p>
+            <p className="mb-5 text-neutral-600">
+              Leave your details and we will call you to plan the right package.
+            </p>
             <AmcForm idPrefix="amc-home" siteKey={turnstileSiteKey} />
           </div>
         </div>
@@ -158,7 +199,12 @@ export default async function HomePage() {
       {/* 9. FAQ */}
       {homeFaqs.length ? (
         <Section surface="neutral" labelledBy="faq-title">
-          <SectionHeader id="faq-title" eyebrow="FAQ" title={home?.faqHeading ?? 'Questions people ask before booking'} center />
+          <SectionHeader
+            id="faq-title"
+            eyebrow="FAQ"
+            title={home?.faqHeading ?? 'Questions people ask before booking'}
+            center
+          />
           <FaqList items={homeFaqs} center />
           <div className="mt-7 flex justify-center">
             <ArrowLink href={routes.faq}>More answers</ArrowLink>

@@ -18,8 +18,14 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
   const training = ['GPTBot', 'Google-Extended', 'CCBot', 'anthropic-ai', 'Applebot-Extended']
   return {
     rules: [
-      {userAgent: ['*', 'Googlebot', 'Bingbot', 'OAI-SearchBot', 'PerplexityBot', 'ClaudeBot'], allow: '/', disallow},
-      settings.allowAiTraining === false ? {userAgent: training, disallow: '/'} : {userAgent: training, allow: '/', disallow},
+      {
+        userAgent: ['*', 'Googlebot', 'Bingbot', 'OAI-SearchBot', 'PerplexityBot', 'ClaudeBot'],
+        allow: '/',
+        disallow,
+      },
+      settings.allowAiTraining === false
+        ? {userAgent: training, disallow: '/'}
+        : {userAgent: training, allow: '/', disallow},
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
     host: siteUrl,

@@ -33,7 +33,8 @@ export function SiteNav({
   whatsappHref: string | null
 }) {
   const pathname = usePathname() ?? '/'
-  const isCurrent = (match: string) => (match === '/' ? pathname === '/' : pathname.startsWith(match))
+  const isCurrent = (match: string) =>
+    match === '/' ? pathname === '/' : pathname.startsWith(match)
 
   return (
     <>
@@ -41,7 +42,12 @@ export function SiteNav({
       <div className="flex items-center gap-3">
         {telHref ? (
           <div className="hidden lg:block">
-            <a href={telHref} className={buttonClasses({variant: 'secondary', tone: 'dark'})} data-track="phone_click" data-track-location="header">
+            <a
+              href={telHref}
+              className={buttonClasses({variant: 'secondary', tone: 'dark'})}
+              data-track="phone_click"
+              data-track-location="header"
+            >
               <Icon name="phone" size="sm" />
               <span className="hidden xl:inline">{phoneDisplay}</span>
               <span className="sr-only xl:hidden">Call {phoneDisplay}</span>
@@ -49,7 +55,12 @@ export function SiteNav({
           </div>
         ) : null}
         <div className="hidden md:block">
-          <Link href={quoteHref} className={buttonClasses({variant: 'primary'})} data-track="cta_click" data-track-location="header">
+          <Link
+            href={quoteHref}
+            className={buttonClasses({variant: 'primary'})}
+            data-track="cta_click"
+            data-track-location="header"
+          >
             Get a Quote
           </Link>
         </div>
@@ -79,10 +90,6 @@ function DesktopNav({
   const [open, setOpen] = useState(false)
   const panelId = useId()
   const wrapRef = useRef<HTMLLIElement>(null)
-  const pathname = usePathname()
-
-  useEffect(() => setOpen(false), [pathname])
-
   useEffect(() => {
     if (!open) return
     const onDoc = (e: MouseEvent) => {
@@ -139,7 +146,11 @@ function DesktopNav({
                 aria-controls={panelId}
                 onClick={() => setOpen((v) => !v)}
               >
-                <Icon name="chevron-down" size="sm" className={clsx('transition-transform', open && 'rotate-180')} />
+                <Icon
+                  name="chevron-down"
+                  size="sm"
+                  className={clsx('transition-transform', open && 'rotate-180')}
+                />
                 <span className="sr-only">Show services</span>
               </button>
               <div
@@ -155,14 +166,19 @@ function DesktopNav({
                       <li key={s.href}>
                         <Link
                           href={s.href}
+                          onClick={() => setOpen(false)}
                           className="flex items-start gap-3 rounded-md p-3 text-cream no-underline hover:bg-ink-800"
                         >
                           <span className="inline-grid size-icon-tile place-items-center rounded-sm bg-accent text-ink-900">
                             <Icon name={s.icon} />
                           </span>
                           <span>
-                            <span className="block font-heading font-bold text-cream">{s.title}</span>
-                            {s.summary ? <span className="block text-small text-cream-muted">{s.summary}</span> : null}
+                            <span className="block font-heading font-bold text-cream">
+                              {s.title}
+                            </span>
+                            {s.summary ? (
+                              <span className="block text-small text-cream-muted">{s.summary}</span>
+                            ) : null}
                           </span>
                         </Link>
                       </li>
@@ -277,7 +293,11 @@ function MobileDrawer({
             </ul>
           </nav>
           <div className="drawer-foot grid gap-3 border-t border-neutral-200 px-gutter pt-4">
-            <Link href={quoteHref} onClick={close} className={buttonClasses({variant: 'primary', block: true})}>
+            <Link
+              href={quoteHref}
+              onClick={close}
+              className={buttonClasses({variant: 'primary', block: true})}
+            >
               Get a Quote
             </Link>
             {whatsappHref ? (
@@ -294,7 +314,12 @@ function MobileDrawer({
               </a>
             ) : null}
             {telHref ? (
-              <a href={telHref} className={buttonClasses({variant: 'secondary', block: true})} data-track="phone_click" data-track-location="drawer">
+              <a
+                href={telHref}
+                className={buttonClasses({variant: 'secondary', block: true})}
+                data-track="phone_click"
+                data-track-location="drawer"
+              >
                 <Icon name="phone" size="sm" />
                 {phoneDisplay}
               </a>

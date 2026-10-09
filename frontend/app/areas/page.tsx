@@ -21,7 +21,8 @@ export async function generateMetadata(): Promise<Metadata> {
     path: routes.areas,
     seo: page?.seo,
     fallbackTitle: 'Areas We Serve in Dubai | IIM Technical Services',
-    fallbackDescription: 'See the Dubai communities where IIM provides electrical, plumbing and maintenance services, and book a visit in three simple steps.',
+    fallbackDescription:
+      'See the Dubai communities where IIM provides electrical, plumbing and maintenance services, and book a visit in three simple steps.',
     defaultOgImage: settings.defaultOgImage,
   })
 }
@@ -36,8 +37,23 @@ export default async function AreasHub() {
 
   return (
     <>
-      <JsonLd data={await pageGraph({path: routes.areas, name: title, description: page?.seo?.metaDescription, crumbs, modified: page?._updatedAt, pageType: 'CollectionPage'})} />
-      <PageHero title={title} eyebrow="Areas" lead={page?.heroSubhead} crumbs={crumbs} actions={{quoteHref: quoteUrl(), whatsappHref: links.whatsapp}} />
+      <JsonLd
+        data={await pageGraph({
+          path: routes.areas,
+          name: title,
+          description: page?.seo?.metaDescription,
+          crumbs,
+          modified: page?._updatedAt,
+          pageType: 'CollectionPage',
+        })}
+      />
+      <PageHero
+        title={title}
+        eyebrow="Areas"
+        lead={page?.heroSubhead}
+        crumbs={crumbs}
+        actions={{quoteHref: quoteUrl(), whatsappHref: links.whatsapp}}
+      />
       <Section labelledBy="areas-list">
         <h2 id="areas-list" className="sr-only">
           Service areas
@@ -45,14 +61,27 @@ export default async function AreasHub() {
         {areas.length ? (
           <div className="grid items-stretch gap-gap md:grid-cols-2 lg:grid-cols-3">
             {areas.map((a) => (
-              <Card key={a._id} href={routes.area(a.slug ?? '')} title={a.title ?? ''} text={a.cardSummary} icon="map-pin" cta="Services in this area" />
+              <Card
+                key={a._id}
+                href={routes.area(a.slug ?? '')}
+                title={a.title ?? ''}
+                text={a.cardSummary}
+                icon="map-pin"
+                cta="Services in this area"
+              />
             ))}
           </div>
         ) : (
           <div className="grid max-w-prose gap-5">
-            <p className="text-lead">We work across Dubai. Send your location when you book and we will confirm the visit time.</p>
+            <p className="text-lead">
+              We work across Dubai. Send your location when you book and we will confirm the visit
+              time.
+            </p>
             {names.length ? (
-              <ul className="m-0 flex list-none flex-wrap gap-2 p-0" aria-label="Communities we visit">
+              <ul
+                className="m-0 flex list-none flex-wrap gap-2 p-0"
+                aria-label="Communities we visit"
+              >
                 {names.map((n) => (
                   <li key={n}>
                     <Chip>{n}</Chip>
@@ -63,7 +92,14 @@ export default async function AreasHub() {
           </div>
         )}
       </Section>
-      <CtaBand heading="Is your area covered?" text="Message us with your location and we will confirm when a technician can visit." quoteHref={quoteUrl()} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />
+      <CtaBand
+        heading="Is your area covered?"
+        text="Message us with your location and we will confirm when a technician can visit."
+        quoteHref={quoteUrl()}
+        whatsappHref={links.whatsapp}
+        telHref={links.tel}
+        phoneDisplay={links.phoneDisplay}
+      />
       <ContactDock message={message} />
     </>
   )

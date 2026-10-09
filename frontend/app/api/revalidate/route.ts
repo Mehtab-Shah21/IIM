@@ -12,14 +12,24 @@ export async function POST(req: NextRequest) {
   const secret = process.env.SANITY_REVALIDATE_SECRET
   if (!secret) return NextResponse.json({ok: false, message: 'Not configured'}, {status: 500})
   try {
-    const {isValidSignature, body} = await parseBody<{_type?: string; slug?: string}>(req, secret, true)
-    if (!isValidSignature) return NextResponse.json({ok: false, message: 'Invalid signature'}, {status: 401})
+    const {isValidSignature, body} = await parseBody<{_type?: string; slug?: string}>(
+      req,
+      secret,
+      true,
+    )
+    if (!isValidSignature)
+      return NextResponse.json({ok: false, message: 'Invalid signature'}, {status: 401})
     if (!body?._type) return NextResponse.json({ok: false, message: 'Missing _type'}, {status: 400})
     revalidateTag(body._type, 'max')
     console.info(JSON.stringify({event: 'revalidated', type: body._type}))
     return NextResponse.json({ok: true, revalidated: body._type})
   } catch (err) {
-    console.error(JSON.stringify({event: 'revalidate_failed', error: err instanceof Error ? err.message : 'unknown'}))
+    console.error(
+      JSON.stringify({
+        event: 'revalidate_failed',
+        error: err instanceof Error ? err.message : 'unknown',
+      }),
+    )
     return NextResponse.json({ok: false}, {status: 500})
   }
 }

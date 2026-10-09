@@ -39,7 +39,8 @@ export const imageWithAlt = defineType({
       name: 'alt',
       title: 'Alt text',
       type: 'string',
-      description: 'What the photo shows, e.g. "Electrician testing a distribution board in a villa". Leave empty only for decorative images.',
+      description:
+        'What the photo shows, e.g. "Electrician testing a distribution board in a villa". Leave empty only for decorative images.',
     }),
   ],
 })
@@ -66,7 +67,12 @@ export const priceItem = defineType({
   type: 'object',
   fields: [
     defineField({name: 'name', type: 'string', validation: (r) => r.required()}),
-    defineField({name: 'priceFrom', title: 'From (AED)', type: 'number', validation: (r) => r.required().min(0)}),
+    defineField({
+      name: 'priceFrom',
+      title: 'From (AED)',
+      type: 'number',
+      validation: (r) => r.required().min(0),
+    }),
     defineField({name: 'note', type: 'string'}),
   ],
   preview: {
@@ -130,7 +136,11 @@ export const socialLink = defineType({
         r
           .required()
           .uri({scheme: ['https']})
-          .custom((v) => (v && /wix\.com|facebook\.com\/wix|linkedin\.com\/company\/wix/i.test(v) ? 'This is a Wix template link, not a real profile.' : true)),
+          .custom((v) =>
+            v && /wix\.com|facebook\.com\/wix|linkedin\.com\/company\/wix/i.test(v)
+              ? 'This is a Wix template link, not a real profile.'
+              : true,
+          ),
     }),
   ],
   preview: {select: {title: 'network', subtitle: 'url'}},
@@ -142,12 +152,20 @@ export const stat = defineType({
   type: 'object',
   fields: [
     defineField({name: 'value', type: 'number', validation: (r) => r.required().min(0)}),
-    defineField({name: 'suffix', type: 'string', description: 'e.g. +', validation: (r) => r.max(3)}),
+    defineField({
+      name: 'suffix',
+      type: 'string',
+      description: 'e.g. +',
+      validation: (r) => r.max(3),
+    }),
     defineField({name: 'label', type: 'string', validation: (r) => r.required()}),
   ],
   preview: {
     select: {value: 'value', suffix: 'suffix', label: 'label'},
-    prepare: ({value, suffix, label}) => ({title: `${value ?? ''}${suffix ?? ''}`, subtitle: label}),
+    prepare: ({value, suffix, label}) => ({
+      title: `${value ?? ''}${suffix ?? ''}`,
+      subtitle: label,
+    }),
   },
 })
 
@@ -158,7 +176,11 @@ export const personRef = defineType({
   fields: [
     defineField({name: 'name', type: 'string', validation: (r) => r.required()}),
     defineField({name: 'role', type: 'string'}),
-    defineField({name: 'credentials', type: 'string', description: 'Licence or certification, only if real.'}),
+    defineField({
+      name: 'credentials',
+      type: 'string',
+      description: 'Licence or certification, only if real.',
+    }),
   ],
 })
 
@@ -167,7 +189,12 @@ export const iconItem = defineType({
   title: 'Item',
   type: 'object',
   fields: [
-    defineField({name: 'icon', type: 'string', options: {list: iconOptions}, initialValue: 'check'}),
+    defineField({
+      name: 'icon',
+      type: 'string',
+      options: {list: iconOptions},
+      initialValue: 'check',
+    }),
     defineField({name: 'title', type: 'string', validation: (r) => r.required()}),
     defineField({name: 'text', type: 'text', rows: 2}),
   ],
@@ -180,7 +207,8 @@ export const directAnswerField = defineField({
   title: 'Direct answer (40–60 words)',
   type: 'text',
   rows: 4,
-  description: 'Answer the main question of this page first, in plain words. Answer engines quote this.',
+  description:
+    'Answer the main question of this page first, in plain words. Answer engines quote this.',
   components: {input: countedInput({min: 40, max: 60, unit: 'words'})},
   validation: (rule) =>
     rule.required().custom((value) => {
@@ -203,5 +231,11 @@ export const slugField = (source = 'title') =>
     options: {source, maxLength: 80},
     description: 'Lowercase words joined by hyphens. Changing it changes the URL: add a redirect.',
     validation: (r) =>
-      r.required().custom((v) => (v?.current && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v.current) ? 'Use lowercase letters, numbers and hyphens only.' : true)),
+      r
+        .required()
+        .custom((v) =>
+          v?.current && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v.current)
+            ? 'Use lowercase letters, numbers and hyphens only.'
+            : true,
+        ),
   })

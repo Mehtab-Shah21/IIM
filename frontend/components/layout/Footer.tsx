@@ -101,7 +101,12 @@ export function Footer({
           <FooterList title="Contact" className="lg:col-span-3">
             {tel ? (
               <li>
-                <a href={tel} className="footer-link" data-track="phone_click" data-track-location="footer">
+                <a
+                  href={tel}
+                  className="footer-link"
+                  data-track="phone_click"
+                  data-track-location="footer"
+                >
                   <Icon name="phone" size="sm" className="text-accent" />
                   {settings.phoneDisplay}
                 </a>
@@ -109,7 +114,14 @@ export function Footer({
             ) : null}
             {wa ? (
               <li>
-                <a href={wa} target="_blank" rel="noopener noreferrer" className="footer-link" data-track="whatsapp_click" data-track-location="footer">
+                <a
+                  href={wa}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                  data-track="whatsapp_click"
+                  data-track-location="footer"
+                >
                   <Icon name="whatsapp" size="sm" className="text-accent" />
                   WhatsApp
                 </a>
@@ -155,7 +167,17 @@ export function Footer({
   )
 }
 
-function FooterList({title, children, className, id}: {title: string; children: React.ReactNode; className?: string; id?: string}) {
+function FooterList({
+  title,
+  children,
+  className,
+  id,
+}: {
+  title: string
+  children: React.ReactNode
+  className?: string
+  id?: string
+}) {
   return (
     <div className={className} id={id}>
       <h2 className="mb-4 text-body font-bold text-cream">{title}</h2>

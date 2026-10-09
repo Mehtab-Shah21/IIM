@@ -3,13 +3,16 @@ import type {Metadata} from 'next'
 import {siteUrl} from '@/lib/env'
 import {sanityImage, type SanityImageValue} from '@/lib/sanity/image'
 
-export type SeoFields = {
-  metaTitle?: string | null
-  metaDescription?: string | null
-  noindex?: boolean | null
-  canonicalOverride?: string | null
-  ogImage?: SanityImageValue
-} | null | undefined
+export type SeoFields =
+  | {
+      metaTitle?: string | null
+      metaDescription?: string | null
+      noindex?: boolean | null
+      canonicalOverride?: string | null
+      ogImage?: SanityImageValue
+    }
+  | null
+  | undefined
 
 export function absoluteUrl(path: string): string {
   if (/^https?:\/\//.test(path)) return path
@@ -44,7 +47,14 @@ export function buildMetadata({
   const hidden = noindex || Boolean(seo?.noindex)
   const og = sanityImage(seo?.ogImage) ?? sanityImage(defaultOgImage)
   const images = og
-    ? [{url: `${og.src}${og.src.includes('?') ? '&' : '?'}w=1200&h=630&fit=crop`, width: 1200, height: 630, alt: og.alt || title}]
+    ? [
+        {
+          url: `${og.src}${og.src.includes('?') ? '&' : '?'}w=1200&h=630&fit=crop`,
+          width: 1200,
+          height: 630,
+          alt: og.alt || title,
+        },
+      ]
     : undefined // falls back to app/opengraph-image.tsx
 
   return {
@@ -61,6 +71,11 @@ export function buildMetadata({
       type,
       ...(images ? {images} : {}),
     },
-    twitter: {card: 'summary_large_image', title, description, ...(images ? {images: images.map((i) => i.url)} : {})},
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(images ? {images: images.map((i) => i.url)} : {}),
+    },
   }
 }

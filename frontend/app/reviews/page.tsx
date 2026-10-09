@@ -15,12 +15,17 @@ import {buildMetadata} from '@/lib/seo/metadata'
 import {homeCrumb, pageGraph} from '@/lib/seo/page-graph'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [page, settings, reviews] = await Promise.all([getPage('reviews'), getSettings(), getTestimonials()])
+  const [page, settings, reviews] = await Promise.all([
+    getPage('reviews'),
+    getSettings(),
+    getTestimonials(),
+  ])
   return buildMetadata({
     path: routes.reviews,
     seo: page?.seo,
     fallbackTitle: 'Customer Reviews | IIM Technical Services Dubai',
-    fallbackDescription: 'Read what customers say about our service, response time and workmanship.',
+    fallbackDescription:
+      'Read what customers say about our service, response time and workmanship.',
     // No approved reviews yet: thin page, keep it out of the index.
     noindex: reviews.length === 0 && !settings.ratingShow,
     defaultOgImage: settings.defaultOgImage,
@@ -28,15 +33,32 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ReviewsPage() {
-  const [page, settings, reviews] = await Promise.all([getPage('reviews'), getSettings(), getTestimonials()])
+  const [page, settings, reviews] = await Promise.all([
+    getPage('reviews'),
+    getSettings(),
+    getTestimonials(),
+  ])
   const message = settings.defaultWhatsappMessage || defaultWhatsappMessage
   const links = contactLinks(settings, message)
   const crumbs = [homeCrumb, {name: 'Reviews'}]
 
   return (
     <>
-      <JsonLd data={await pageGraph({path: routes.reviews, name: page?.heroHeadline ?? 'Customer reviews', crumbs, modified: page?._updatedAt, ratingVisible: true})} />
-      <PageHero title={page?.heroHeadline ?? 'Customer reviews'} eyebrow="Reviews" lead={page?.heroSubhead} crumbs={crumbs} />
+      <JsonLd
+        data={await pageGraph({
+          path: routes.reviews,
+          name: page?.heroHeadline ?? 'Customer reviews',
+          crumbs,
+          modified: page?._updatedAt,
+          ratingVisible: true,
+        })}
+      />
+      <PageHero
+        title={page?.heroHeadline ?? 'Customer reviews'}
+        eyebrow="Reviews"
+        lead={page?.heroSubhead}
+        crumbs={crumbs}
+      />
       <Section labelledBy="reviews-title">
         <div className="mb-7 grid gap-4">
           <h2 id="reviews-title" className="text-h2 font-bold">
@@ -62,7 +84,13 @@ export default async function ReviewsPage() {
           ) : null}
         </div>
       </Section>
-      <CtaBand heading="See for yourself" quoteHref={quoteUrl()} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />
+      <CtaBand
+        heading="See for yourself"
+        quoteHref={quoteUrl()}
+        whatsappHref={links.whatsapp}
+        telHref={links.tel}
+        phoneDisplay={links.phoneDisplay}
+      />
       <ContactDock message={message} />
     </>
   )

@@ -1,5 +1,5 @@
 /**
- * next/image loader. Sanity CDN URLs get width, quality and automatic AVIF/WebP from Sanity's
+ * Image URL builder for Img (components/ui/Img.tsx). Sanity CDN URLs get width, quality and automatic AVIF/WebP from Sanity's
  * image pipeline, so the Node server never resizes images. Local files are served as-is
  * (they are pre-optimised in the repo).
  */

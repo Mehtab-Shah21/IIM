@@ -1,4 +1,4 @@
-import {TransferIcon} from '@sanity/icons'
+import {TransferIcon} from '@sanity/icons/Transfer'
 import {defineField, defineType} from 'sanity'
 
 const pathPattern = /^\/[^\s?#]*$/
@@ -59,8 +59,10 @@ export const redirect = defineType({
           const parent = context.parent as {type?: string; from?: string} | undefined
           if (parent?.type === '410') return true
           if (!to) return 'Required.'
-          if (!pathPattern.test(to) && !/^https:\/\//.test(to)) return 'Use a path starting with / or an https:// URL.'
-          if (parent?.from && to.replace(/\/+$/, '') === parent.from.replace(/\/+$/, '')) return 'A redirect cannot point to itself.'
+          if (!pathPattern.test(to) && !/^https:\/\//.test(to))
+            return 'Use a path starting with / or an https:// URL.'
+          if (parent?.from && to.replace(/\/+$/, '') === parent.from.replace(/\/+$/, ''))
+            return 'A redirect cannot point to itself.'
           return true
         }),
     }),
@@ -68,6 +70,9 @@ export const redirect = defineType({
   ],
   preview: {
     select: {from: 'from', to: 'to', type: 'type'},
-    prepare: ({from, to, type}) => ({title: from, subtitle: type === '410' ? '410 Gone' : `${type} → ${to}`}),
+    prepare: ({from, to, type}) => ({
+      title: from,
+      subtitle: type === '410' ? '410 Gone' : `${type} → ${to}`,
+    }),
   },
 })

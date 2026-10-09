@@ -13,9 +13,18 @@ export type BusinessInfo = {
   legalName?: string | null
   phoneE164?: string | null
   email?: string | null
-  address?: {street?: string | null; locality?: string | null; region?: string | null; country?: string | null} | null
+  address?: {
+    street?: string | null
+    locality?: string | null
+    region?: string | null
+    country?: string | null
+  } | null
   geo?: {lat?: number | null; lng?: number | null} | null
-  openingHours?: Array<{days?: string[] | null; opens?: string | null; closes?: string | null}> | null
+  openingHours?: Array<{
+    days?: string[] | null
+    opens?: string | null
+    closes?: string | null
+  }> | null
   is247?: boolean | null
   serviceAreas?: string[] | null
   socials?: Array<{url?: string | null}> | null
@@ -37,15 +46,27 @@ const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 
 export function businessNode(
   b: BusinessInfo,
-  opts: {areas?: string[]; services?: Array<{title: string; url: string}>; ratingVisible?: boolean; logoUrl?: string} = {},
+  opts: {
+    areas?: string[]
+    services?: Array<{title: string; url: string}>
+    ratingVisible?: boolean
+    logoUrl?: string
+  } = {},
 ): Node {
   const areaNames = opts.areas?.length ? opts.areas : (b.serviceAreas ?? [])
   const hours = b.is247
     ? [{'@type': 'OpeningHoursSpecification', dayOfWeek: days, opens: '00:00', closes: '23:59'}]
     : (b.openingHours ?? [])
         .filter((h) => h.days?.length && h.opens && h.closes)
-        .map((h) => ({'@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes}))
-  const sameAs = [...(b.socials ?? []).map((s) => s.url), b.gbpUrl].filter((u): u is string => Boolean(u))
+        .map((h) => ({
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: h.days,
+          opens: h.opens,
+          closes: h.closes,
+        }))
+  const sameAs = [...(b.socials ?? []).map((s) => s.url), b.gbpUrl].filter((u): u is string =>
+    Boolean(u),
+  )
   const node: Node = {
     '@type': ['Organization', 'HomeAndConstructionBusiness', 'Electrician', 'Plumber'],
     '@id': ids.org(),
@@ -70,10 +91,12 @@ export function businessNode(
     node.logo = opts.logoUrl
     node.image = opts.logoUrl
   }
-  if (b.geo?.lat && b.geo?.lng) node.geo = {'@type': 'GeoCoordinates', latitude: b.geo.lat, longitude: b.geo.lng}
+  if (b.geo?.lat && b.geo?.lng)
+    node.geo = {'@type': 'GeoCoordinates', latitude: b.geo.lat, longitude: b.geo.lng}
   if (hours.length) node.openingHoursSpecification = hours
   if (sameAs.length) node.sameAs = sameAs
-  if (b.licenceNumber) node.identifier = {'@type': 'PropertyValue', name: 'Trade licence', value: b.licenceNumber}
+  if (b.licenceNumber)
+    node.identifier = {'@type': 'PropertyValue', name: 'Trade licence', value: b.licenceNumber}
   if (opts.services?.length) {
     node.hasOfferCatalog = {
       '@type': 'OfferCatalog',
@@ -108,7 +131,10 @@ export function breadcrumbNode(url: string, crumbs: Crumb[]): Node {
   }
 }
 
-export function faqNode(url: string, faqs: Array<{question?: string | null; answer?: string | null}>): Node | null {
+export function faqNode(
+  url: string,
+  faqs: Array<{question?: string | null; answer?: string | null}>,
+): Node | null {
   const items = faqs.filter((f) => f.question && f.answer)
   if (!items.length) return null
   return {
@@ -136,13 +162,20 @@ export function serviceNode(
     url,
     description: s.description || undefined,
     provider: {'@id': ids.org()},
-    areaServed: [...(s.areas ?? []).map((n) => ({'@type': 'Place', name: `${n}, Dubai`})), {'@type': 'City', name: 'Dubai'}],
+    areaServed: [
+      ...(s.areas ?? []).map((n) => ({'@type': 'Place', name: `${n}, Dubai`})),
+      {'@type': 'City', name: 'Dubai'},
+    ],
     ...(offers.length
       ? {
           offers: offers.map((p) => ({
             '@type': 'Offer',
             name: p.name,
-            priceSpecification: {'@type': 'PriceSpecification', minPrice: p.priceFrom, priceCurrency: 'AED'},
+            priceSpecification: {
+              '@type': 'PriceSpecification',
+              minPrice: p.priceFrom,
+              priceCurrency: 'AED',
+            },
           })),
         }
       : {}),
@@ -151,7 +184,15 @@ export function serviceNode(
 
 export function articleNode(
   url: string,
-  a: {title: string; description?: string | null; author?: string | null; reviewer?: string | null; published?: string | null; modified?: string | null; image?: string},
+  a: {
+    title: string
+    description?: string | null
+    author?: string | null
+    reviewer?: string | null
+    published?: string | null
+    modified?: string | null
+    image?: string
+  },
 ): Node {
   return prune({
     '@type': 'Article',
@@ -174,10 +215,13 @@ export function parseExtraJsonLd(raw?: string | null): Node[] {
   try {
     const parsed: unknown = JSON.parse(raw)
     const list = Array.isArray(parsed) ? parsed : [parsed]
-    return list.filter((n): n is Node => typeof n === 'object' && n !== null).map((n) => {
-      const {['@context']: _ctx, ...rest} = n as Node
-      return rest
-    })
+    return list
+      .filter((n): n is Node => typeof n === 'object' && n !== null)
+      .map((n) => {
+        const rest = {...(n as Node)}
+        delete rest['@context']
+        return rest
+      })
   } catch {
     return []
   }
@@ -225,7 +269,13 @@ export function buildGraph({
   })
   return {
     '@context': 'https://schema.org',
-    '@graph': [business, website, webpage, breadcrumbNode(url, crumbs), ...extra.filter((n): n is Node => Boolean(n))],
+    '@graph': [
+      business,
+      website,
+      webpage,
+      breadcrumbNode(url, crumbs),
+      ...extra.filter((n): n is Node => Boolean(n)),
+    ],
   }
 }
 

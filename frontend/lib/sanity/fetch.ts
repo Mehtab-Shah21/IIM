@@ -16,7 +16,12 @@ export async function sanityQuery<const Q extends string>(
 ): Promise<QueryResult<Q>> {
   if (isSanityConfigured) {
     const {sanityFetch} = await import('./live')
-    const {data} = await sanityFetch({query, params, tags: options.tags, stega: options.stega ?? false})
+    const {data} = await sanityFetch({
+      query,
+      params,
+      tags: options.tags,
+      stega: options.stega ?? false,
+    })
     return data as QueryResult<Q>
   }
   const {evaluateFixture} = await import('./fixtures')

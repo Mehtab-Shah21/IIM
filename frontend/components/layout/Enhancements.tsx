@@ -48,7 +48,10 @@ export function Enhancements({gaId}: {gaId?: string}) {
     const onClick = (e: MouseEvent) => {
       const el = (e.target as HTMLElement | null)?.closest<HTMLElement>('[data-track]')
       if (!el) return
-      track(el.dataset.track as TrackEvent, {link_location: el.dataset.trackLocation, page_path: window.location.pathname})
+      track(el.dataset.track as TrackEvent, {
+        link_location: el.dataset.trackLocation,
+        page_path: window.location.pathname,
+      })
     }
     document.addEventListener('click', onClick)
     return () => document.removeEventListener('click', onClick)
@@ -69,7 +72,9 @@ export function Enhancements({gaId}: {gaId?: string}) {
       s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`
       document.head.appendChild(s)
     }
-    const w = window as Window & {requestIdleCallback?: (cb: () => void, o?: {timeout: number}) => number}
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, o?: {timeout: number}) => number
+    }
     if (w.requestIdleCallback) w.requestIdleCallback(load, {timeout: 4000})
     else setTimeout(load, 3000)
   }, [gaId])

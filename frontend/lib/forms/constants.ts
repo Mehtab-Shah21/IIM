@@ -20,7 +20,15 @@ export const preferredTimeLabels: Record<(typeof preferredTimes)[number], string
   evening: 'Evening',
 }
 
-export const propertyTypes = ['apartment', 'villa', 'townhouse', 'office', 'retail', 'building', 'other'] as const
+export const propertyTypes = [
+  'apartment',
+  'villa',
+  'townhouse',
+  'office',
+  'retail',
+  'building',
+  'other',
+] as const
 export const propertyTypeLabels: Record<(typeof propertyTypes)[number], string> = {
   apartment: 'Apartment',
   villa: 'Villa',
@@ -45,7 +53,12 @@ export function normaliseUaePhone(raw: string): string | null {
 
 /** Today's date in Dubai as YYYY-MM-DD. */
 export function dubaiToday(now: Date = new Date()): string {
-  return new Intl.DateTimeFormat('en-CA', {timeZone: 'Asia/Dubai', year: 'numeric', month: '2-digit', day: '2-digit'}).format(now)
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Dubai',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(now)
 }
 
 export function addDays(isoDate: string, days: number): string {

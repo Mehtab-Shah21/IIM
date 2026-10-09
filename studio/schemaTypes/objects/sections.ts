@@ -37,7 +37,8 @@ export const portableText = defineType({
                 name: 'href',
                 type: 'string',
                 description: 'A path on this site (/services/…) or a full https:// URL.',
-                validation: (r) => r.required().regex(/^(\/|https:\/\/|mailto:|tel:)/, {name: 'path or URL'}),
+                validation: (r) =>
+                  r.required().regex(/^(\/|https:\/\/|mailto:|tel:)/, {name: 'path or URL'}),
               }),
             ],
           }),
@@ -79,7 +80,8 @@ export const articleText = defineType({
               defineField({
                 name: 'href',
                 type: 'string',
-                validation: (r) => r.required().regex(/^(\/|https:\/\/|mailto:|tel:)/, {name: 'path or URL'}),
+                validation: (r) =>
+                  r.required().regex(/^(\/|https:\/\/|mailto:|tel:)/, {name: 'path or URL'}),
               }),
             ],
           }),
@@ -94,8 +96,14 @@ export const richTextSection = defineType({
   name: 'richTextSection',
   title: 'Heading and text',
   type: 'object',
-  fields: [heading, defineField({name: 'body', type: 'portableText', validation: (r) => r.required()})],
-  preview: {select: {title: 'heading'}, prepare: ({title}) => ({title: title || 'Text', subtitle: 'Heading and text'})},
+  fields: [
+    heading,
+    defineField({name: 'body', type: 'portableText', validation: (r) => r.required()}),
+  ],
+  preview: {
+    select: {title: 'heading'},
+    prepare: ({title}) => ({title: title || 'Text', subtitle: 'Heading and text'}),
+  },
 })
 
 export const imageTextSection = defineType({
@@ -113,7 +121,14 @@ export const imageTextSection = defineType({
     }),
     defineField({name: 'body', type: 'portableText'}),
   ],
-  preview: {select: {title: 'heading', media: 'image'}, prepare: ({title, media}) => ({title: title || 'Image and text', subtitle: 'Image and text', media})},
+  preview: {
+    select: {title: 'heading', media: 'image'},
+    prepare: ({title, media}) => ({
+      title: title || 'Image and text',
+      subtitle: 'Image and text',
+      media,
+    }),
+  },
 })
 
 export const stepsSection = defineType({
@@ -139,7 +154,10 @@ export const stepsSection = defineType({
       validation: (r) => r.required().min(2).max(6),
     }),
   ],
-  preview: {select: {title: 'heading'}, prepare: ({title}) => ({title: title || 'Steps', subtitle: 'Numbered steps'})},
+  preview: {
+    select: {title: 'heading'},
+    prepare: ({title}) => ({title: title || 'Steps', subtitle: 'Numbered steps'}),
+  },
 })
 
 export const proofPointsSection = defineType({
@@ -148,9 +166,17 @@ export const proofPointsSection = defineType({
   type: 'object',
   fields: [
     heading,
-    defineField({name: 'items', type: 'array', of: [defineArrayMember({type: 'iconItem'})], validation: (r) => r.required().min(2).max(4)}),
+    defineField({
+      name: 'items',
+      type: 'array',
+      of: [defineArrayMember({type: 'iconItem'})],
+      validation: (r) => r.required().min(2).max(4),
+    }),
   ],
-  preview: {select: {title: 'heading'}, prepare: ({title}) => ({title: title || 'Proof points', subtitle: 'Proof points'})},
+  preview: {
+    select: {title: 'heading'},
+    prepare: ({title}) => ({title: title || 'Proof points', subtitle: 'Proof points'}),
+  },
 })
 
 export const checklistSection = defineType({
@@ -160,17 +186,31 @@ export const checklistSection = defineType({
   fields: [
     heading,
     defineField({name: 'intro', type: 'text', rows: 2}),
-    defineField({name: 'items', type: 'array', of: [defineArrayMember({type: 'string'})], validation: (r) => r.required().min(2)}),
+    defineField({
+      name: 'items',
+      type: 'array',
+      of: [defineArrayMember({type: 'string'})],
+      validation: (r) => r.required().min(2),
+    }),
   ],
-  preview: {select: {title: 'heading'}, prepare: ({title}) => ({title: title || 'Checklist', subtitle: 'Checklist'})},
+  preview: {
+    select: {title: 'heading'},
+    prepare: ({title}) => ({title: title || 'Checklist', subtitle: 'Checklist'}),
+  },
 })
 
 export const calloutSection = defineType({
   name: 'calloutSection',
   title: 'Highlighted note',
   type: 'object',
-  fields: [heading, defineField({name: 'text', type: 'text', rows: 3, validation: (r) => r.required()})],
-  preview: {select: {title: 'heading', subtitle: 'text'}, prepare: ({title, subtitle}) => ({title: title || 'Note', subtitle})},
+  fields: [
+    heading,
+    defineField({name: 'text', type: 'text', rows: 3, validation: (r) => r.required()}),
+  ],
+  preview: {
+    select: {title: 'heading', subtitle: 'text'},
+    prepare: ({title, subtitle}) => ({title: title || 'Note', subtitle}),
+  },
 })
 
 export const gallerySection = defineType({
@@ -186,7 +226,10 @@ export const gallerySection = defineType({
       validation: (r) => r.max(6),
     }),
   ],
-  preview: {select: {title: 'heading'}, prepare: ({title}) => ({title: title || 'Gallery', subtitle: 'Before and after gallery'})},
+  preview: {
+    select: {title: 'heading'},
+    prepare: ({title}) => ({title: title || 'Gallery', subtitle: 'Before and after gallery'}),
+  },
 })
 
 export const ctaBandSection = defineType({
@@ -197,7 +240,10 @@ export const ctaBandSection = defineType({
     defineField({name: 'heading', type: 'string', validation: (r) => r.required()}),
     defineField({name: 'text', type: 'text', rows: 2}),
   ],
-  preview: {select: {title: 'heading'}, prepare: ({title}) => ({title, subtitle: 'Call-to-action band'})},
+  preview: {
+    select: {title: 'heading'},
+    prepare: ({title}) => ({title, subtitle: 'Call-to-action band'}),
+  },
 })
 
 export const faqListSection = defineType({
@@ -205,10 +251,21 @@ export const faqListSection = defineType({
   title: 'FAQ',
   type: 'object',
   description: 'Shown as questions and answers and emitted as FAQPage structured data.',
-  fields: [heading, defineField({name: 'items', type: 'array', of: [defineArrayMember({type: 'faqItem'})], validation: (r) => r.required().min(1)})],
+  fields: [
+    heading,
+    defineField({
+      name: 'items',
+      type: 'array',
+      of: [defineArrayMember({type: 'faqItem'})],
+      validation: (r) => r.required().min(1),
+    }),
+  ],
   preview: {
     select: {title: 'heading', items: 'items'},
-    prepare: ({title, items}) => ({title: title || 'FAQ', subtitle: `${Array.isArray(items) ? items.length : 0} questions`}),
+    prepare: ({title, items}) => ({
+      title: title || 'FAQ',
+      subtitle: `${Array.isArray(items) ? items.length : 0} questions`,
+    }),
   },
 })
 
@@ -218,9 +275,17 @@ export const relatedServicesSection = defineType({
   type: 'object',
   fields: [
     heading,
-    defineField({name: 'services', type: 'array', of: [defineArrayMember({type: 'reference', to: [{type: 'service'}]})], validation: (r) => r.max(3)}),
+    defineField({
+      name: 'services',
+      type: 'array',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'service'}]})],
+      validation: (r) => r.max(3),
+    }),
   ],
-  preview: {select: {title: 'heading'}, prepare: ({title}) => ({title: title || 'Related services', subtitle: 'Related services'})},
+  preview: {
+    select: {title: 'heading'},
+    prepare: ({title}) => ({title: title || 'Related services', subtitle: 'Related services'}),
+  },
 })
 
 export const sectionTypes = [

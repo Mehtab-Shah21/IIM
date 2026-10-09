@@ -28,14 +28,20 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     path: routes.area(slug),
     seo: area.seo,
     fallbackTitle: `Electrician & Plumber in ${area.title}, Dubai | IIM`,
-    fallbackDescription: area.directAnswer?.slice(0, 150) ?? `Electrical, plumbing and maintenance services in ${area.title}, Dubai.`,
+    fallbackDescription:
+      area.directAnswer?.slice(0, 150) ??
+      `Electrical, plumbing and maintenance services in ${area.title}, Dubai.`,
     defaultOgImage: settings.defaultOgImage,
   })
 }
 
 export default async function AreaPage({params}: Props) {
   const {slug} = await params
-  const [area, settings, allServices] = await Promise.all([getArea(slug), getSettings(), getServices()])
+  const [area, settings, allServices] = await Promise.all([
+    getArea(slug),
+    getSettings(),
+    getServices(),
+  ])
   if (!area) notFound()
 
   const path = routes.area(slug)
@@ -64,17 +70,38 @@ export default async function AreaPage({params}: Props) {
         crumbs={crumbs}
         actions={{quoteHref: quoteUrl(), whatsappHref: links.whatsapp}}
       />
-      <ContentLayout asideLabel="Book a visit" aside={<AsideCta quoteHref={quoteUrl()} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />}>
+      <ContentLayout
+        asideLabel="Book a visit"
+        aside={
+          <AsideCta
+            quoteHref={quoteUrl()}
+            whatsappHref={links.whatsapp}
+            telHref={links.tel}
+            phoneDisplay={links.phoneDisplay}
+          />
+        }
+      >
         <DirectAnswer text={area.directAnswer} />
         <SectionRenderer sections={area.sections} />
         <section className="grid gap-4" aria-labelledby="area-services">
           <h2 id="area-services" className="text-h2 font-bold">
             Services in {area.title}
           </h2>
-          <ChipLinks items={services.filter((s) => s.slug).map((s) => ({href: routes.service(s.slug!), label: s.title ?? ''}))} icon="wrench" />
+          <ChipLinks
+            items={services
+              .filter((s) => s.slug)
+              .map((s) => ({href: routes.service(s.slug!), label: s.title ?? ''}))}
+            icon="wrench"
+          />
         </section>
       </ContentLayout>
-      <CtaBand heading={`Need a technician in ${area.title}?`} quoteHref={quoteUrl()} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />
+      <CtaBand
+        heading={`Need a technician in ${area.title}?`}
+        quoteHref={quoteUrl()}
+        whatsappHref={links.whatsapp}
+        telHref={links.tel}
+        phoneDisplay={links.phoneDisplay}
+      />
       <ContactDock message={message} />
     </>
   )

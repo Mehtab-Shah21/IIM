@@ -14,7 +14,13 @@ export function buttonClasses({
   block = false,
   size = 'default',
   className,
-}: {variant?: ButtonVariant; tone?: ButtonTone; block?: boolean; size?: 'default' | 'bar'; className?: string}) {
+}: {
+  variant?: ButtonVariant
+  tone?: ButtonTone
+  block?: boolean
+  size?: 'default' | 'bar'
+  className?: string
+}) {
   // Never pass display or min-height overrides in className: they conflict with these base
   // classes. Wrap the button for responsive visibility, use `size` for the compact action bar.
   return clsx(
@@ -30,7 +36,9 @@ export function buttonClasses({
         ? 'border border-cream bg-transparent text-cream hover:bg-ink-800'
         : 'border border-ink-900 bg-white text-ink-900 hover:bg-neutral-100'),
     variant === 'ghost' &&
-      (tone === 'dark' ? 'bg-transparent text-cream hover:bg-ink-800' : 'bg-transparent text-ink-900 hover:bg-neutral-100'),
+      (tone === 'dark'
+        ? 'bg-transparent text-cream hover:bg-ink-800'
+        : 'bg-transparent text-ink-900 hover:bg-neutral-100'),
     className,
   )
 }
@@ -70,7 +78,7 @@ export function Button({
           <span className="size-icon-sm animate-spin rounded-pill border-2 border-current border-r-transparent" />
         </span>
       ) : null}
-      <span className={clsx('inline-flex items-center gap-2', loading && 'invisible')}>
+      <span className={clsx('inline-flex items-center gap-2', loading && 'opacity-0')}>
         {icon ? <Icon name={icon} size="sm" /> : null}
         {children}
         {iconAfter ? <Icon name={iconAfter} size="sm" /> : null}
@@ -102,7 +110,12 @@ export function ButtonLink({
   )
   if (external || /^(https?:|tel:|mailto:)/.test(href)) {
     return (
-      <a href={href} className={classes} {...(external ? {target: '_blank', rel: 'noopener noreferrer'} : {})} {...rest}>
+      <a
+        href={href}
+        className={classes}
+        {...(external ? {target: '_blank', rel: 'noopener noreferrer'} : {})}
+        {...rest}
+      >
         {content}
       </a>
     )
@@ -115,7 +128,15 @@ export function ButtonLink({
 }
 
 /** Text link with an arrow that nudges on hover. */
-export function ArrowLink({href, children, tone = 'light'}: {href: string; children: ReactNode; tone?: ButtonTone}) {
+export function ArrowLink({
+  href,
+  children,
+  tone = 'light',
+}: {
+  href: string
+  children: ReactNode
+  tone?: ButtonTone
+}) {
   return (
     <Link
       href={href}
@@ -125,7 +146,11 @@ export function ArrowLink({href, children, tone = 'light'}: {href: string; child
       )}
     >
       {children}
-      <Icon name="arrow-right" size="sm" className="transition-transform group-hover:translate-x-1" />
+      <Icon
+        name="arrow-right"
+        size="sm"
+        className="transition-transform group-hover:translate-x-1"
+      />
     </Link>
   )
 }

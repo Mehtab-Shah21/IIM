@@ -94,7 +94,14 @@ export default async function GuidePage({params}: Props) {
       />
       <ContentLayout
         asideLabel="Book a technician"
-        aside={<AsideCta quoteHref={quoteUrl(firstService?.slug ?? undefined)} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />}
+        aside={
+          <AsideCta
+            quoteHref={quoteUrl(firstService?.slug ?? undefined)}
+            whatsappHref={links.whatsapp}
+            telHref={links.tel}
+            phoneDisplay={links.phoneDisplay}
+          />
+        }
       >
         <DirectAnswer text={guide.directAnswer} />
         <RichText value={guide.body} />
@@ -105,7 +112,12 @@ export default async function GuidePage({params}: Props) {
         ) : null}
         {guide.relatedServices?.length ? (
           <ContentBlock id="guide-services" heading="Need a hand with this?">
-            <ChipLinks items={guide.relatedServices.filter((s) => s.slug).map((s) => ({href: routes.service(s.slug!), label: s.title ?? ''}))} icon="wrench" />
+            <ChipLinks
+              items={guide.relatedServices
+                .filter((s) => s.slug)
+                .map((s) => ({href: routes.service(s.slug!), label: s.title ?? ''}))}
+              icon="wrench"
+            />
           </ContentBlock>
         ) : null}
       </ContentLayout>

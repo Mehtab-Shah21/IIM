@@ -19,14 +19,17 @@ export const dynamic = 'force-dynamic'
 const MAX_BYTES = 32 * 1024
 const limiter = new RateLimiter(5, 60 * 60 * 1000)
 
-const log = (event: Record<string, unknown>) => console.info(JSON.stringify({ts: new Date().toISOString(), ...event}))
+const log = (event: Record<string, unknown>) =>
+  console.info(JSON.stringify({ts: new Date().toISOString(), ...event}))
 
 function allowedOrigin(req: NextRequest): boolean {
   const origin = req.headers.get('origin')
   if (!origin) return false
   const own = new URL(req.url).origin
   const forwardedHost = req.headers.get('x-forwarded-host')
-  const forwarded = forwardedHost ? `${req.headers.get('x-forwarded-proto') ?? 'https'}://${forwardedHost}` : null
+  const forwarded = forwardedHost
+    ? `${req.headers.get('x-forwarded-proto') ?? 'https'}://${forwardedHost}`
+    : null
   return [own, siteUrl, forwarded].filter(Boolean).includes(origin)
 }
 
@@ -41,10 +44,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ok: false, message: 'Unsupported content type.'}, {status: 415})
   }
   const length = Number(req.headers.get('content-length') ?? 0)
-  if (length > MAX_BYTES) return NextResponse.json({ok: false, message: 'Request too large.'}, {status: 413})
+  if (length > MAX_BYTES)
+    return NextResponse.json({ok: false, message: 'Request too large.'}, {status: 413})
 
   const bodyText = await req.text()
-  if (bodyText.length > MAX_BYTES) return NextResponse.json({ok: false, message: 'Request too large.'}, {status: 413})
+  if (bodyText.length > MAX_BYTES)
+    return NextResponse.json({ok: false, message: 'Request too large.'}, {status: 413})
 
   const ip = clientIp(req.headers)
   const rate = limiter.check(ip)
@@ -52,7 +57,10 @@ export async function POST(req: NextRequest) {
     log({event: 'lead_rejected', reason: 'rate_limit'})
     const message = 'Too many requests from your connection. Please message us on WhatsApp instead.'
     return wantsJson
-      ? NextResponse.json({ok: false, message}, {status: 429, headers: {'Retry-After': String(rate.retryAfterSeconds)}})
+      ? NextResponse.json(
+          {ok: false, message},
+          {status: 429, headers: {'Retry-After': String(rate.retryAfterSeconds)}},
+        )
       : NextResponse.redirect(new URL('/get-a-quote/?error=rate', req.url), 303)
   }
 
@@ -98,9 +106,15 @@ function respond(wantsJson: boolean, result: LeadResult, req: NextRequest) {
     }
     case 'invalid':
       return wantsJson
-        ? NextResponse.json({ok: false, message: 'Please check the highlighted fields.', errors: result.errors}, {status: 400, headers})
+        ? NextResponse.json(
+            {ok: false, message: 'Please check the highlighted fields.', errors: result.errors},
+            {status: 400, headers},
+          )
         : NextResponse.redirect(
-            new URL(`/get-a-quote/?type=${result.type}&errors=${encodeURIComponent(Object.keys(result.errors).join(','))}#form`, req.url),
+            new URL(
+              `/get-a-quote/?type=${result.type}&errors=${encodeURIComponent(Object.keys(result.errors).join(','))}#form`,
+              req.url,
+            ),
             {status: 303, headers},
           )
     case 'forbidden': {
@@ -112,7 +126,10 @@ function respond(wantsJson: boolean, result: LeadResult, req: NextRequest) {
             : 'Your session expired. Please reload the page and try again.'
       return wantsJson
         ? NextResponse.json({ok: false, message}, {status: 403, headers})
-        : NextResponse.redirect(new URL(`/get-a-quote/?type=${result.type}&error=${result.reason}#form`, req.url), {status: 303, headers})
+        : NextResponse.redirect(
+            new URL(`/get-a-quote/?type=${result.type}&error=${result.reason}#form`, req.url),
+            {status: 303, headers},
+          )
     }
     case 'undeliverable':
       return wantsJson
@@ -120,10 +137,17 @@ function respond(wantsJson: boolean, result: LeadResult, req: NextRequest) {
             {
               ok: false,
               ref: result.ref,
-              message: 'We could not send your request right now. Please call or WhatsApp us and quote your reference.',
+              message:
+                'We could not send your request right now. Please call or WhatsApp us and quote your reference.',
             },
             {status: 503, headers},
           )
-        : NextResponse.redirect(new URL(`/get-a-quote/?error=delivery&ref=${encodeURIComponent(result.ref)}#form`, req.url), {status: 303, headers})
+        : NextResponse.redirect(
+            new URL(
+              `/get-a-quote/?error=delivery&ref=${encodeURIComponent(result.ref)}#form`,
+              req.url,
+            ),
+            {status: 303, headers},
+          )
   }
 }

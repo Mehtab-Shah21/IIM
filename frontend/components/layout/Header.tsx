@@ -16,7 +16,15 @@ export const navItems: NavItem[] = [
 ]
 
 /** Sticky header with a fixed height (never shifts layout). */
-export function Header({settings, services, whatsappMessage}: {settings: Settings; services: ServiceCard[]; whatsappMessage: string}) {
+export function Header({
+  settings,
+  services,
+  whatsappMessage,
+}: {
+  settings: Settings
+  services: ServiceCard[]
+  whatsappMessage: string
+}) {
   return (
     <header className="sticky top-0 z-40 h-header border-b border-ink-700 bg-ink-900 text-cream">
       <div className="container-wide flex h-full items-center justify-between gap-5">

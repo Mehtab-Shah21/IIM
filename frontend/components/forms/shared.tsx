@@ -31,10 +31,20 @@ export function NoScriptSteps() {
   )
 }
 
-export function FormAlert({message, fallbackRef}: {message?: string | null; fallbackRef?: string | null}) {
+export function FormAlert({
+  message,
+  fallbackRef,
+}: {
+  message?: string | null
+  fallbackRef?: string | null
+}) {
   if (!message) return null
   return (
-    <div role="alert" tabIndex={-1} className="flex items-start gap-3 rounded-sm bg-error-bg p-4 font-medium text-error">
+    <div
+      role="alert"
+      tabIndex={-1}
+      className="flex items-start gap-3 rounded-sm bg-error-bg p-4 font-medium text-error"
+    >
       <Icon name="triangle-alert" size="sm" className="mt-1" />
       <span>
         {message}

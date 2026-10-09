@@ -13,12 +13,17 @@ import {buildMetadata} from '@/lib/seo/metadata'
 import {homeCrumb, pageGraph} from '@/lib/seo/page-graph'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [page, settings, projects] = await Promise.all([getPage('projects'), getSettings(), getProjects()])
+  const [page, settings, projects] = await Promise.all([
+    getPage('projects'),
+    getSettings(),
+    getProjects(),
+  ])
   return buildMetadata({
     path: routes.projects,
     seo: page?.seo,
     fallbackTitle: 'Our Work | Completed Projects in Dubai | IIM',
-    fallbackDescription: 'Photos of real electrical, plumbing, painting and renovation jobs completed across Dubai.',
+    fallbackDescription:
+      'Photos of real electrical, plumbing, painting and renovation jobs completed across Dubai.',
     // A hub with no projects yet is thin content: keep it out of the index until it has some.
     noindex: projects.length === 0,
     defaultOgImage: settings.defaultOgImage,
@@ -26,7 +31,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProjectsHub() {
-  const [page, settings, projects] = await Promise.all([getPage('projects'), getSettings(), getProjects()])
+  const [page, settings, projects] = await Promise.all([
+    getPage('projects'),
+    getSettings(),
+    getProjects(),
+  ])
   const message = settings.defaultWhatsappMessage || defaultWhatsappMessage
   const links = contactLinks(settings, message)
   const title = page?.heroHeadline ?? 'Our work in Dubai'
@@ -34,7 +43,15 @@ export default async function ProjectsHub() {
 
   return (
     <>
-      <JsonLd data={await pageGraph({path: routes.projects, name: title, crumbs, modified: page?._updatedAt, pageType: 'CollectionPage'})} />
+      <JsonLd
+        data={await pageGraph({
+          path: routes.projects,
+          name: title,
+          crumbs,
+          modified: page?._updatedAt,
+          pageType: 'CollectionPage',
+        })}
+      />
       <PageHero title={title} eyebrow="Projects" lead={page?.heroSubhead} crumbs={crumbs} />
       <Section labelledBy="projects-list">
         <h2 id="projects-list" className="sr-only">
@@ -43,10 +60,19 @@ export default async function ProjectsHub() {
         {projects.length ? (
           <BeforeAfter projects={projects} />
         ) : (
-          <p className="max-w-prose text-lead">Project photos are on their way. In the meantime, ask us on WhatsApp for examples of similar jobs.</p>
+          <p className="max-w-prose text-lead">
+            Project photos are on their way. In the meantime, ask us on WhatsApp for examples of
+            similar jobs.
+          </p>
         )}
       </Section>
-      <CtaBand heading="Need something similar?" quoteHref={quoteUrl()} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />
+      <CtaBand
+        heading="Need something similar?"
+        quoteHref={quoteUrl()}
+        whatsappHref={links.whatsapp}
+        telHref={links.tel}
+        phoneDisplay={links.phoneDisplay}
+      />
       <ContactDock message={message} />
     </>
   )

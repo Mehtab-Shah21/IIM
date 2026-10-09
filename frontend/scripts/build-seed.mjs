@@ -36,16 +36,22 @@ function spans(html) {
   let last = 0
   let m
   while ((m = re.exec(html))) {
-    if (m.index > last) out.push({_type: 'span', _key: key(), text: decode(html.slice(last, m.index)), marks: []})
+    if (m.index > last)
+      out.push({_type: 'span', _key: key(), text: decode(html.slice(last, m.index)), marks: []})
     out.push({_type: 'span', _key: key(), text: decode(m[1]), marks: ['strong']})
     last = m.index + m[0].length
   }
-  if (last < html.length) out.push({_type: 'span', _key: key(), text: decode(html.slice(last)), marks: []})
+  if (last < html.length)
+    out.push({_type: 'span', _key: key(), text: decode(html.slice(last)), marks: []})
   return out.filter((s) => s.text !== '')
 }
 
 function decode(s) {
-  return s.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+  return s
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
 }
 
 function block(html, style = 'normal', listItem) {
@@ -67,7 +73,8 @@ function htmlToPt(html) {
   while ((m = re.exec(html))) {
     const [, tag, inner] = m
     if (tag === 'ul') {
-      for (const li of inner.matchAll(/<li>([\s\S]*?)<\/li>/g)) blocks.push(block(li[1], 'normal', 'bullet'))
+      for (const li of inner.matchAll(/<li>([\s\S]*?)<\/li>/g))
+        blocks.push(block(li[1], 'normal', 'bullet'))
     } else {
       blocks.push(block(inner, tag === 'p' ? 'normal' : tag))
     }
@@ -75,14 +82,18 @@ function htmlToPt(html) {
   return blocks
 }
 
-const paras = (...texts) => texts.map((t) => block(t))
-
 /* ---------- Sections ---------- */
 
 function section(s) {
   switch (s.acf_fc_layout) {
     case 'checklist':
-      return {_type: 'checklistSection', _key: key(), heading: s.heading, intro: s.intro || undefined, items: s.items}
+      return {
+        _type: 'checklistSection',
+        _key: key(),
+        heading: s.heading,
+        intro: s.intro || undefined,
+        items: s.items,
+      }
     case 'text':
       return {_type: 'richTextSection', _key: key(), heading: s.heading, body: htmlToPt(s.body)}
     case 'callout':
@@ -106,7 +117,13 @@ const faqList = (heading, faqs) => ({
   items: faqs.map((f) => ({_type: 'faqItem', _key: key(), question: f.question, answer: f.answer})),
 })
 
-const seo = (metaTitle, metaDescription, extra = {}) => ({_type: 'seo', metaTitle, metaDescription, noindex: false, ...extra})
+const seo = (metaTitle, metaDescription, extra = {}) => ({
+  _type: 'seo',
+  metaTitle,
+  metaDescription,
+  noindex: false,
+  ...extra,
+})
 const ref = (id) => ({_type: 'reference', _ref: id, _key: key()})
 
 /* ---------- Documents ---------- */
@@ -163,7 +180,13 @@ copy.services.forEach((s, i) => {
     heroSubhead: s.hero_subhead,
     directAnswer: s.direct_answer,
     sections: [...s.sections.map(section), faqList(`${s.title}: common questions`, s.faqs)],
-    prices: s.prices.map((p) => ({_type: 'priceItem', _key: key(), name: p.name, priceFrom: p.price_from, note: p.note || undefined})),
+    prices: s.prices.map((p) => ({
+      _type: 'priceItem',
+      _key: key(),
+      name: p.name,
+      priceFrom: p.price_from,
+      note: p.note || undefined,
+    })),
     showPrices: false,
     relatedServices: related.map(ref),
     lastReviewed: today,
@@ -185,7 +208,10 @@ function pageFromCopy(slug, key_, extra = {}) {
     heroSubhead: f.hero_subhead,
     directAnswer: f.direct_answer,
     cardSummary: f.card_summary,
-    sections: [...(p.sections || []).map(section), ...(p.faqs?.length ? [faqList(extra.faqHeading || 'Common questions', p.faqs)] : [])],
+    sections: [
+      ...(p.sections || []).map(section),
+      ...(p.faqs?.length ? [faqList(extra.faqHeading || 'Common questions', p.faqs)] : []),
+    ],
     body: p.content ? htmlToPt(p.content) : undefined,
     lastReviewed: today,
     seo: seo(p.seo_title, p.seo_description, extra.noindex ? {noindex: true} : {}),
@@ -204,16 +230,58 @@ docs.push({
     servicesIntro:
       'From a tripped breaker to a full bathroom refit, our technicians handle the job end to end across Dubai.',
     steps: [
-      {_type: 'iconItem', _key: key(), icon: 'message-circle', title: 'Message us', text: 'Tap WhatsApp or fill in the quote form. Tell us what is wrong in a sentence or two.'},
-      {_type: 'iconItem', _key: key(), icon: 'camera', title: 'Show us the issue', text: 'Send a photo or a short video. It helps the technician bring the right parts the first time.'},
-      {_type: 'iconItem', _key: key(), icon: 'calendar-check', title: 'Pick a place and time', text: 'Share your location and the date that suits you. We confirm the visit before we come.'},
+      {
+        _type: 'iconItem',
+        _key: key(),
+        icon: 'message-circle',
+        title: 'Message us',
+        text: 'Tap WhatsApp or fill in the quote form. Tell us what is wrong in a sentence or two.',
+      },
+      {
+        _type: 'iconItem',
+        _key: key(),
+        icon: 'camera',
+        title: 'Show us the issue',
+        text: 'Send a photo or a short video. It helps the technician bring the right parts the first time.',
+      },
+      {
+        _type: 'iconItem',
+        _key: key(),
+        icon: 'calendar-check',
+        title: 'Pick a place and time',
+        text: 'Share your location and the date that suits you. We confirm the visit before we come.',
+      },
     ],
     whyHeading: 'Straightforward maintenance, done properly',
     whyItems: [
-      {_type: 'iconItem', _key: key(), icon: 'wallet', title: 'Pay after the service', text: 'You pay once the work is done and you have checked it.'},
-      {_type: 'iconItem', _key: key(), icon: 'message-circle', title: 'Simple booking', text: 'Three steps on WhatsApp or online. A photo of the problem replaces a long explanation.'},
-      {_type: 'iconItem', _key: key(), icon: 'wrench', title: 'One team, many trades', text: 'Electrical, plumbing, AC, painting and handyman work from one company, so one visit can cover several jobs.'},
-      {_type: 'iconItem', _key: key(), icon: 'calendar-check', title: 'Annual contracts', text: 'Scheduled check-ups and priority visits for homes and businesses that want fewer surprises.'},
+      {
+        _type: 'iconItem',
+        _key: key(),
+        icon: 'wallet',
+        title: 'Pay after the service',
+        text: 'You pay once the work is done and you have checked it.',
+      },
+      {
+        _type: 'iconItem',
+        _key: key(),
+        icon: 'message-circle',
+        title: 'Simple booking',
+        text: 'Three steps on WhatsApp or online. A photo of the problem replaces a long explanation.',
+      },
+      {
+        _type: 'iconItem',
+        _key: key(),
+        icon: 'wrench',
+        title: 'One team, many trades',
+        text: 'Electrical, plumbing, AC, painting and handyman work from one company, so one visit can cover several jobs.',
+      },
+      {
+        _type: 'iconItem',
+        _key: key(),
+        icon: 'calendar-check',
+        title: 'Annual contracts',
+        text: 'Scheduled check-ups and priority visits for homes and businesses that want fewer surprises.',
+      },
     ],
     amcHeading: 'Premium care, all year round',
     amcText:
@@ -231,23 +299,37 @@ docs.push({
   },
 })
 
-docs.push({...pageFromCopy('annual-maintenance-contract', 'amc', {faqHeading: 'Annual contract questions'}), title: 'Annual Maintenance Contract'})
-docs.push({...pageFromCopy('residential', 'amc-residential', {faqHeading: 'Questions about this plan'})})
-docs.push({...pageFromCopy('commercial', 'amc-commercial', {faqHeading: 'Questions about this plan'})})
+docs.push({
+  ...pageFromCopy('annual-maintenance-contract', 'amc', {faqHeading: 'Annual contract questions'}),
+  title: 'Annual Maintenance Contract',
+})
+docs.push({
+  ...pageFromCopy('residential', 'amc-residential', {faqHeading: 'Questions about this plan'}),
+})
+docs.push({
+  ...pageFromCopy('commercial', 'amc-commercial', {faqHeading: 'Questions about this plan'}),
+})
 docs.push(pageFromCopy('about', 'about'))
 docs.push({
   ...pageFromCopy('contact', 'contact'),
-  heroSubhead: 'Call, WhatsApp or email us. For the fastest reply, send a photo of the issue on WhatsApp.',
+  heroSubhead:
+    'Call, WhatsApp or email us. For the fastest reply, send a photo of the issue on WhatsApp.',
 })
 docs.push({
   ...pageFromCopy('get-a-quote', 'get-a-quote'),
   heroHeadline: 'Get a quote',
-  heroSubhead: 'Tell us the issue and choose a time. We reply to confirm the visit, and you pay after the service.',
+  heroSubhead:
+    'Tell us the issue and choose a time. We reply to confirm the visit, and you pay after the service.',
 })
 docs.push({
   ...pageFromCopy('thank-you', 'thank-you', {noindex: true}),
   heroHeadline: 'Thank you, we have your request',
-  seo: {_type: 'seo', metaTitle: 'Thank you | IIM Technical Services', metaDescription: 'Your request has been received.', noindex: true},
+  seo: {
+    _type: 'seo',
+    metaTitle: 'Thank you | IIM Technical Services',
+    metaDescription: 'Your request has been received.',
+    noindex: true,
+  },
 })
 docs.push({
   ...pageFromCopy('reviews', 'reviews'),
@@ -311,7 +393,8 @@ docs.push({
   key: 'guides',
   title: 'Guides hub',
   heroHeadline: 'Home maintenance guides for Dubai homes',
-  heroSubhead: 'Practical advice on electrical safety, plumbing problems and keeping your property in shape through the Dubai summer.',
+  heroSubhead:
+    'Practical advice on electrical safety, plumbing problems and keeping your property in shape through the Dubai summer.',
   seo: seo(
     'Home Maintenance Guides for Dubai Homes | IIM Technical',
     'Practical advice from IIM Technical Services on electrical safety, plumbing problems, AC care and keeping Dubai homes in good shape through the summer.',
@@ -319,7 +402,12 @@ docs.push({
 })
 
 // FAQs (draft-only ones become Sanity drafts).
-const topicMap = {'booking-and-payment': 'booking', services: 'services', emergencies: 'emergencies', 'annual-contracts': 'contracts'}
+const topicMap = {
+  'booking-and-payment': 'booking',
+  services: 'services',
+  emergencies: 'emergencies',
+  'annual-contracts': 'contracts',
+}
 copy.faqs.forEach((f, i) => {
   const id = `faq-${i + 1}`
   docs.push({
@@ -348,7 +436,10 @@ copy.testimonials.forEach((t, i) => {
 })
 
 // Redirects: old Wix URLs (verified against each page's real H1, see the audit).
-const csv = readFileSync(join(root, 'docs/reference/old-url-redirect-map.csv'), 'utf8').trim().split(/\r?\n/).slice(1)
+const csv = readFileSync(join(root, 'docs/reference/old-url-redirect-map.csv'), 'utf8')
+  .trim()
+  .split(/\r?\n/)
+  .slice(1)
 const redirects = []
 for (const line of csv) {
   const [from, to, code, note] = line.split(',')
@@ -358,7 +449,9 @@ for (const line of csv) {
   else redirects.push({from, to, type: '301', note})
 }
 // Arabic copies: the 16 URLs listed in ar_ar-pages-sitemap.xml, each to its English equivalent.
-const englishFor = Object.fromEntries(redirects.filter((r) => r.type === '301').map((r) => [r.from, r.to]))
+const englishFor = Object.fromEntries(
+  redirects.filter((r) => r.type === '301').map((r) => [r.from, r.to]),
+)
 const arabic = [
   ['/ar', '/'],
   ['/ar/contact', '/contact/'],
@@ -383,10 +476,15 @@ for (const [from, to] of arabic) {
   if (!to) throw new Error(`No English target for ${from}`)
   redirects.push({from, to, type: '301', note: 'Arabic copy of the old Wix site'})
 }
-redirects.forEach((r, i) => docs.push({_id: `redirect-${String(i + 1).padStart(3, '0')}`, _type: 'redirect', ...r}))
+redirects.forEach((r, i) =>
+  docs.push({_id: `redirect-${String(i + 1).padStart(3, '0')}`, _type: 'redirect', ...r}),
+)
 
 // Draft-only pages become Sanity drafts (published once legal review is done).
 const out = docs.map(({_draftOnly, ...d}) => (_draftOnly ? {...d, _id: `drafts.${d._id}`} : d))
 
-writeFileSync(join(here, '..', 'content', 'seed', 'documents.json'), `${JSON.stringify(out, null, 2)}\n`)
+writeFileSync(
+  join(here, '..', 'content', 'seed', 'documents.json'),
+  `${JSON.stringify(out, null, 2)}\n`,
+)
 console.info(`Wrote ${out.length} documents (${redirects.length} redirects).`)

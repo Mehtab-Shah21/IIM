@@ -30,7 +30,11 @@ export function Section({
   className?: string
 }) {
   return (
-    <section id={id} aria-labelledby={labelledBy} className={clsx('section', surfaces[surface], className)}>
+    <section
+      id={id}
+      aria-labelledby={labelledBy}
+      className={clsx('section', surfaces[surface], className)}
+    >
       <div className={wide ? 'container-wide' : 'container-content'}>{children}</div>
     </section>
   )
@@ -55,18 +59,36 @@ export function SectionHeader({
   children?: ReactNode
 }) {
   return (
-    <div className={clsx('mb-7 grid max-w-prose gap-4', center && 'mx-auto justify-items-center text-center')}>
+    <div
+      className={clsx(
+        'mb-7 grid max-w-prose gap-4',
+        center && 'mx-auto justify-items-center text-center',
+      )}
+    >
       {eyebrow ? <Eyebrow tone={tone}>{eyebrow}</Eyebrow> : null}
-      <h2 id={id} className={clsx('text-h2 font-bold', tone === 'dark' ? 'text-cream' : 'text-ink-900')}>
+      <h2
+        id={id}
+        className={clsx('text-h2 font-bold', tone === 'dark' ? 'text-cream' : 'text-ink-900')}
+      >
         {title}
       </h2>
-      {lead ? <p className={clsx('text-lead', tone === 'dark' ? 'text-cream-muted' : 'text-neutral-600')}>{lead}</p> : null}
+      {lead ? (
+        <p className={clsx('text-lead', tone === 'dark' ? 'text-cream-muted' : 'text-neutral-600')}>
+          {lead}
+        </p>
+      ) : null}
       {children}
     </div>
   )
 }
 
-export function Eyebrow({children, tone = 'light'}: {children: ReactNode; tone?: 'light' | 'dark'}) {
+export function Eyebrow({
+  children,
+  tone = 'light',
+}: {
+  children: ReactNode
+  tone?: 'light' | 'dark'
+}) {
   return (
     <p
       className={clsx(
@@ -79,7 +101,13 @@ export function Eyebrow({children, tone = 'light'}: {children: ReactNode; tone?:
   )
 }
 
-export function Badge({children, tone = 'accent'}: {children: ReactNode; tone?: 'accent' | 'neutral'}) {
+export function Badge({
+  children,
+  tone = 'accent',
+}: {
+  children: ReactNode
+  tone?: 'accent' | 'neutral'
+}) {
   return (
     <span
       className={clsx(

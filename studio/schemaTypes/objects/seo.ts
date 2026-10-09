@@ -68,7 +68,8 @@ export const seo = defineType({
           if (!value) return true
           try {
             const parsed: unknown = JSON.parse(value)
-            if (typeof parsed !== 'object' || parsed === null) return 'Must be a JSON object or array.'
+            if (typeof parsed !== 'object' || parsed === null)
+              return 'Must be a JSON object or array.'
             return true
           } catch {
             return 'Not valid JSON.'

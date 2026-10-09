@@ -20,30 +20,87 @@ export async function generateMetadata(): Promise<Metadata> {
     path: routes.contact,
     seo: page?.seo,
     fallbackTitle: 'Contact IIM Technical Services | Call or WhatsApp',
-    fallbackDescription: 'Call, WhatsApp or email IIM for repairs, maintenance and renovation in Dubai.',
+    fallbackDescription:
+      'Call, WhatsApp or email IIM for repairs, maintenance and renovation in Dubai.',
     defaultOgImage: settings.defaultOgImage,
   })
 }
 
 export default async function ContactPage() {
-  const [page, settings, services] = await Promise.all([getPage('contact'), getSettings(), getServices()])
+  const [page, settings, services] = await Promise.all([
+    getPage('contact'),
+    getSettings(),
+    getServices(),
+  ])
   const message = settings.defaultWhatsappMessage || defaultWhatsappMessage
   const links = contactLinks(settings, message)
   const crumbs = [homeCrumb, {name: 'Contact'}]
   const address = addressLine(settings)
 
-  const rows: Array<{icon: IconName; label: string; value: string; href?: string; external?: boolean; track?: string}> = [
-    ...(links.tel ? [{icon: 'phone' as IconName, label: 'Phone', value: links.phoneDisplay, href: links.tel, track: 'phone_click'}] : []),
-    ...(links.whatsapp ? [{icon: 'whatsapp' as IconName, label: 'WhatsApp', value: 'Start a chat', href: links.whatsapp, external: true, track: 'whatsapp_click'}] : []),
-    ...(settings.email ? [{icon: 'mail' as IconName, label: 'Email', value: settings.email, href: `mailto:${settings.email}`}] : []),
+  const rows: Array<{
+    icon: IconName
+    label: string
+    value: string
+    href?: string
+    external?: boolean
+    track?: string
+  }> = [
+    ...(links.tel
+      ? [
+          {
+            icon: 'phone' as IconName,
+            label: 'Phone',
+            value: links.phoneDisplay,
+            href: links.tel,
+            track: 'phone_click',
+          },
+        ]
+      : []),
+    ...(links.whatsapp
+      ? [
+          {
+            icon: 'whatsapp' as IconName,
+            label: 'WhatsApp',
+            value: 'Start a chat',
+            href: links.whatsapp,
+            external: true,
+            track: 'whatsapp_click',
+          },
+        ]
+      : []),
+    ...(settings.email
+      ? [
+          {
+            icon: 'mail' as IconName,
+            label: 'Email',
+            value: settings.email,
+            href: `mailto:${settings.email}`,
+          },
+        ]
+      : []),
     {icon: 'map-pin', label: 'Address', value: address},
-    ...(settings.hoursText ? [{icon: 'clock' as IconName, label: 'Hours', value: settings.hoursText}] : []),
+    ...(settings.hoursText
+      ? [{icon: 'clock' as IconName, label: 'Hours', value: settings.hoursText}]
+      : []),
   ]
 
   return (
     <>
-      <JsonLd data={await pageGraph({path: routes.contact, name: page?.heroHeadline ?? 'Contact', crumbs, modified: page?._updatedAt, pageType: 'ContactPage'})} />
-      <PageHero title={page?.heroHeadline ?? 'Contact IIM Technical Services'} eyebrow="Contact" lead={page?.heroSubhead} crumbs={crumbs} />
+      <JsonLd
+        data={await pageGraph({
+          path: routes.contact,
+          name: page?.heroHeadline ?? 'Contact',
+          crumbs,
+          modified: page?._updatedAt,
+          pageType: 'ContactPage',
+        })}
+      />
+      <PageHero
+        title={page?.heroHeadline ?? 'Contact IIM Technical Services'}
+        eyebrow="Contact"
+        lead={page?.heroSubhead}
+        crumbs={crumbs}
+      />
       <Section>
         <div className="grid items-start gap-7 lg:grid-cols-12 lg:gap-gap">
           <div className="grid content-start gap-5 lg:col-span-5" data-track-zone="contact">
@@ -61,7 +118,9 @@ export default async function ContactPage() {
                         href={r.href}
                         className="font-semibold break-words text-navy"
                         {...(r.external ? {target: '_blank', rel: 'noopener noreferrer'} : {})}
-                        {...(r.track ? {'data-track': r.track, 'data-track-location': 'contact'} : {})}
+                        {...(r.track
+                          ? {'data-track': r.track, 'data-track-location': 'contact'}
+                          : {})}
                       >
                         {r.value}
                       </a>
@@ -73,14 +132,21 @@ export default async function ContactPage() {
               ))}
             </ul>
             {settings.gbpUrl ? (
-              <a href={settings.gbpUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-navy">
+              <a
+                href={settings.gbpUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-navy"
+              >
                 Find us on Google Maps
               </a>
             ) : null}
           </div>
           <div className="rounded-md border border-neutral-200 bg-white p-card shadow-md md:p-6 lg:col-span-7">
             <h2 className="mb-2 text-h3 font-bold">Request a quote</h2>
-            <p className="mb-5 text-neutral-600">Three short steps. We reply to confirm the visit.</p>
+            <p className="mb-5 text-neutral-600">
+              Three short steps. We reply to confirm the visit.
+            </p>
             <QuoteForm services={formServices(services)} siteKey={turnstileSiteKey} />
           </div>
         </div>

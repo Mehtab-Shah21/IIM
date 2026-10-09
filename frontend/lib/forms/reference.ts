@@ -7,8 +7,16 @@ const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ'
  * Lead reference IIM-YYMMDD-XXXX (Dubai date). 32^4 ≈ 1M combinations per day, from a CSPRNG;
  * `exists` lets callers retry on the (very unlikely) collision.
  */
-export function newReference(now: Date = new Date(), exists: (ref: string) => boolean = () => false): string {
-  const ymd = new Intl.DateTimeFormat('en-GB', {timeZone: 'Asia/Dubai', year: '2-digit', month: '2-digit', day: '2-digit'})
+export function newReference(
+  now: Date = new Date(),
+  exists: (ref: string) => boolean = () => false,
+): string {
+  const ymd = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Dubai',
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  })
     .formatToParts(now)
     .reduce<Record<string, string>>((acc, p) => ({...acc, [p.type]: p.value}), {})
   for (let attempt = 0; attempt < 10; attempt++) {

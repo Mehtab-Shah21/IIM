@@ -31,7 +31,9 @@ export async function sendEmail(email: Email): Promise<boolean> {
     await getTransport().sendMail({from: env.MAIL_FROM, ...email})
     return true
   } catch (err) {
-    console.error(JSON.stringify({event: 'mail_failed', error: err instanceof Error ? err.message : 'unknown'}))
+    console.error(
+      JSON.stringify({event: 'mail_failed', error: err instanceof Error ? err.message : 'unknown'}),
+    )
     return false
   }
 }

@@ -31,7 +31,9 @@ export async function pageGraph({
   const [settings, services, areas] = await Promise.all([getSettings(), getServices(), getAreas()])
   const business = businessNode(settings, {
     areas: areas.map((a) => a.title).filter((t): t is string => Boolean(t)),
-    services: services.filter((s) => s.slug && s.title).map((s) => ({title: s.title!, url: absoluteUrl(routes.service(s.slug!))})),
+    services: services
+      .filter((s) => s.slug && s.title)
+      .map((s) => ({title: s.title!, url: absoluteUrl(routes.service(s.slug!))})),
     ratingVisible,
   })
   return buildGraph({

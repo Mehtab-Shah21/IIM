@@ -5,7 +5,16 @@
  * A lead is never silently dropped: if neither the webhook nor the owner email succeeds the
  * caller returns 503 and shows the visitor WhatsApp/phone fallbacks.
  */
-import {fieldErrors, preferredTimeLabels, propertyTypeLabels, type AmcInput, type LeadInput, amcSchema, antiSpamSchema, quoteSchema} from './schema'
+import {
+  fieldErrors,
+  preferredTimeLabels,
+  propertyTypeLabels,
+  type AmcInput,
+  type LeadInput,
+  amcSchema,
+  antiSpamSchema,
+  quoteSchema,
+} from './schema'
 
 export type LeadPayload = {
   ref: string
@@ -35,14 +44,24 @@ export type Deps = {
   turnstileRequired: boolean
   newReference: () => string
   sendWebhook: ((payload: LeadPayload) => Promise<{ok: boolean; error?: string}>) | null
-  sendEmail: (email: {to: string | string[]; subject: string; text: string; replyTo?: string}) => Promise<boolean>
+  sendEmail: (email: {
+    to: string | string[]
+    subject: string
+    text: string
+    replyTo?: string
+  }) => Promise<boolean>
   ownerEmail: string | undefined
   business: {name: string; phoneDisplay: string; whatsappE164: string; siteUrl: string}
   log: (event: Record<string, unknown>) => void
 }
 
 export type LeadResult =
-  | {status: 'ok'; ref: string; type: 'quote' | 'amc'; delivered: {webhook: boolean; ownerEmail: boolean; customerEmail: boolean}}
+  | {
+      status: 'ok'
+      ref: string
+      type: 'quote' | 'amc'
+      delivered: {webhook: boolean; ownerEmail: boolean; customerEmail: boolean}
+    }
   | {status: 'spam'; ref: string; type: 'quote' | 'amc'}
   | {status: 'invalid'; type: 'quote' | 'amc'; errors: Record<string, string>}
   | {status: 'forbidden'; type: 'quote' | 'amc'; reason: string}
@@ -97,7 +116,10 @@ export async function processLead(raw: Record<string, unknown>, deps: Deps): Pro
   const subjectPrefix = webhookOk ? '' : '[WEBHOOK FAILED] '
   const ownerEmailOk = deps.ownerEmail
     ? await deps.sendEmail({
-        to: deps.ownerEmail.split(',').map((s) => s.trim()).filter(Boolean),
+        to: deps.ownerEmail
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean),
         subject: `${subjectPrefix}New ${type === 'amc' ? 'annual contract application' : 'quote request'} ${ref}: ${summaryTitle(payload, deps)}`,
         text: ownerText(payload, deps),
         replyTo: payload.email || undefined,
@@ -113,13 +135,31 @@ export async function processLead(raw: Record<string, unknown>, deps: Deps): Pro
       })
     : false
 
-  deps.log({event: 'lead_processed', ref, type, webhook: webhookOk, webhookError, ownerEmail: ownerEmailOk, customerEmail: customerEmailOk})
+  deps.log({
+    event: 'lead_processed',
+    ref,
+    type,
+    webhook: webhookOk,
+    webhookError,
+    ownerEmail: ownerEmailOk,
+    customerEmail: customerEmailOk,
+  })
 
   if (!webhookOk && !ownerEmailOk) return {status: 'undeliverable', ref, type}
-  return {status: 'ok', ref, type, delivered: {webhook: webhookOk, ownerEmail: ownerEmailOk, customerEmail: customerEmailOk}}
+  return {
+    status: 'ok',
+    ref,
+    type,
+    delivered: {webhook: webhookOk, ownerEmail: ownerEmailOk, customerEmail: customerEmailOk},
+  }
 }
 
-function toPayload(lead: LeadInput, ref: string, now: Date, meta: {pageUrl: string; utmSource: string; utmMedium: string; utmCampaign: string}): LeadPayload {
+function toPayload(
+  lead: LeadInput,
+  ref: string,
+  now: Date,
+  meta: {pageUrl: string; utmSource: string; utmMedium: string; utmCampaign: string},
+): LeadPayload {
   const base = {
     ref,
     createdAt: now.toISOString(),
@@ -160,30 +200,55 @@ function toPayload(lead: LeadInput, ref: string, now: Date, meta: {pageUrl: stri
 }
 
 function summaryTitle(p: LeadPayload, deps: Deps) {
-  return p.type === 'amc' ? `${p.plan || 'annual'} contract, ${p.area}` : `${deps.serviceTitle(p.service)}, ${p.area}`
+  return p.type === 'amc'
+    ? `${p.plan || 'annual'} contract, ${p.area}`
+    : `${deps.serviceTitle(p.service)}, ${p.area}`
 }
 
 function rows(p: LeadPayload, deps: Deps): Array<[string, string]> {
   return [
     ['Reference', p.ref],
-    ['Request', p.type === 'amc' ? `Annual contract${p.plan ? ` (${p.plan})` : ''}` : deps.serviceTitle(p.service)],
+    [
+      'Request',
+      p.type === 'amc'
+        ? `Annual contract${p.plan ? ` (${p.plan})` : ''}`
+        : deps.serviceTitle(p.service),
+    ],
     ['Name', p.name],
     ['Phone', p.phone],
     ['Email', p.email],
     ['Emirate', p.emirate],
     ['Area', p.area],
     ['Address', p.address],
-    ['Property', p.propertyType ? (propertyTypeLabels[p.propertyType as keyof typeof propertyTypeLabels] ?? p.propertyType) : ''],
+    [
+      'Property',
+      p.propertyType
+        ? (propertyTypeLabels[p.propertyType as keyof typeof propertyTypeLabels] ?? p.propertyType)
+        : '',
+    ],
     ['Preferred date', p.preferredDate],
-    ['Preferred time', p.preferredTime ? (preferredTimeLabels[p.preferredTime as keyof typeof preferredTimeLabels] ?? p.preferredTime) : ''],
+    [
+      'Preferred time',
+      p.preferredTime
+        ? (preferredTimeLabels[p.preferredTime as keyof typeof preferredTimeLabels] ??
+          p.preferredTime)
+        : '',
+    ],
   ].filter(([, v]) => v) as Array<[string, string]>
 }
 
 function ownerText(p: LeadPayload, deps: Deps) {
   const lines = rows(p, deps).map(([k, v]) => `${k}: ${v}`)
   if (p.description) lines.push('', 'Details:', p.description)
-  lines.push('', `Reply on WhatsApp: https://wa.me/${p.phone.replace(/\D/g, '')}`, `Sent from: ${p.pageUrl || deps.business.siteUrl}`)
-  if (p.utm.source || p.utm.campaign) lines.push(`Campaign: ${[p.utm.source, p.utm.medium, p.utm.campaign].filter(Boolean).join(' / ')}`)
+  lines.push(
+    '',
+    `Reply on WhatsApp: https://wa.me/${p.phone.replace(/\D/g, '')}`,
+    `Sent from: ${p.pageUrl || deps.business.siteUrl}`,
+  )
+  if (p.utm.source || p.utm.campaign)
+    lines.push(
+      `Campaign: ${[p.utm.source, p.utm.medium, p.utm.campaign].filter(Boolean).join(' / ')}`,
+    )
   return lines.join('\n')
 }
 
@@ -199,7 +264,9 @@ function customerText(p: LeadPayload, deps: Deps) {
     ...rows(p, deps).map(([k, v]) => `${k}: ${v}`),
     ...(p.description ? ['', p.description] : []),
     '',
-    wa ? `To send photos or change anything, message us on WhatsApp: https://wa.me/${wa}?text=${msg}` : '',
+    wa
+      ? `To send photos or change anything, message us on WhatsApp: https://wa.me/${wa}?text=${msg}`
+      : '',
     '',
     deps.business.name,
     deps.business.phoneDisplay,

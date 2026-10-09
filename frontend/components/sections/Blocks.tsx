@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import Image from 'next/image'
+import {Img} from '@/components/ui/Img'
 import Link from 'next/link'
 import {PortableText, type PortableTextComponents} from 'next-sanity'
 import type {ReactNode} from 'react'
@@ -17,7 +17,9 @@ const ptComponents: PortableTextComponents = {
   block: {
     h2: ({children}) => <h2>{children}</h2>,
     h3: ({children}) => <h3>{children}</h3>,
-    blockquote: ({children}) => <blockquote className="border-l-4 border-gold pl-5 text-lead">{children}</blockquote>,
+    blockquote: ({children}) => (
+      <blockquote className="border-l-4 border-gold pl-5 text-lead">{children}</blockquote>
+    ),
   },
   marks: {
     link: ({value, children}) => {
@@ -25,7 +27,10 @@ const ptComponents: PortableTextComponents = {
       return href.startsWith('/') ? (
         <Link href={href}>{children}</Link>
       ) : (
-        <a href={href} {...(href.startsWith('http') ? {target: '_blank', rel: 'noopener noreferrer'} : {})}>
+        <a
+          href={href}
+          {...(href.startsWith('http') ? {target: '_blank', rel: 'noopener noreferrer'} : {})}
+        >
           {children}
         </a>
       )
@@ -36,7 +41,13 @@ const ptComponents: PortableTextComponents = {
       const img = sanityImage(value as SanityImageValue)
       return img ? (
         <figure className="overflow-hidden rounded-lg">
-          <Image src={img.src} alt={img.alt} width={img.width} height={img.height} sizes="(min-width: 1024px) 760px, 100vw" />
+          <Img
+            src={img.src}
+            alt={img.alt}
+            width={img.width}
+            height={img.height}
+            sizes="(min-width: 1024px) 760px, 100vw"
+          />
         </figure>
       ) : null
     },
@@ -47,7 +58,10 @@ export function RichText({value, className}: {value: unknown; className?: string
   if (!Array.isArray(value) || !value.length) return null
   return (
     <div className={clsx('prose-iim', className)}>
-      <PortableText value={value as Parameters<typeof PortableText>[0]['value']} components={ptComponents} />
+      <PortableText
+        value={value as Parameters<typeof PortableText>[0]['value']}
+        components={ptComponents}
+      />
     </div>
   )
 }
@@ -79,11 +93,19 @@ export function Checklist({items, columns = 2}: {items: string[]; columns?: 1 | 
   )
 }
 
-export function Steps({items}: {items: Array<{title?: string | null; text?: string | null; icon?: string | null}>}) {
+export function Steps({
+  items,
+}: {
+  items: Array<{title?: string | null; text?: string | null; icon?: string | null}>
+}) {
   return (
     <ol className="steps m-0 grid list-none gap-gap p-0 md:grid-cols-3">
       {items.map((s, i) => (
-        <li key={`${s.title}-${i}`} className="grid content-start gap-3 rounded-md border border-neutral-200 bg-white p-card" data-reveal>
+        <li
+          key={`${s.title}-${i}`}
+          className="grid content-start gap-3 rounded-md border border-neutral-200 bg-white p-card"
+          data-reveal
+        >
           <span className="inline-grid size-icon-tile place-items-center rounded-pill bg-accent font-heading text-h3 font-extrabold text-ink-900">
             {i + 1}
           </span>
@@ -113,11 +135,22 @@ export function ProofPoints({
           )}
           data-reveal
         >
-          <span className={clsx('inline-grid size-icon-tile place-items-center rounded-sm', tone === 'dark' ? 'bg-accent text-ink-900' : 'bg-ink-900 text-accent')}>
+          <span
+            className={clsx(
+              'inline-grid size-icon-tile place-items-center rounded-sm',
+              tone === 'dark' ? 'bg-accent text-ink-900' : 'bg-ink-900 text-accent',
+            )}
+          >
             <Icon name={isIconName(p.icon) ? p.icon : 'check'} />
           </span>
-          <h3 className={clsx('text-h4 font-bold', tone === 'dark' ? 'text-cream' : 'text-ink-900')}>{p.title}</h3>
-          {p.text ? <p className={tone === 'dark' ? 'text-cream-muted' : 'text-neutral-600'}>{p.text}</p> : null}
+          <h3
+            className={clsx('text-h4 font-bold', tone === 'dark' ? 'text-cream' : 'text-ink-900')}
+          >
+            {p.title}
+          </h3>
+          {p.text ? (
+            <p className={tone === 'dark' ? 'text-cream-muted' : 'text-neutral-600'}>{p.text}</p>
+          ) : null}
         </div>
       ))}
     </div>
@@ -126,7 +159,10 @@ export function ProofPoints({
 
 export function Callout({heading, text}: {heading?: string | null; text?: string | null}) {
   return (
-    <div className="grid max-w-prose gap-2 rounded-md border border-gold bg-cream p-card" role="note">
+    <div
+      className="grid max-w-prose gap-2 rounded-md border border-gold bg-cream p-card"
+      role="note"
+    >
       {heading ? (
         <p className="flex items-center gap-2 font-heading font-bold text-ink-900">
           <Icon name="triangle-alert" size="sm" />
@@ -140,16 +176,30 @@ export function Callout({heading, text}: {heading?: string | null; text?: string
 
 /* ---------- FAQ (native details: no JS, indexable, matches FAQPage schema) ---------- */
 
-export function FaqList({items, center = false}: {items: Array<{question?: string | null; answer?: string | null}>; center?: boolean}) {
+export function FaqList({
+  items,
+  center = false,
+}: {
+  items: Array<{question?: string | null; answer?: string | null}>
+  center?: boolean
+}) {
   const list = items.filter((f) => f.question && f.answer)
   if (!list.length) return null
   return (
     <div className={clsx('grid max-w-prose gap-3', center && 'mx-auto')}>
       {list.map((f, i) => (
-        <details key={f.question} className="faq-item group rounded-md border border-neutral-200 bg-white" open={i === 0}>
+        <details
+          key={f.question}
+          className="faq-item group rounded-md border border-neutral-200 bg-white"
+          open={i === 0}
+        >
           <summary className="flex min-h-control cursor-pointer list-none items-center justify-between gap-4 rounded-md px-card py-4 font-heading font-bold text-ink-900">
             <span>{f.question}</span>
-            <Icon name="chevron-down" size="sm" className="transition-transform group-open:rotate-180" />
+            <Icon
+              name="chevron-down"
+              size="sm"
+              className="transition-transform group-open:rotate-180"
+            />
           </summary>
           <div className="px-card pb-card text-neutral-600">
             <p>{f.answer}</p>
@@ -162,7 +212,13 @@ export function FaqList({items, center = false}: {items: Array<{question?: strin
 
 /* ---------- Service cards ---------- */
 
-export function ServiceCardItem({service, headingLevel = 3}: {service: ServiceCard; headingLevel?: 2 | 3}) {
+export function ServiceCardItem({
+  service,
+  headingLevel = 3,
+}: {
+  service: ServiceCard
+  headingLevel?: 2 | 3
+}) {
   const img = sanityImage(service.cardImage)
   return (
     <Card
@@ -174,14 +230,13 @@ export function ServiceCardItem({service, headingLevel = 3}: {service: ServiceCa
       headingLevel={headingLevel}
       media={
         img ? (
-          <Image
+          <Img
             src={img.src}
             alt=""
             width={800}
             height={500}
             sizes="(min-width: 1024px) 384px, (min-width: 768px) 50vw, 100vw"
             className="size-full object-cover"
-            placeholder={img.blurDataURL ? 'blur' : 'empty'}
             blurDataURL={img.blurDataURL}
           />
         ) : (
@@ -225,7 +280,14 @@ export function BeforeAfter({projects}: {projects: ProjectCard[]}) {
               return (
                 <div key={k} className="relative aspect-square bg-neutral-100">
                   {img ? (
-                    <Image src={img.src} alt={img.alt} width={600} height={600} sizes="(min-width: 1280px) 190px, (min-width: 768px) 25vw, 50vw" className="size-full object-cover" />
+                    <Img
+                      src={img.src}
+                      alt={img.alt}
+                      width={600}
+                      height={600}
+                      sizes="(min-width: 1280px) 190px, (min-width: 768px) 25vw, 50vw"
+                      className="size-full object-cover"
+                    />
                   ) : (
                     <PhotoPlaceholder label={`${k} photo`} />
                   )}
@@ -268,22 +330,44 @@ export function CtaBand({
   return (
     <section className="section bg-white" aria-labelledby="cta-band-title">
       <div className="container-content">
-        <div className="grid justify-items-center gap-5 rounded-lg bg-ink-900 px-card py-7 text-center lg:px-7 lg:py-8" data-reveal>
+        <div
+          className="grid justify-items-center gap-5 rounded-lg bg-ink-900 px-card py-7 text-center lg:px-7 lg:py-8"
+          data-reveal
+        >
           <h2 id="cta-band-title" className="text-h2 font-bold text-cream">
             {heading}
           </h2>
           {text ? <p className="max-w-prose text-lead text-cream-muted">{text}</p> : null}
           <div className="flex flex-wrap justify-center gap-3">
-            <ButtonLink href={quoteHref} variant="primary" data-track="cta_click" data-track-location="cta_band">
+            <ButtonLink
+              href={quoteHref}
+              variant="primary"
+              data-track="cta_click"
+              data-track-location="cta_band"
+            >
               Get a Quote
             </ButtonLink>
             {whatsappHref ? (
-              <ButtonLink href={whatsappHref} external variant="whatsapp" icon="whatsapp" data-track="whatsapp_click" data-track-location="cta_band">
+              <ButtonLink
+                href={whatsappHref}
+                external
+                variant="whatsapp"
+                icon="whatsapp"
+                data-track="whatsapp_click"
+                data-track-location="cta_band"
+              >
                 WhatsApp Us
               </ButtonLink>
             ) : null}
             {telHref ? (
-              <ButtonLink href={telHref} variant="secondary" tone="dark" icon="phone" data-track="phone_click" data-track-location="cta_band">
+              <ButtonLink
+                href={telHref}
+                variant="secondary"
+                tone="dark"
+                icon="phone"
+                data-track="phone_click"
+                data-track-location="cta_band"
+              >
                 {phoneDisplay}
               </ButtonLink>
             ) : null}
@@ -296,13 +380,35 @@ export function CtaBand({
 
 /* ---------- Image and text ---------- */
 
-export function ImageText({heading, image, imagePosition, body}: {heading?: string | null; image?: SanityImageValue; imagePosition?: string | null; body?: unknown}) {
+export function ImageText({
+  heading,
+  image,
+  imagePosition,
+  body,
+}: {
+  heading?: string | null
+  image?: SanityImageValue
+  imagePosition?: string | null
+  body?: unknown
+}) {
   const img = sanityImage(image)
   return (
     <div className="grid items-center gap-5 md:grid-cols-2">
-      <div className={clsx('aspect-card overflow-hidden rounded-lg bg-neutral-100', imagePosition === 'right' && 'md:order-2')}>
+      <div
+        className={clsx(
+          'aspect-card overflow-hidden rounded-lg bg-neutral-100',
+          imagePosition === 'right' && 'md:order-2',
+        )}
+      >
         {img ? (
-          <Image src={img.src} alt={img.alt} width={800} height={500} sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw" className="size-full object-cover" />
+          <Img
+            src={img.src}
+            alt={img.alt}
+            width={800}
+            height={500}
+            sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
+            className="size-full object-cover"
+          />
         ) : (
           <PhotoPlaceholder label={heading ?? undefined} />
         )}
@@ -313,7 +419,15 @@ export function ImageText({heading, image, imagePosition, body}: {heading?: stri
 }
 
 /** Wrapper used for content blocks inside a page body (consistent heading spacing). */
-export function ContentBlock({heading, id, children}: {heading?: string | null; id: string; children: ReactNode}) {
+export function ContentBlock({
+  heading,
+  id,
+  children,
+}: {
+  heading?: string | null
+  id: string
+  children: ReactNode
+}) {
   return (
     <section className="grid gap-4" aria-labelledby={heading ? id : undefined} data-reveal>
       {heading ? (

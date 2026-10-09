@@ -21,7 +21,16 @@ type FieldShell = {
   children: ReactNode
 }
 
-export function Field({id, label, hint, error, required, optionalNote, className, children}: FieldShell) {
+export function Field({
+  id,
+  label,
+  hint,
+  error,
+  required,
+  optionalNote,
+  className,
+  children,
+}: FieldShell) {
   return (
     <div className={clsx('grid min-w-0 gap-2', className)}>
       <label htmlFor={id} className="font-semibold text-ink-900">
@@ -48,7 +57,13 @@ export function Field({id, label, hint, error, required, optionalNote, className
 
 export function FieldError({id, message}: {id: string; message?: string}) {
   return (
-    <p id={id} className={clsx('items-center gap-2 text-small font-semibold text-error', message ? 'flex' : 'hidden')}>
+    <p
+      id={id}
+      className={clsx(
+        'items-center gap-2 text-small font-semibold text-error',
+        message ? 'flex' : 'hidden',
+      )}
+    >
       <Icon name="triangle-alert" size="sm" />
       <span>{message}</span>
     </p>
@@ -64,7 +79,12 @@ export function TextInput({className, ...props}: ComponentProps<'input'>) {
 }
 
 export function Textarea({className, ...props}: ComponentProps<'textarea'>) {
-  return <textarea className={clsx(control, 'min-h-section resize-y leading-body', className)} {...props} />
+  return (
+    <textarea
+      className={clsx(control, 'min-h-section resize-y leading-body', className)}
+      {...props}
+    />
+  )
 }
 
 export function Select({className, children, ...props}: ComponentProps<'select'>) {
@@ -142,7 +162,11 @@ export function ChoiceGroup({
           </span>
         ) : null}
       </legend>
-      <div className={clsx('grid grid-cols-1 gap-3 sm:grid-cols-2', columns === 3 && 'lg:grid-cols-3')}>
+      <div
+        role="radiogroup"
+        aria-invalid={error ? true : undefined}
+        className={clsx('grid grid-cols-1 gap-3 sm:grid-cols-2', columns === 3 && 'lg:grid-cols-3')}
+      >
         {options.map((o) => (
           <label key={o.value} className="choice-tile">
             <input
@@ -151,7 +175,6 @@ export function ChoiceGroup({
               value={o.value}
               className="sr-only"
               required={required}
-              aria-invalid={error ? true : undefined}
               {...(value !== undefined
                 ? {checked: value === o.value, onChange: () => onChange?.(o.value)}
                 : {defaultChecked: defaultValue === o.value})}

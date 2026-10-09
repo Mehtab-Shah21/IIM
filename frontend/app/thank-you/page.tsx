@@ -28,7 +28,9 @@ export default async function ThankYouPage({searchParams}: Props) {
   const rawRef = Array.isArray(params.ref) ? params.ref[0] : params.ref
   const ref = rawRef && REFERENCE_PATTERN.test(rawRef) ? rawRef : null
   const isAmc = params.type === 'amc'
-  const message = ref ? `Hi IIM, I just sent a request on your website. My reference is ${ref}.` : 'Hi IIM, I just sent a request on your website.'
+  const message = ref
+    ? `Hi IIM, I just sent a request on your website. My reference is ${ref}.`
+    : 'Hi IIM, I just sent a request on your website.'
   const wa = whatsappHref(settings.whatsappE164, message)
 
   return (
@@ -40,24 +42,43 @@ export default async function ThankYouPage({searchParams}: Props) {
       />
       <Section>
         <div className="grid max-w-prose gap-6">
-          <div role="status" className="flex items-start gap-3 rounded-sm bg-success-bg p-4 font-medium text-success">
+          <div
+            role="status"
+            className="flex items-start gap-3 rounded-sm bg-success-bg p-4 font-medium text-success"
+          >
             <Icon name="circle-check" size="sm" className="mt-1" />
-            <span>Your request was sent. If you gave us your email address, a confirmation is on its way.</span>
+            <span>
+              Your request was sent. If you gave us your email address, a confirmation is on its
+              way.
+            </span>
           </div>
           <div className="grid gap-3">
             <h2 className="text-h2 font-bold">What happens next</h2>
             <ol className="m-0 grid gap-2 pl-5">
-              <li>We review your {isAmc ? 'application' : 'request'} and contact you to confirm {isAmc ? 'the details of your plan' : 'a visit time'}.</li>
+              <li>
+                We review your {isAmc ? 'application' : 'request'} and contact you to confirm{' '}
+                {isAmc ? 'the details of your plan' : 'a visit time'}.
+              </li>
               {settings.responseTime ? <li>{settings.responseTime}</li> : null}
               <li>A technician visits at the agreed time and you pay after the service.</li>
             </ol>
           </div>
           <div className="grid gap-3">
             <h2 className="text-h3 font-bold">Want to speed things up?</h2>
-            <p>Send photos or a short video of the issue on WhatsApp. Your reference number is already in the message.</p>
+            <p>
+              Send photos or a short video of the issue on WhatsApp. Your reference number is
+              already in the message.
+            </p>
             <div className="flex flex-wrap gap-3">
               {wa ? (
-                <ButtonLink href={wa} external variant="whatsapp" icon="whatsapp" data-track="whatsapp_click" data-track-location="thank_you">
+                <ButtonLink
+                  href={wa}
+                  external
+                  variant="whatsapp"
+                  icon="whatsapp"
+                  data-track="whatsapp_click"
+                  data-track-location="thank_you"
+                >
                   Send photos on WhatsApp
                 </ButtonLink>
               ) : null}

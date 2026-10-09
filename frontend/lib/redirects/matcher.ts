@@ -7,7 +7,11 @@
  */
 export type RedirectRule = {from?: string | null; to?: string | null; type?: string | null}
 export type Resolved = {status: 301 | 302 | 410; to?: string}
-export type RedirectMap = {exact: Map<string, Resolved>; prefixes: Array<[string, Resolved]>; problems: string[]}
+export type RedirectMap = {
+  exact: Map<string, Resolved>
+  prefixes: Array<[string, Resolved]>
+  problems: string[]
+}
 
 export function normalisePath(path: string): string {
   let p = path.split(/[?#]/)[0] ?? '/'
@@ -21,7 +25,8 @@ export function normalisePath(path: string): string {
   return p || '/'
 }
 
-const statusOf = (t?: string | null): 301 | 302 | 410 => (t === '302' ? 302 : t === '410' ? 410 : 301)
+const statusOf = (t?: string | null): 301 | 302 | 410 =>
+  t === '302' ? 302 : t === '410' ? 410 : 301
 const isAbsolute = (u: string) => /^https?:\/\//.test(u)
 
 export function buildRedirectMap(rules: RedirectRule[]): RedirectMap {
@@ -37,7 +42,10 @@ export function buildRedirectMap(rules: RedirectRule[]): RedirectMap {
       continue
     }
     if (r.from.endsWith('/*')) {
-      prefixes.push([normalisePath(r.from.slice(0, -2)), status === 410 ? {status} : {status, to: r.to!}])
+      prefixes.push([
+        normalisePath(r.from.slice(0, -2)),
+        status === 410 ? {status} : {status, to: r.to!},
+      ])
       continue
     }
     const key = normalisePath(r.from)
@@ -84,6 +92,7 @@ export function matchRedirect(map: RedirectMap, path: string): Resolved | null {
   const p = normalisePath(path)
   const hit = map.exact.get(p)
   if (hit) return hit
-  for (const [prefix, res] of map.prefixes) if (p === prefix || p.startsWith(`${prefix}/`)) return res
+  for (const [prefix, res] of map.prefixes)
+    if (p === prefix || p.startsWith(`${prefix}/`)) return res
   return null
 }

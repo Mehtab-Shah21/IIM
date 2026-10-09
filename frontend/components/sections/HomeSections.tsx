@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import {Img} from '@/components/ui/Img'
 import Link from 'next/link'
 
 import {Icon, isIconName, type IconName} from '@/components/icons/Icon'
@@ -27,16 +27,31 @@ export function HomeHero({
 }) {
   const img = sanityImage(image)
   return (
-    <section className="hero-pattern relative overflow-hidden bg-ink-900 py-8 text-cream lg:py-9" data-track-zone="hero">
+    <section
+      className="hero-pattern relative overflow-hidden bg-ink-900 py-8 text-cream lg:py-9"
+      data-track-zone="hero"
+    >
       <div className="container-content relative">
         <div className="grid items-center gap-7 lg:grid-cols-12 lg:gap-gap">
-          <div className={img ? 'grid content-start gap-5 lg:col-span-7' : 'grid content-start gap-5 lg:col-span-9'}>
+          <div
+            className={
+              img
+                ? 'grid content-start gap-5 lg:col-span-7'
+                : 'grid content-start gap-5 lg:col-span-9'
+            }
+          >
             <h1 className="text-h1 font-extrabold text-cream">
               {headline} {accent ? <span className="text-accent">{accent}</span> : null}
             </h1>
             {subhead ? <p className="max-w-prose text-lead text-cream-muted">{subhead}</p> : null}
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={quoteHref} variant="primary" className="w-full sm:w-auto" data-track="cta_click" data-track-location="hero">
+              <ButtonLink
+                href={quoteHref}
+                variant="primary"
+                className="w-full sm:w-auto"
+                data-track="cta_click"
+                data-track-location="hero"
+              >
                 Get a Quote
               </ButtonLink>
               {whatsappHref ? (
@@ -57,13 +72,12 @@ export function HomeHero({
           </div>
           {img ? (
             <div className="aspect-hero overflow-hidden rounded-lg bg-ink-800 shadow-lg lg:col-span-4 lg:col-start-9">
-              <Image
+              <Img
                 src={img.src}
                 alt={img.alt}
                 width={1200}
                 height={900}
                 priority
-                fetchPriority="high"
                 sizes="(min-width: 1024px) 380px, 100vw"
                 className="size-full object-cover"
               />
@@ -79,16 +93,27 @@ export function HomeHero({
 export function TrustStrip({settings}: {settings: Settings}) {
   const items: Array<{icon: IconName; text: string; href?: string}> = []
   if (settings.is247) items.push({icon: 'clock', text: '24/7 emergency help'})
-  if (settings.dewaShow && settings.dewaShort) items.push({icon: 'shield-check', text: settings.dewaShort})
+  if (settings.dewaShow && settings.dewaShort)
+    items.push({icon: 'shield-check', text: settings.dewaShort})
   items.push({icon: 'wallet', text: 'Pay after the service'})
   items.push({icon: 'message-circle', text: 'Book in 3 steps'})
   if (settings.ratingShow && settings.ratingValue) {
-    items.push({icon: 'star', text: `${settings.ratingValue} on Google`, href: settings.reviewUrl ?? undefined})
+    items.push({
+      icon: 'star',
+      text: `${settings.ratingValue} on Google`,
+      href: settings.reviewUrl ?? undefined,
+    })
   }
   return (
-    <ul className="m-0 grid list-none grid-cols-2 gap-3 p-0 md:flex md:flex-wrap" aria-label="Why customers choose us">
+    <ul
+      className="m-0 grid list-none grid-cols-2 gap-3 p-0 md:flex md:flex-wrap"
+      aria-label="Why customers choose us"
+    >
       {items.map((i) => (
-        <li key={i.text} className="flex min-h-tap items-center gap-2 rounded-sm border border-ink-700 px-3 py-2 text-small font-semibold leading-tight">
+        <li
+          key={i.text}
+          className="flex min-h-tap items-center gap-2 rounded-sm border border-ink-700 px-3 py-2 text-small font-semibold leading-tight"
+        >
           <Icon name={i.icon} size="sm" className="text-accent" />
           {i.href ? (
             <a href={i.href} target="_blank" rel="noopener noreferrer" className="text-cream">
@@ -103,9 +128,21 @@ export function TrustStrip({settings}: {settings: Settings}) {
   )
 }
 
-export function EmergencyBand({service, telHref, whatsappHref}: {service: ServiceCard; telHref: string | null; whatsappHref: string | null}) {
+export function EmergencyBand({
+  service,
+  telHref,
+  whatsappHref,
+}: {
+  service: ServiceCard
+  telHref: string | null
+  whatsappHref: string | null
+}) {
   return (
-    <div className="emergency-band mt-gap grid items-center gap-4 rounded-md bg-ink-900 p-card text-cream-muted md:gap-5" data-reveal data-track-zone="emergency-band">
+    <div
+      className="emergency-band mt-gap grid items-center gap-4 rounded-md bg-ink-900 p-card text-cream-muted md:gap-5"
+      data-reveal
+      data-track-zone="emergency-band"
+    >
       <span className="inline-grid size-icon-tile place-items-center rounded-sm bg-accent text-ink-900">
         <Icon name={isIconName(service.icon) ? service.icon : 'siren'} />
       </span>
@@ -119,12 +156,25 @@ export function EmergencyBand({service, telHref, whatsappHref}: {service: Servic
       </div>
       <div className="flex flex-wrap gap-3">
         {telHref ? (
-          <ButtonLink href={telHref} variant="primary" icon="phone" data-track="phone_click" data-track-location="emergency_band">
+          <ButtonLink
+            href={telHref}
+            variant="primary"
+            icon="phone"
+            data-track="phone_click"
+            data-track-location="emergency_band"
+          >
             Call now
           </ButtonLink>
         ) : null}
         {whatsappHref ? (
-          <ButtonLink href={whatsappHref} external variant="whatsapp" icon="whatsapp" data-track="whatsapp_click" data-track-location="emergency_band">
+          <ButtonLink
+            href={whatsappHref}
+            external
+            variant="whatsapp"
+            icon="whatsapp"
+            data-track="whatsapp_click"
+            data-track-location="emergency_band"
+          >
             WhatsApp
           </ButtonLink>
         ) : null}
@@ -137,10 +187,17 @@ export function Stats({stats}: {stats: NonNullable<Settings['stats']>}) {
   const list = stats.filter((s) => typeof s.value === 'number' && s.label)
   if (!list.length) return null
   return (
-    <ul className="m-0 mt-8 grid list-none grid-cols-2 gap-gap p-0 md:grid-cols-4" aria-label="IIM in numbers">
+    <ul
+      className="m-0 mt-8 grid list-none grid-cols-2 gap-gap p-0 md:grid-cols-4"
+      aria-label="IIM in numbers"
+    >
       {list.map((s) => (
         <li key={s.label} className="grid gap-1 border-l-4 border-accent p-card">
-          <span className="font-heading text-stat font-extrabold tabular-nums text-cream" data-count-to={s.value!} data-count-suffix={s.suffix ?? ''}>
+          <span
+            className="font-heading text-stat font-extrabold tabular-nums text-cream"
+            data-count-to={s.value!}
+            data-count-suffix={s.suffix ?? ''}
+          >
             {new Intl.NumberFormat('en').format(s.value!)}
             {s.suffix}
           </span>
@@ -155,10 +212,18 @@ export function Testimonials({items}: {items: Testimonial[]}) {
   return (
     <div className="grid items-stretch gap-gap md:grid-cols-2 lg:grid-cols-3">
       {items.map((t) => (
-        <figure key={t._id} className="m-0 flex h-full flex-col gap-4 rounded-md border border-neutral-200 bg-white p-card" data-reveal>
+        <figure
+          key={t._id}
+          className="m-0 flex h-full flex-col gap-4 rounded-md border border-neutral-200 bg-white p-card"
+          data-reveal
+        >
           <Icon name="quote" size="lg" className="text-gold" />
           {t.rating ? (
-            <span className="flex gap-1 text-gold" role="img" aria-label={`Rated ${t.rating} out of 5`}>
+            <span
+              className="flex gap-1 text-gold"
+              role="img"
+              aria-label={`Rated ${t.rating} out of 5`}
+            >
               {Array.from({length: Math.min(5, t.rating)}, (_, i) => (
                 <Icon key={i} name="star" size="sm" className="fill-current" />
               ))}
@@ -171,7 +236,12 @@ export function Testimonials({items}: {items: Testimonial[]}) {
             <strong className="text-ink-900">{t.name}</strong>
             {t.context ? <span className="text-small text-neutral-600">{t.context}</span> : null}
             {t.sourceUrl ? (
-              <a href={t.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-small text-navy">
+              <a
+                href={t.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-small text-navy"
+              >
                 View the original review
               </a>
             ) : null}
@@ -191,7 +261,8 @@ export function RatingSummary({settings}: {settings: Settings}) {
           <Icon key={i} name="star" size="sm" className="fill-current" />
         ))}
       </span>
-      {settings.ratingValue} out of 5 from {new Intl.NumberFormat('en').format(settings.ratingCount)} Google reviews
+      {settings.ratingValue} out of 5 from{' '}
+      {new Intl.NumberFormat('en').format(settings.ratingCount)} Google reviews
     </p>
   )
 }

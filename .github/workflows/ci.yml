@@ -1,0 +1,94 @@
+# Quality gate (CLAUDE.md §15): a failure here blocks merging into main.
+# The site builds and runs on local fixtures, so CI needs no secrets.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SITE_ENV: test
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  verify:
+    name: Lint, types, tests, build, budgets, e2e, Lighthouse
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Lint (ESLint + design tokens)
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Performance budgets
+        run: npm run check:budgets --workspace=frontend
+
+      - name: Colour contrast
+        run: npm run check:contrast --workspace=frontend
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+        working-directory: frontend
+
+      - name: End-to-end, layout, accessibility and SEO tests
+        run: npm run test:e2e --workspace=frontend
+
+      - name: Lighthouse CI (mobile)
+        run: npm run lhci --workspace=frontend
+
+      - name: Upload reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            frontend/playwright-report/
+            frontend/.lighthouseci/
+            frontend/.next/budget-report.json
+          retention-days: 14
+          if-no-files-found: ignore
+
+  studio:
+    name: Sanity Studio build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Seed export is valid
+        run: npm run seed:export
+      - name: Build Studio
+        run: npm run build --workspace=studio

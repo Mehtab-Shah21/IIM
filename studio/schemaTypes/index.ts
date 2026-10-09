@@ -1,7 +1,16 @@
 import {area, faq, guide, page, project, service, testimonial} from './documents/content'
 import {redirect} from './documents/redirect'
 import {siteSettings} from './documents/siteSettings'
-import {faqItem, iconItem, imageWithAlt, openingHours, personRef, priceItem, socialLink, stat} from './objects/common'
+import {
+  faqItem,
+  iconItem,
+  imageWithAlt,
+  openingHours,
+  personRef,
+  priceItem,
+  socialLink,
+  stat,
+} from './objects/common'
 import {
   articleText,
   calloutSection,

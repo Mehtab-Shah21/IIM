@@ -11,8 +11,23 @@ import {useState} from 'react'
 
 import {Icon, type IconName} from '@/components/icons/Icon'
 import {Button} from '@/components/ui/Button'
-import {Checkbox, ChoiceGroup, Field, Select, TextInput, Textarea, describedBy} from '@/components/ui/Field'
-import {addDays, dubaiToday, emirates, preferredTimeLabels, preferredTimes, quoteSteps} from '@/lib/forms/constants'
+import {
+  Checkbox,
+  ChoiceGroup,
+  Field,
+  Select,
+  TextInput,
+  Textarea,
+  describedBy,
+} from '@/components/ui/Field'
+import {
+  addDays,
+  dubaiToday,
+  emirates,
+  preferredTimeLabels,
+  preferredTimes,
+  quoteSteps,
+} from '@/lib/forms/constants'
 import {routes} from '@/lib/routes'
 
 import {FormAlert, HiddenFields, NoScriptSteps} from './shared'
@@ -38,7 +53,8 @@ export function QuoteForm({
   initialMessage?: string
   privacyHref?: string
 }) {
-  const {formRef, errors, message, fallbackRef, submitting, submit, validate, resetSignal} = useLeadForm('quote', initialErrors)
+  const {formRef, errors, message, fallbackRef, submitting, submit, validate, resetSignal} =
+    useLeadForm('quote', initialErrors)
   const [step, setStep] = useState(() => firstStepWithError(initialErrors))
   const slugs = services.map((s) => s.slug)
   const today = dubaiToday()
@@ -46,7 +62,9 @@ export function QuoteForm({
   const go = async (next: number) => {
     if (next > step && !(await validate(quoteSteps[step]!, slugs))) return
     setStep(next)
-    requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>(`[data-step="${next}"] legend`)?.focus())
+    requestAnimationFrame(() =>
+      formRef.current?.querySelector<HTMLElement>(`[data-step="${next}"] legend`)?.focus(),
+    )
   }
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -55,7 +73,16 @@ export function QuoteForm({
   }
 
   return (
-    <form ref={formRef} id="form" method="post" action="/api/quote" noValidate onSubmit={onSubmit} className="grid gap-5" data-track-zone="quote-form">
+    <form
+      ref={formRef}
+      id="form"
+      method="post"
+      action="/api/quote"
+      noValidate
+      onSubmit={onSubmit}
+      className="grid gap-5"
+      data-track-zone="quote-form"
+    >
       <NoScriptSteps />
       <HiddenFields type="quote" />
       <FormAlert message={message ?? initialMessage} fallbackRef={fallbackRef} />
@@ -70,13 +97,21 @@ export function QuoteForm({
               i === step ? 'text-ink-900' : 'text-neutral-600',
             )}
           >
-            <span className={clsx('block h-1 rounded-pill', i <= step ? 'bg-ink-900' : 'bg-neutral-200')} />
+            <span
+              className={clsx(
+                'block h-1 rounded-pill',
+                i <= step ? 'bg-ink-900' : 'bg-neutral-200',
+              )}
+            />
             {label}
           </li>
         ))}
       </ol>
 
-      <fieldset className={clsx('form-step m-0 grid min-w-0 gap-5 border-0 p-0', step === 0 && 'is-active')} data-step={0}>
+      <fieldset
+        className={clsx('form-step m-0 grid min-w-0 gap-5 border-0 p-0', step === 0 && 'is-active')}
+        data-step={0}
+      >
         <legend tabIndex={-1} className="mb-4 p-0 font-heading text-h4 font-bold text-ink-900">
           1. What do you need?
         </legend>
@@ -87,7 +122,10 @@ export function QuoteForm({
           columns={3}
           defaultValue={preselect}
           error={errors.service}
-          options={[...services.map((s) => ({value: s.slug, label: s.title, icon: s.icon})), {value: 'other', label: 'Something else', icon: 'clipboard-list' as IconName}]}
+          options={[
+            ...services.map((s) => ({value: s.slug, label: s.title, icon: s.icon})),
+            {value: 'other', label: 'Something else', icon: 'clipboard-list' as IconName},
+          ]}
         />
         <Field
           id="q-description"
@@ -108,17 +146,27 @@ export function QuoteForm({
         </Field>
         <p className="flex items-start gap-2 text-small text-neutral-600">
           <Icon name="camera" size="sm" className="mt-1" />
-          You can send photos or a short video on WhatsApp after you submit. Your reference number will be in the message.
+          You can send photos or a short video on WhatsApp after you submit. Your reference number
+          will be in the message.
         </p>
       </fieldset>
 
-      <fieldset className={clsx('form-step m-0 grid min-w-0 gap-5 border-0 p-0', step === 1 && 'is-active')} data-step={1}>
+      <fieldset
+        className={clsx('form-step m-0 grid min-w-0 gap-5 border-0 p-0', step === 1 && 'is-active')}
+        data-step={1}
+      >
         <legend tabIndex={-1} className="mb-4 p-0 font-heading text-h4 font-bold text-ink-900">
           2. Where and when?
         </legend>
         <div className="grid gap-5 sm:grid-cols-2">
           <Field id="q-emirate" label="Emirate" required error={errors.emirate}>
-            <Select id="q-emirate" name="emirate" defaultValue="Dubai" required aria-describedby={describedBy('q-emirate')}>
+            <Select
+              id="q-emirate"
+              name="emirate"
+              defaultValue="Dubai"
+              required
+              aria-describedby={describedBy('q-emirate')}
+            >
               {emirates.map((e) => (
                 <option key={e} value={e}>
                   {e}
@@ -138,8 +186,20 @@ export function QuoteForm({
               aria-invalid={errors.area ? true : undefined}
             />
           </Field>
-          <Field id="q-address" label="Building or street" optionalNote="optional" error={errors.address} className="sm:col-span-2">
-            <TextInput id="q-address" name="address" maxLength={200} autoComplete="street-address" aria-describedby={describedBy('q-address')} />
+          <Field
+            id="q-address"
+            label="Building or street"
+            optionalNote="optional"
+            error={errors.address}
+            className="sm:col-span-2"
+          >
+            <TextInput
+              id="q-address"
+              name="address"
+              maxLength={200}
+              autoComplete="street-address"
+              aria-describedby={describedBy('q-address')}
+            />
           </Field>
           <Field id="q-date" label="Preferred date" required error={errors.preferredDate}>
             <TextInput
@@ -166,15 +226,39 @@ export function QuoteForm({
         </div>
       </fieldset>
 
-      <fieldset className={clsx('form-step m-0 grid min-w-0 gap-5 border-0 p-0', step === 2 && 'is-active')} data-step={2}>
+      <fieldset
+        className={clsx('form-step m-0 grid min-w-0 gap-5 border-0 p-0', step === 2 && 'is-active')}
+        data-step={2}
+      >
         <legend tabIndex={-1} className="mb-4 p-0 font-heading text-h4 font-bold text-ink-900">
           3. Your details
         </legend>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field id="q-name" label="Full name" required error={errors.name} className="sm:col-span-2">
-            <TextInput id="q-name" name="name" required minLength={2} maxLength={80} autoComplete="name" aria-describedby={describedBy('q-name')} aria-invalid={errors.name ? true : undefined} />
+          <Field
+            id="q-name"
+            label="Full name"
+            required
+            error={errors.name}
+            className="sm:col-span-2"
+          >
+            <TextInput
+              id="q-name"
+              name="name"
+              required
+              minLength={2}
+              maxLength={80}
+              autoComplete="name"
+              aria-describedby={describedBy('q-name')}
+              aria-invalid={errors.name ? true : undefined}
+            />
           </Field>
-          <Field id="q-phone" label="Mobile number" required hint="UAE number. We use it to confirm your visit." error={errors.phone}>
+          <Field
+            id="q-phone"
+            label="Mobile number"
+            required
+            hint="UAE number. We use it to confirm your visit."
+            error={errors.phone}
+          >
             <TextInput
               id="q-phone"
               name="phone"
@@ -188,8 +272,21 @@ export function QuoteForm({
               aria-invalid={errors.phone ? true : undefined}
             />
           </Field>
-          <Field id="q-email" label="Email" optionalNote="optional, for a written confirmation" error={errors.email}>
-            <TextInput id="q-email" name="email" type="email" maxLength={150} autoComplete="email" aria-describedby={describedBy('q-email')} aria-invalid={errors.email ? true : undefined} />
+          <Field
+            id="q-email"
+            label="Email"
+            optionalNote="optional, for a written confirmation"
+            error={errors.email}
+          >
+            <TextInput
+              id="q-email"
+              name="email"
+              type="email"
+              maxLength={150}
+              autoComplete="email"
+              aria-describedby={describedBy('q-email')}
+              aria-invalid={errors.email ? true : undefined}
+            />
           </Field>
           <div className="sm:col-span-2">
             <Checkbox
@@ -199,8 +296,8 @@ export function QuoteForm({
               error={errors.consent}
               label={
                 <>
-                  I agree that IIM Technical Services may contact me by phone, WhatsApp or email about this request and keep my details as
-                  described in the{' '}
+                  I agree that IIM Technical Services may contact me by phone, WhatsApp or email
+                  about this request and keep my details as described in the{' '}
                   <a href={privacyHref ?? routes.privacy} className="text-navy underline">
                     privacy policy
                   </a>

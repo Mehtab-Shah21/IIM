@@ -33,7 +33,12 @@ export function SectionRenderer({sections}: {sections?: Section[] | null}) {
           case 'imageTextSection':
             return (
               <ContentBlock key={s._key} id={id} heading={s.heading}>
-                <ImageText heading={s.heading} image={s.image} imagePosition={s.imagePosition} body={s.body} />
+                <ImageText
+                  heading={s.heading}
+                  image={s.image}
+                  imagePosition={s.imagePosition}
+                  body={s.body}
+                />
               </ContentBlock>
             )
           case 'stepsSection':

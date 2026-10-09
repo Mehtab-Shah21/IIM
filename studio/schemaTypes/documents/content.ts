@@ -1,12 +1,10 @@
-import {
-  BulbOutlineIcon,
-  CommentIcon,
-  DocumentTextIcon,
-  HelpCircleIcon,
-  ImagesIcon,
-  PinIcon,
-  WrenchIcon,
-} from '@sanity/icons'
+import {BulbOutlineIcon} from '@sanity/icons/BulbOutline'
+import {CommentIcon} from '@sanity/icons/Comment'
+import {DocumentTextIcon} from '@sanity/icons/DocumentText'
+import {HelpCircleIcon} from '@sanity/icons/HelpCircle'
+import {ImagesIcon} from '@sanity/icons/Images'
+import {PinIcon} from '@sanity/icons/Pin'
+import {WrenchIcon} from '@sanity/icons/Wrench'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 import {countedInput} from '../../components/CountedInput'
@@ -20,7 +18,13 @@ const heroHeadline = defineField({
   description: 'The one H1 on the page. Include the service and "Dubai" where natural.',
   validation: (r) => r.required().max(90),
 })
-const heroSubhead = defineField({name: 'heroSubhead', title: 'Subheading', type: 'text', rows: 2, validation: (r) => r.max(220)})
+const heroSubhead = defineField({
+  name: 'heroSubhead',
+  title: 'Subheading',
+  type: 'text',
+  rows: 2,
+  validation: (r) => r.max(220),
+})
 const seoField = defineField({name: 'seo', type: 'seo', group: 'seo'})
 const groups = [
   {name: 'content', title: 'Content', default: true},
@@ -74,13 +78,30 @@ export const page = defineType({
           return count === 0 ? true : 'Another page already uses this key.'
         }),
     }),
-    defineField({name: 'title', title: 'Internal title', type: 'string', validation: (r) => r.required()}),
+    defineField({
+      name: 'title',
+      title: 'Internal title',
+      type: 'string',
+      validation: (r) => r.required(),
+    }),
     heroHeadline,
-    defineField({name: 'heroAccent', title: 'H1 accent line (home only)', type: 'string', hidden: ({document}) => document?.key !== 'home'}),
+    defineField({
+      name: 'heroAccent',
+      title: 'H1 accent line (home only)',
+      type: 'string',
+      hidden: ({document}) => document?.key !== 'home',
+    }),
     heroSubhead,
     defineField({name: 'heroImage', title: 'Hero image', type: 'imageWithAlt'}),
     {...directAnswerField, validation: undefined},
-    defineField({name: 'cardSummary', title: 'Card summary', type: 'text', rows: 2, group: 'card', validation: (r) => r.max(160)}),
+    defineField({
+      name: 'cardSummary',
+      title: 'Card summary',
+      type: 'text',
+      rows: 2,
+      group: 'card',
+      validation: (r) => r.max(160),
+    }),
     defineField({
       name: 'home',
       title: 'Homepage sections',
@@ -97,10 +118,21 @@ export const page = defineType({
           validation: (r) => r.length(3),
         }),
         defineField({name: 'whyHeading', type: 'string'}),
-        defineField({name: 'whyItems', title: 'Why IIM (4 proof points)', type: 'array', of: [defineArrayMember({type: 'iconItem'})], validation: (r) => r.max(4)}),
+        defineField({
+          name: 'whyItems',
+          title: 'Why IIM (4 proof points)',
+          type: 'array',
+          of: [defineArrayMember({type: 'iconItem'})],
+          validation: (r) => r.max(4),
+        }),
         defineField({name: 'amcHeading', type: 'string'}),
         defineField({name: 'amcText', type: 'text', rows: 2}),
-        defineField({name: 'amcBullets', type: 'array', of: [defineArrayMember({type: 'string'})], validation: (r) => r.max(5)}),
+        defineField({
+          name: 'amcBullets',
+          type: 'array',
+          of: [defineArrayMember({type: 'string'})],
+          validation: (r) => r.max(5),
+        }),
         defineField({name: 'faqHeading', type: 'string'}),
         defineField({name: 'ctaHeading', type: 'string'}),
         defineField({name: 'ctaText', type: 'text', rows: 2}),
@@ -127,19 +159,54 @@ export const service = defineType({
   fields: [
     defineField({name: 'title', type: 'string', validation: (r) => r.required()}),
     slugField(),
-    defineField({name: 'order', title: 'Menu order', type: 'number', group: 'card', initialValue: 10}),
-    defineField({name: 'icon', type: 'string', group: 'card', options: {list: iconOptions}, initialValue: 'wrench'}),
+    defineField({
+      name: 'order',
+      title: 'Menu order',
+      type: 'number',
+      group: 'card',
+      initialValue: 10,
+    }),
+    defineField({
+      name: 'icon',
+      type: 'string',
+      group: 'card',
+      options: {list: iconOptions},
+      initialValue: 'wrench',
+    }),
     defineField({name: 'menuSummary', type: 'string', group: 'card', validation: (r) => r.max(60)}),
-    defineField({name: 'cardSummary', type: 'text', rows: 3, group: 'card', validation: (r) => r.required().max(140)}),
-    defineField({name: 'cardImage', title: 'Card image (16:10)', type: 'imageWithAlt', group: 'card'}),
-    defineField({name: 'isEmergency', title: 'Emergency service', type: 'boolean', group: 'card', initialValue: false, description: 'Shown as a highlighted band rather than a card.'}),
+    defineField({
+      name: 'cardSummary',
+      type: 'text',
+      rows: 3,
+      group: 'card',
+      validation: (r) => r.required().max(140),
+    }),
+    defineField({
+      name: 'cardImage',
+      title: 'Card image (16:10)',
+      type: 'imageWithAlt',
+      group: 'card',
+    }),
+    defineField({
+      name: 'isEmergency',
+      title: 'Emergency service',
+      type: 'boolean',
+      group: 'card',
+      initialValue: false,
+      description: 'Shown as a highlighted band rather than a card.',
+    }),
     defineField({
       name: 'whatsappNoun',
       title: 'WhatsApp phrase',
       type: 'string',
       description: 'Completes "Hi IIM, I need … in Dubai." Example: an electrician',
     }),
-    defineField({name: 'schemaServiceType', title: 'Schema service type', type: 'string', group: 'seo'}),
+    defineField({
+      name: 'schemaServiceType',
+      title: 'Schema service type',
+      type: 'string',
+      group: 'seo',
+    }),
     heroHeadline,
     heroSubhead,
     directAnswerField,
@@ -150,7 +217,12 @@ export const service = defineType({
       type: 'array',
       of: [defineArrayMember({type: 'priceItem'})],
     }),
-    defineField({name: 'showPrices', title: 'Show prices on this service', type: 'boolean', initialValue: false}),
+    defineField({
+      name: 'showPrices',
+      title: 'Show prices on this service',
+      type: 'boolean',
+      initialValue: false,
+    }),
     defineField({
       name: 'relatedServices',
       type: 'array',
@@ -171,9 +243,20 @@ export const area = defineType({
   icon: PinIcon,
   groups,
   fields: [
-    defineField({name: 'title', title: 'Area name', type: 'string', validation: (r) => r.required()}),
+    defineField({
+      name: 'title',
+      title: 'Area name',
+      type: 'string',
+      validation: (r) => r.required(),
+    }),
     slugField(),
-    defineField({name: 'cardSummary', type: 'text', rows: 2, group: 'card', validation: (r) => r.max(140)}),
+    defineField({
+      name: 'cardSummary',
+      type: 'text',
+      rows: 2,
+      group: 'card',
+      validation: (r) => r.max(140),
+    }),
     heroHeadline,
     heroSubhead,
     directAnswerField,
@@ -199,13 +282,33 @@ export const project = defineType({
     defineField({name: 'title', type: 'string', validation: (r) => r.required()}),
     slugField(),
     defineField({name: 'summary', type: 'text', rows: 3, validation: (r) => r.max(220)}),
-    defineField({name: 'location', title: 'Location (as shown)', type: 'string', description: 'e.g. "Villa, Al Barsha". No customer names or unit numbers.'}),
+    defineField({
+      name: 'location',
+      title: 'Location (as shown)',
+      type: 'string',
+      description: 'e.g. "Villa, Al Barsha". No customer names or unit numbers.',
+    }),
     defineField({name: 'completed', type: 'date'}),
     defineField({name: 'service', type: 'reference', to: [{type: 'service'}]}),
     defineField({name: 'area', type: 'reference', to: [{type: 'area'}]}),
-    defineField({name: 'before', title: 'Before photo', type: 'imageWithAlt', validation: (r) => r.required()}),
-    defineField({name: 'after', title: 'After photo', type: 'imageWithAlt', validation: (r) => r.required()}),
-    defineField({name: 'gallery', type: 'array', of: [defineArrayMember({type: 'imageWithAlt'})], validation: (r) => r.max(8)}),
+    defineField({
+      name: 'before',
+      title: 'Before photo',
+      type: 'imageWithAlt',
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'after',
+      title: 'After photo',
+      type: 'imageWithAlt',
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'gallery',
+      type: 'array',
+      of: [defineArrayMember({type: 'imageWithAlt'})],
+      validation: (r) => r.max(8),
+    }),
     defineField({name: 'body', title: 'What we did', type: 'portableText'}),
     seoField,
   ],
@@ -218,7 +321,12 @@ export const testimonial = defineType({
   type: 'document',
   icon: CommentIcon,
   fields: [
-    defineField({name: 'name', title: 'Customer name (as agreed)', type: 'string', validation: (r) => r.required()}),
+    defineField({
+      name: 'name',
+      title: 'Customer name (as agreed)',
+      type: 'string',
+      validation: (r) => r.required(),
+    }),
     defineField({name: 'quote', type: 'text', rows: 4, validation: (r) => r.required()}),
     defineField({
       name: 'permissionConfirmed',
@@ -227,7 +335,11 @@ export const testimonial = defineType({
       initialValue: false,
       description: 'Testimonials stay hidden until this is on.',
     }),
-    defineField({name: 'context', type: 'string', description: 'e.g. "Annual contract, villa in Mirdif"'}),
+    defineField({
+      name: 'context',
+      type: 'string',
+      description: 'e.g. "Annual contract, villa in Mirdif"',
+    }),
     defineField({name: 'rating', type: 'number', validation: (r) => r.min(1).max(5).integer()}),
     defineField({name: 'source', type: 'string', options: {list: ['Google', 'Direct', 'Other']}}),
     defineField({name: 'sourceUrl', title: 'Link to the original review', type: 'url'}),
@@ -254,8 +366,19 @@ export const faq = defineType({
   fields: [
     defineField({name: 'question', type: 'string', validation: (r) => r.required()}),
     defineField({name: 'answer', type: 'text', rows: 4, validation: (r) => r.required()}),
-    defineField({name: 'topic', type: 'string', options: {list: faqTopics}, validation: (r) => r.required()}),
-    defineField({name: 'showOnHome', title: 'Show on the homepage', type: 'boolean', initialValue: false, description: 'Keep 6 to 8 of these.'}),
+    defineField({
+      name: 'topic',
+      type: 'string',
+      options: {list: faqTopics},
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'showOnHome',
+      title: 'Show on the homepage',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Keep 6 to 8 of these.',
+    }),
     defineField({name: 'order', type: 'number', initialValue: 10}),
   ],
   preview: {select: {title: 'question', subtitle: 'topic'}},
@@ -275,7 +398,13 @@ export const guide = defineType({
       validation: (r) => r.required(),
     }),
     slugField(),
-    defineField({name: 'excerpt', type: 'text', rows: 2, group: 'card', validation: (r) => r.max(200)}),
+    defineField({
+      name: 'excerpt',
+      type: 'text',
+      rows: 2,
+      group: 'card',
+      validation: (r) => r.max(200),
+    }),
     defineField({name: 'coverImage', type: 'imageWithAlt', group: 'card'}),
     directAnswerField,
     defineField({name: 'body', type: 'articleText', validation: (r) => r.required()}),
@@ -284,11 +413,21 @@ export const guide = defineType({
       type: 'array',
       of: [defineArrayMember({type: 'faqItem'})],
     }),
-    defineField({name: 'author', title: 'Written by', type: 'personRef', validation: (r) => r.required()}),
+    defineField({
+      name: 'author',
+      title: 'Written by',
+      type: 'personRef',
+      validation: (r) => r.required(),
+    }),
     defineField({name: 'reviewer', title: 'Reviewed by (named technician)', type: 'personRef'}),
     defineField({name: 'publishedAt', type: 'date', validation: (r) => r.required()}),
     lastReviewedField,
-    defineField({name: 'relatedServices', type: 'array', of: [defineArrayMember({type: 'reference', to: [{type: 'service'}]})], validation: (r) => r.min(1).max(3)}),
+    defineField({
+      name: 'relatedServices',
+      type: 'array',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'service'}]})],
+      validation: (r) => r.min(1).max(3),
+    }),
     seoField,
   ],
 })

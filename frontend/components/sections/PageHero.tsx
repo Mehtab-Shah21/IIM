@@ -31,7 +31,12 @@ export function PageHero({
           {actions ? (
             <div className="flex flex-wrap gap-3" data-track-zone="page-hero">
               {actions.quoteHref ? (
-                <ButtonLink href={actions.quoteHref} variant="primary" data-track="cta_click" data-track-location="page_hero">
+                <ButtonLink
+                  href={actions.quoteHref}
+                  variant="primary"
+                  data-track="cta_click"
+                  data-track-location="page_hero"
+                >
                   {actions.quoteLabel ?? 'Get a Quote'}
                 </ButtonLink>
               ) : null}
@@ -49,7 +54,9 @@ export function PageHero({
               ) : null}
             </div>
           ) : null}
-          {meta ? <div className="flex flex-wrap gap-x-4 gap-y-2 text-small text-cream-muted">{meta}</div> : null}
+          {meta ? (
+            <div className="flex flex-wrap gap-x-4 gap-y-2 text-small text-cream-muted">{meta}</div>
+          ) : null}
         </div>
       </div>
     </section>

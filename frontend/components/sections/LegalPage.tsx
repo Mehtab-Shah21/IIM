@@ -36,7 +36,11 @@ export async function LegalPage({pageKey}: {pageKey: LegalKey}) {
   return (
     <>
       <JsonLd data={await pageGraph({path, name: title, crumbs, modified: page._updatedAt})} />
-      <PageHero title={title} crumbs={crumbs} meta={updated ? <span>Last updated {updated}</span> : null} />
+      <PageHero
+        title={title}
+        crumbs={crumbs}
+        meta={updated ? <span>Last updated {updated}</span> : null}
+      />
       <Section>
         <RichText value={page.body} />
       </Section>

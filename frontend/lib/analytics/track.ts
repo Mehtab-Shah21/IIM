@@ -2,9 +2,14 @@
  * Analytics events (CLAUDE.md §16): quote_submit, amc_submit, whatsapp_click, phone_click, cta_click.
  * Sends to GA4 when it has loaded; otherwise queues in dataLayer. Never sends personal data.
  */
-export type TrackEvent = 'quote_submit' | 'amc_submit' | 'whatsapp_click' | 'phone_click' | 'cta_click'
+export type TrackEvent =
+  'quote_submit' | 'amc_submit' | 'whatsapp_click' | 'phone_click' | 'cta_click'
 
-type Gtag = (command: 'event' | 'js' | 'config', target: string | Date, params?: Record<string, unknown>) => void
+type Gtag = (
+  command: 'event' | 'js' | 'config',
+  target: string | Date,
+  params?: Record<string, unknown>,
+) => void
 
 declare global {
   interface Window {

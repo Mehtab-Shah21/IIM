@@ -5,7 +5,11 @@ import {CtaBand, DirectAnswer} from '@/components/sections/Blocks'
 import {ContactDock} from '@/components/sections/ContactDock'
 import {AsideCta, ContentLayout, PriceList, RelatedServices} from '@/components/sections/Inner'
 import {PageHero} from '@/components/sections/PageHero'
-import {ctaFromSections, faqsFromSections, SectionRenderer} from '@/components/sections/SectionRenderer'
+import {
+  ctaFromSections,
+  faqsFromSections,
+  SectionRenderer,
+} from '@/components/sections/SectionRenderer'
 import {JsonLd} from '@/components/seo/JsonLd'
 import {getAreas, getService, getServices, getSettings, getSlugs} from '@/lib/content'
 import {serviceWhatsappMessage} from '@/lib/contact'
@@ -38,7 +42,12 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
 export default async function ServicePage({params}: Props) {
   const {slug} = await params
-  const [service, settings, allServices, areas] = await Promise.all([getService(slug), getSettings(), getServices(), getAreas()])
+  const [service, settings, allServices, areas] = await Promise.all([
+    getService(slug),
+    getSettings(),
+    getServices(),
+    getAreas(),
+  ])
   if (!service) notFound()
 
   const path = routes.service(slug)
@@ -48,7 +57,9 @@ export default async function ServicePage({params}: Props) {
   const pricesVisible = Boolean(settings.showPrices && service.showPrices)
   const faqs = faqsFromSections(service.sections)
   const cta = ctaFromSections(service.sections)
-  const related = service.relatedServices?.length ? service.relatedServices : allServices.filter((s) => s._id !== service._id)
+  const related = service.relatedServices?.length
+    ? service.relatedServices
+    : allServices.filter((s) => s._id !== service._id)
   const crumbs = [homeCrumb, {name: 'Services', href: routes.services}, {name: service.title ?? ''}]
   const reviewed = formatDate(service.lastReviewed)
 
@@ -94,7 +105,14 @@ export default async function ServicePage({params}: Props) {
       />
       <ContentLayout
         asideLabel="Book this service"
-        aside={<AsideCta quoteHref={quoteUrl(slug)} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />}
+        aside={
+          <AsideCta
+            quoteHref={quoteUrl(slug)}
+            whatsappHref={links.whatsapp}
+            telHref={links.tel}
+            phoneDisplay={links.phoneDisplay}
+          />
+        }
       >
         <DirectAnswer text={service.directAnswer} />
         <SectionRenderer sections={service.sections} />
@@ -102,11 +120,16 @@ export default async function ServicePage({params}: Props) {
       </ContentLayout>
       <RelatedServices
         services={related}
-        areas={areas.filter((a) => a.slug).map((a) => ({href: routes.area(a.slug!), label: a.title ?? ''}))}
+        areas={areas
+          .filter((a) => a.slug)
+          .map((a) => ({href: routes.area(a.slug!), label: a.title ?? ''}))}
       />
       <CtaBand
         heading={cta?.heading || `Book ${service.title?.toLowerCase() ?? 'a technician'} in Dubai`}
-        text={cta?.text || 'Send a photo on WhatsApp or use the quote form. We confirm the visit, and you pay after the service.'}
+        text={
+          cta?.text ||
+          'Send a photo on WhatsApp or use the quote form. We confirm the visit, and you pay after the service.'
+        }
         quoteHref={quoteUrl(slug)}
         whatsappHref={links.whatsapp}
         telHref={links.tel}

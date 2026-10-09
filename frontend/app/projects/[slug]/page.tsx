@@ -1,5 +1,5 @@
 import type {Metadata} from 'next'
-import Image from 'next/image'
+import {Img} from '@/components/ui/Img'
 import {notFound} from 'next/navigation'
 
 import {BeforeAfter, RichText} from '@/components/sections/Blocks'
@@ -29,7 +29,9 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     path: routes.project(slug),
     seo: project.seo,
     fallbackTitle: `${project.title} | Our Work in Dubai | IIM`,
-    fallbackDescription: project.summary ?? `A completed ${project.service?.title?.toLowerCase() ?? 'maintenance'} job by IIM Technical Services.`,
+    fallbackDescription:
+      project.summary ??
+      `A completed ${project.service?.title?.toLowerCase() ?? 'maintenance'} job by IIM Technical Services.`,
     defaultOgImage: project.after ?? settings.defaultOgImage,
   })
 }
@@ -47,7 +49,16 @@ export default async function ProjectPage({params}: Props) {
 
   return (
     <>
-      <JsonLd data={await pageGraph({path: routes.project(slug), name: project.title ?? '', description: project.summary, crumbs, extraJsonLd: project.seo?.extraJsonLd, modified: project._updatedAt})} />
+      <JsonLd
+        data={await pageGraph({
+          path: routes.project(slug),
+          name: project.title ?? '',
+          description: project.summary,
+          crumbs,
+          extraJsonLd: project.seo?.extraJsonLd,
+          modified: project._updatedAt,
+        })}
+      />
       <PageHero
         title={project.title ?? ''}
         eyebrow="Project"
@@ -60,7 +71,18 @@ export default async function ProjectPage({params}: Props) {
           </>
         }
       />
-      <ContentLayout asideLabel="Book a similar job" aside={<AsideCta heading="Need something similar?" quoteHref={quoteHref} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />}>
+      <ContentLayout
+        asideLabel="Book a similar job"
+        aside={
+          <AsideCta
+            heading="Need something similar?"
+            quoteHref={quoteHref}
+            whatsappHref={links.whatsapp}
+            telHref={links.tel}
+            phoneDisplay={links.phoneDisplay}
+          />
+        }
+      >
         <BeforeAfter projects={[project]} />
         <RichText value={project.body} />
         {project.gallery?.length ? (
@@ -73,7 +95,14 @@ export default async function ProjectPage({params}: Props) {
                 const img = sanityImage(g)
                 return img ? (
                   <div key={i} className="aspect-card overflow-hidden rounded-lg bg-neutral-100">
-                    <Image src={img.src} alt={img.alt} width={800} height={500} sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="size-full object-cover" />
+                    <Img
+                      src={img.src}
+                      alt={img.alt}
+                      width={800}
+                      height={500}
+                      sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+                      className="size-full object-cover"
+                    />
                   </div>
                 ) : null
               })}
@@ -82,8 +111,12 @@ export default async function ProjectPage({params}: Props) {
         ) : null}
         <ChipLinks
           items={[
-            ...(project.service?.slug ? [{href: routes.service(project.service.slug), label: project.service.title ?? ''}] : []),
-            ...(project.area?.slug ? [{href: routes.area(project.area.slug), label: project.area.title ?? ''}] : []),
+            ...(project.service?.slug
+              ? [{href: routes.service(project.service.slug), label: project.service.title ?? ''}]
+              : []),
+            ...(project.area?.slug
+              ? [{href: routes.area(project.area.slug), label: project.area.title ?? ''}]
+              : []),
           ]}
         />
       </ContentLayout>

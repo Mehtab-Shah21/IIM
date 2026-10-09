@@ -19,16 +19,31 @@ import {homeCrumb, pageGraph} from '@/lib/seo/page-graph'
 
 const message = 'Hi IIM, I would like to know more about your annual maintenance contract.'
 
-export async function amcMetadata(key: PageKey, fallbackTitle: string, fallbackDescription: string): Promise<Metadata> {
+export async function amcMetadata(
+  key: PageKey,
+  fallbackTitle: string,
+  fallbackDescription: string,
+): Promise<Metadata> {
   const [page, settings] = await Promise.all([getPage(key), getSettings()])
-  return buildMetadata({path: pageKeyRoute[key]!, seo: page?.seo, fallbackTitle, fallbackDescription, defaultOgImage: settings.defaultOgImage})
+  return buildMetadata({
+    path: pageKeyRoute[key]!,
+    seo: page?.seo,
+    fallbackTitle,
+    fallbackDescription,
+    defaultOgImage: settings.defaultOgImage,
+  })
 }
 
 function ApplyPanel({plan, title}: {plan?: 'residential' | 'commercial'; title: string}) {
   return (
-    <div id="apply" className="rounded-md border border-neutral-200 bg-white p-card shadow-md md:p-6">
+    <div
+      id="apply"
+      className="rounded-md border border-neutral-200 bg-white p-card shadow-md md:p-6"
+    >
       <h2 className="mb-2 text-h3 font-bold">{title}</h2>
-      <p className="mb-5 text-neutral-600">We call you back to agree the visit schedule and coverage before anything is signed.</p>
+      <p className="mb-5 text-neutral-600">
+        We call you back to agree the visit schedule and coverage before anything is signed.
+      </p>
       <AmcForm idPrefix={plan ? `amc-${plan}` : 'amc-hub'} plan={plan} siteKey={turnstileSiteKey} />
     </div>
   )
@@ -79,7 +94,10 @@ export async function AmcHubPage() {
           ))}
         </div>
       </Section>
-      <ContentLayout aside={<ApplyPanel title="Apply for a contract" />} asideLabel="Apply for a contract">
+      <ContentLayout
+        aside={<ApplyPanel title="Apply for a contract" />}
+        asideLabel="Apply for a contract"
+      >
         <SectionRenderer sections={page.sections} />
       </ContentLayout>
       <ContactDock message={message} />
@@ -87,12 +105,22 @@ export async function AmcHubPage() {
   )
 }
 
-export async function AmcPlanPage({pageKey, plan}: {pageKey: 'amc-residential' | 'amc-commercial'; plan: 'residential' | 'commercial'}) {
+export async function AmcPlanPage({
+  pageKey,
+  plan,
+}: {
+  pageKey: 'amc-residential' | 'amc-commercial'
+  plan: 'residential' | 'commercial'
+}) {
   const [page, settings] = await Promise.all([getPage(pageKey), getSettings()])
   if (!page) notFound()
   const links = contactLinks(settings, message)
   const path = pageKeyRoute[pageKey]!
-  const crumbs = [homeCrumb, {name: 'Annual Maintenance Contract', href: routes.amc}, {name: plan === 'residential' ? 'Residential' : 'Commercial'}]
+  const crumbs = [
+    homeCrumb,
+    {name: 'Annual Maintenance Contract', href: routes.amc},
+    {name: plan === 'residential' ? 'Residential' : 'Commercial'},
+  ]
   return (
     <>
       <JsonLd
@@ -113,7 +141,10 @@ export async function AmcPlanPage({pageKey, plan}: {pageKey: 'amc-residential' |
         crumbs={crumbs}
         actions={{quoteHref: '#apply', quoteLabel: 'Apply now', whatsappHref: links.whatsapp}}
       />
-      <ContentLayout aside={<ApplyPanel plan={plan} title="Apply for this plan" />} asideLabel="Apply for this plan">
+      <ContentLayout
+        aside={<ApplyPanel plan={plan} title="Apply for this plan" />}
+        asideLabel="Apply for this plan"
+      >
         <DirectAnswer text={page.directAnswer} />
         <SectionRenderer sections={page.sections} />
       </ContentLayout>

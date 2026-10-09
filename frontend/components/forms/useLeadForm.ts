@@ -26,22 +26,30 @@ export function useLeadForm(type: 'quote' | 'amc', initialErrors: Errors = {}) {
     if (el) el.value = String(Date.now())
     const params = new URLSearchParams(window.location.search)
     for (const k of ['utm_source', 'utm_medium', 'utm_campaign']) {
-      const input = formRef.current?.elements.namedItem(k.replace(/_(\w)/, (_, c: string) => c.toUpperCase())) as HTMLInputElement | null
+      const input = formRef.current?.elements.namedItem(
+        k.replace(/_(\w)/, (_, c: string) => c.toUpperCase()),
+      ) as HTMLInputElement | null
       if (input && params.get(k)) input.value = params.get(k)!.slice(0, 100)
     }
     const page = formRef.current?.elements.namedItem('pageUrl') as HTMLInputElement | null
     if (page) page.value = window.location.href.split('#')[0]!.slice(0, 500)
   }, [])
 
-  const values = () => Object.fromEntries(new FormData(formRef.current!).entries()) as Record<string, string>
+  const values = () =>
+    Object.fromEntries(new FormData(formRef.current!).entries()) as Record<string, string>
 
   /** Validates only the given fields (a step). Returns true when they are valid. */
-  async function validate(fields: readonly string[] | null, serviceSlugs: string[] = []): Promise<boolean> {
+  async function validate(
+    fields: readonly string[] | null,
+    serviceSlugs: string[] = [],
+  ): Promise<boolean> {
     const {amcSchema, quoteSchema, fieldErrors} = await import('@/lib/forms/schema')
     const schema = type === 'amc' ? amcSchema : quoteSchema(serviceSlugs)
     const result = schema.safeParse({...values(), type})
     const all = result.success ? {} : fieldErrors(result.error)
-    const relevant = fields ? Object.fromEntries(Object.entries(all).filter(([k]) => fields.includes(k))) : all
+    const relevant = fields
+      ? Object.fromEntries(Object.entries(all).filter(([k]) => fields.includes(k)))
+      : all
     setErrors((prev) => {
       const next = {...prev}
       for (const f of fields ?? Object.keys(prev)) delete next[f]
@@ -64,9 +72,17 @@ export function useLeadForm(type: 'quote' | 'amc', initialErrors: Errors = {}) {
         headers: {Accept: 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'},
         body: new URLSearchParams(values()),
       })
-      const data = (await res.json().catch(() => ({}))) as {ok?: boolean; ref?: string; redirect?: string; message?: string; errors?: Errors}
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean
+        ref?: string
+        redirect?: string
+        message?: string
+        errors?: Errors
+      }
       if (res.ok && data.ok && data.redirect) {
-        track(type === 'amc' ? 'amc_submit' : 'quote_submit', {form_location: window.location.pathname})
+        track(type === 'amc' ? 'amc_submit' : 'quote_submit', {
+          form_location: window.location.pathname,
+        })
         router.push(data.redirect)
         return null
       }
@@ -76,18 +92,32 @@ export function useLeadForm(type: 'quote' | 'amc', initialErrors: Errors = {}) {
         if (first) focusField(formRef.current, first)
       }
       if (data.ref) setFallbackRef(data.ref)
-      setMessage(data.message ?? 'Something went wrong. Please try again, or message us on WhatsApp.')
+      setMessage(
+        data.message ?? 'Something went wrong. Please try again, or message us on WhatsApp.',
+      )
       setResetSignal((n) => n + 1)
       return data.errors ?? null
     } catch {
-      setMessage('We could not send your request. Check your connection and try again, or message us on WhatsApp.')
+      setMessage(
+        'We could not send your request. Check your connection and try again, or message us on WhatsApp.',
+      )
       return null
     } finally {
       setSubmitting(false)
     }
   }
 
-  return {formRef, errors, setErrors, message, fallbackRef, submitting, submit, validate, resetSignal}
+  return {
+    formRef,
+    errors,
+    setErrors,
+    message,
+    fallbackRef,
+    submitting,
+    submit,
+    validate,
+    resetSignal,
+  }
 }
 
 export function focusField(form: HTMLFormElement | null, name: string) {

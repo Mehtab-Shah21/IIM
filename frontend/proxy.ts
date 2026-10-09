@@ -17,7 +17,10 @@ const goneHtml =
 function unauthorized() {
   return new NextResponse('Authentication required', {
     status: 401,
-    headers: {'WWW-Authenticate': 'Basic realm="IIM staging", charset="UTF-8"', 'X-Robots-Tag': 'noindex, nofollow'},
+    headers: {
+      'WWW-Authenticate': 'Basic realm="IIM staging", charset="UTF-8"',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
   })
 }
 
@@ -29,7 +32,9 @@ export async function proxy(req: NextRequest) {
     const expected = process.env.STAGING_BASIC_AUTH
     if (expected) {
       const header = req.headers.get('authorization') ?? ''
-      const given = header.startsWith('Basic ') ? Buffer.from(header.slice(6), 'base64').toString() : ''
+      const given = header.startsWith('Basic ')
+        ? Buffer.from(header.slice(6), 'base64').toString()
+        : ''
       if (given !== expected) return unauthorized()
     }
   }
@@ -48,7 +53,10 @@ export async function proxy(req: NextRequest) {
     if (hit.status === 410) {
       return new NextResponse(goneHtml, {
         status: 410,
-        headers: {'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=3600'},
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'public, max-age=3600',
+        },
       })
     }
     const dest = /^https?:\/\//.test(hit.to!) ? hit.to! : new URL(hit.to!, req.url).toString()
@@ -78,7 +86,8 @@ export async function proxy(req: NextRequest) {
 export const config = {
   matcher: [
     {
-      source: '/((?!_next/static|_next/image|api/|favicon.ico|opengraph-image|icon|apple-icon|robots.txt|sitemap.xml).*)',
+      source:
+        '/((?!_next/static|_next/image|api/|favicon.ico|opengraph-image|icon|apple-icon|robots.txt|sitemap.xml).*)',
       missing: [
         {type: 'header', key: 'next-router-prefetch'},
         {type: 'header', key: 'purpose', value: 'prefetch'},

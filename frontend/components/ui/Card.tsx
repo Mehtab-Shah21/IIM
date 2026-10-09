@@ -35,13 +35,18 @@ export function Card({
     <article
       className={clsx(
         'group relative flex h-full flex-col overflow-hidden rounded-md border shadow-sm transition',
-        href && 'hover:-translate-y-1 hover:shadow-md focus-within:-translate-y-1 focus-within:shadow-md',
-        tone === 'dark' ? 'border-ink-700 bg-ink-800 text-cream' : 'border-neutral-200 bg-white text-ink-900',
+        href &&
+          'hover:-translate-y-1 hover:shadow-md focus-within:-translate-y-1 focus-within:shadow-md',
+        tone === 'dark'
+          ? 'border-ink-700 bg-ink-800 text-cream'
+          : 'border-neutral-200 bg-white text-ink-900',
         className,
       )}
       data-reveal
     >
-      {media !== undefined ? <div className="aspect-card overflow-hidden bg-neutral-100">{media}</div> : null}
+      {media !== undefined ? (
+        <div className="aspect-card overflow-hidden bg-neutral-100">{media}</div>
+      ) : null}
       <div className="flex flex-1 flex-col gap-3 p-card">
         {icon ? (
           <span
@@ -53,7 +58,9 @@ export function Card({
             <Icon name={icon} />
           </span>
         ) : null}
-        <Heading className={clsx('text-h3 font-bold', tone === 'dark' ? 'text-cream' : 'text-ink-900')}>
+        <Heading
+          className={clsx('text-h3 font-bold', tone === 'dark' ? 'text-cream' : 'text-ink-900')}
+        >
           {href ? (
             <Link href={href} className="stretched-link no-underline">
               {title}
@@ -62,15 +69,24 @@ export function Card({
             title
           )}
         </Heading>
-        {text ? <p className={tone === 'dark' ? 'text-cream-muted' : 'text-neutral-600'}>{text}</p> : null}
+        {text ? (
+          <p className={tone === 'dark' ? 'text-cream-muted' : 'text-neutral-600'}>{text}</p>
+        ) : null}
         {cta ? (
           <div className="mt-auto pt-2">
             <span
               aria-hidden="true"
-              className={clsx('inline-flex min-h-tap items-center gap-2 font-semibold', tone === 'dark' ? 'text-accent' : 'text-navy')}
+              className={clsx(
+                'inline-flex min-h-tap items-center gap-2 font-semibold',
+                tone === 'dark' ? 'text-accent' : 'text-navy',
+              )}
             >
               {cta}
-              <Icon name="arrow-right" size="sm" className="transition-transform group-hover:translate-x-1" />
+              <Icon
+                name="arrow-right"
+                size="sm"
+                className="transition-transform group-hover:translate-x-1"
+              />
             </span>
           </div>
         ) : null}

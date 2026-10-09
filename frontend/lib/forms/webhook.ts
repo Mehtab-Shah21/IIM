@@ -1,6 +1,7 @@
 import {signPayload} from '@/lib/security/hmac'
 
-export type WebhookResult = {ok: true; attempts: number} | {ok: false; attempts: number; error: string}
+export type WebhookResult =
+  {ok: true; attempts: number} | {ok: false; attempts: number; error: string}
 
 /**
  * POSTs the lead to Make/n8n with X-IIM-Timestamp and X-IIM-Signature headers.
@@ -10,7 +11,10 @@ export async function sendWebhook(
   url: string,
   secret: string,
   payload: unknown,
-  {fetchImpl = fetch, sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))}: {fetchImpl?: typeof fetch; sleep?: (ms: number) => Promise<void>} = {},
+  {
+    fetchImpl = fetch,
+    sleep = (ms: number) => new Promise((r) => setTimeout(r, ms)),
+  }: {fetchImpl?: typeof fetch; sleep?: (ms: number) => Promise<void>} = {},
 ): Promise<WebhookResult> {
   const body = JSON.stringify(payload)
   let lastError = 'unknown'

@@ -1,5 +1,5 @@
 import type {Metadata} from 'next'
-import Image from 'next/image'
+import {Img} from '@/components/ui/Img'
 
 import {CtaBand} from '@/components/sections/Blocks'
 import {ContactDock} from '@/components/sections/ContactDock'
@@ -16,19 +16,28 @@ import {buildMetadata} from '@/lib/seo/metadata'
 import {homeCrumb, pageGraph} from '@/lib/seo/page-graph'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [page, settings, guides] = await Promise.all([getPage('guides'), getSettings(), getGuides()])
+  const [page, settings, guides] = await Promise.all([
+    getPage('guides'),
+    getSettings(),
+    getGuides(),
+  ])
   return buildMetadata({
     path: routes.guides,
     seo: page?.seo,
     fallbackTitle: 'Home Maintenance Guides for Dubai Homes | IIM',
-    fallbackDescription: 'Practical, expert advice on electrical safety, plumbing problems and keeping your property in good shape.',
+    fallbackDescription:
+      'Practical, expert advice on electrical safety, plumbing problems and keeping your property in good shape.',
     noindex: guides.length === 0,
     defaultOgImage: settings.defaultOgImage,
   })
 }
 
 export default async function GuidesHub() {
-  const [page, settings, guides] = await Promise.all([getPage('guides'), getSettings(), getGuides()])
+  const [page, settings, guides] = await Promise.all([
+    getPage('guides'),
+    getSettings(),
+    getGuides(),
+  ])
   const message = settings.defaultWhatsappMessage || defaultWhatsappMessage
   const links = contactLinks(settings, message)
   const title = page?.heroHeadline ?? 'Home maintenance guides for Dubai homes'
@@ -36,7 +45,15 @@ export default async function GuidesHub() {
 
   return (
     <>
-      <JsonLd data={await pageGraph({path: routes.guides, name: title, crumbs, modified: page?._updatedAt, pageType: 'CollectionPage'})} />
+      <JsonLd
+        data={await pageGraph({
+          path: routes.guides,
+          name: title,
+          crumbs,
+          modified: page?._updatedAt,
+          pageType: 'CollectionPage',
+        })}
+      />
       <PageHero title={title} eyebrow="Guides" lead={page?.heroSubhead} crumbs={crumbs} />
       <Section labelledBy="guides-list">
         <h2 id="guides-list" className="sr-only">
@@ -55,7 +72,14 @@ export default async function GuidesHub() {
                   cta="Read the guide"
                   media={
                     img ? (
-                      <Image src={img.src} alt="" width={800} height={500} sizes="(min-width: 1024px) 384px, (min-width: 768px) 50vw, 100vw" className="size-full object-cover" />
+                      <Img
+                        src={img.src}
+                        alt=""
+                        width={800}
+                        height={500}
+                        sizes="(min-width: 1024px) 384px, (min-width: 768px) 50vw, 100vw"
+                        className="size-full object-cover"
+                      />
                     ) : (
                       <PhotoPlaceholder />
                     )
@@ -68,7 +92,13 @@ export default async function GuidesHub() {
           <p className="max-w-prose text-lead">Our first guides are being written by the team.</p>
         )}
       </Section>
-      <CtaBand heading="Rather have an expert look at it?" quoteHref={quoteUrl()} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />
+      <CtaBand
+        heading="Rather have an expert look at it?"
+        quoteHref={quoteUrl()}
+        whatsappHref={links.whatsapp}
+        telHref={links.tel}
+        phoneDisplay={links.phoneDisplay}
+      />
       <ContactDock message={message} />
     </>
   )

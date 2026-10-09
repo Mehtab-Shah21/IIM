@@ -12,7 +12,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const p of data.pages ?? []) {
     if (!p.key || p.noindex || excluded.has(p.key) || !pageKeyRoute[p.key]) continue
-    entries.push({url: absoluteUrl(pageKeyRoute[p.key]!), lastModified: p._updatedAt, priority: p.key === 'home' ? 1 : 0.7})
+    entries.push({
+      url: absoluteUrl(pageKeyRoute[p.key]!),
+      lastModified: p._updatedAt,
+      priority: p.key === 'home' ? 1 : 0.7,
+    })
   }
   const typed: Array<[keyof typeof data, (slug: string) => string, number]> = [
     ['services', routes.service, 0.9],
@@ -21,7 +25,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ['guides', routes.guide, 0.6],
   ]
   for (const [key, toPath, priority] of typed) {
-    const list = data[key] as Array<{slug: string | null; _updatedAt: string; noindex: boolean | null}> | null
+    const list = data[key] as Array<{
+      slug: string | null
+      _updatedAt: string
+      noindex: boolean | null
+    }> | null
     for (const d of list ?? []) {
       if (!d.slug || d.noindex) continue
       entries.push({url: absoluteUrl(toPath(d.slug)), lastModified: d._updatedAt, priority})

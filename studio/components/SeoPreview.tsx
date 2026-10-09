@@ -8,7 +8,8 @@ type SeoValue = {metaTitle?: string; metaDescription?: string; noindex?: boolean
 
 export function SeoPreview(props: ObjectInputProps<SeoValue>) {
   const title = props.value?.metaTitle?.trim() || 'Add a meta title'
-  const description = props.value?.metaDescription?.trim() || 'Add a meta description (140–155 characters).'
+  const description =
+    props.value?.metaDescription?.trim() || 'Add a meta description (140–155 characters).'
   return (
     <div>
       <div

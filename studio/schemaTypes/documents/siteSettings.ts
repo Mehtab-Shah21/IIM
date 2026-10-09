@@ -1,4 +1,4 @@
-import {CogIcon} from '@sanity/icons'
+import {CogIcon} from '@sanity/icons/Cog'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 /**
@@ -19,8 +19,18 @@ export const siteSettings = defineType({
     {name: 'site', title: 'Site'},
   ],
   fields: [
-    defineField({name: 'businessName', type: 'string', group: 'contact', validation: (r) => r.required()}),
-    defineField({name: 'legalName', title: 'Legal name (as on the trade licence)', type: 'string', group: 'contact'}),
+    defineField({
+      name: 'businessName',
+      type: 'string',
+      group: 'contact',
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'legalName',
+      title: 'Legal name (as on the trade licence)',
+      type: 'string',
+      group: 'contact',
+    }),
     defineField({
       name: 'phoneDisplay',
       title: 'Phone (as shown)',
@@ -44,7 +54,13 @@ export const siteSettings = defineType({
       group: 'contact',
       validation: (r) => r.required().regex(/^\+971\d{8,9}$/, {name: '+971 number'}),
     }),
-    defineField({name: 'email', title: 'Public email', type: 'string', group: 'contact', validation: (r) => r.email()}),
+    defineField({
+      name: 'email',
+      title: 'Public email',
+      type: 'string',
+      group: 'contact',
+      validation: (r) => r.email(),
+    }),
     defineField({
       name: 'address',
       type: 'object',
@@ -66,7 +82,12 @@ export const siteSettings = defineType({
         defineField({name: 'lng', type: 'number'}),
       ],
     }),
-    defineField({name: 'hoursText', title: 'Working hours (as shown)', type: 'string', group: 'contact'}),
+    defineField({
+      name: 'hoursText',
+      title: 'Working hours (as shown)',
+      type: 'string',
+      group: 'contact',
+    }),
     defineField({
       name: 'openingHours',
       title: 'Working hours (for Google)',
@@ -83,24 +104,110 @@ export const siteSettings = defineType({
       of: [defineArrayMember({type: 'string'})],
     }),
 
-    defineField({name: 'licenceNumber', title: 'Trade licence number', type: 'string', group: 'claims'}),
-    defineField({name: 'licenceAuthority', title: 'Issuing authority', type: 'string', group: 'claims'}),
-    defineField({name: 'is247', title: 'Offer 24/7 emergency service', type: 'boolean', group: 'claims', initialValue: false}),
-    defineField({name: 'dewaShow', title: 'Show the DEWA compliance claim', type: 'boolean', group: 'claims', initialValue: false}),
-    defineField({name: 'dewaShort', title: 'DEWA claim (short)', type: 'string', group: 'claims', initialValue: 'DEWA-compliant work'}),
-    defineField({name: 'dewaText', title: 'DEWA proof (full text)', type: 'text', rows: 2, group: 'claims'}),
-    defineField({name: 'insuranceText', title: 'Insurance details', type: 'text', rows: 2, group: 'claims'}),
-    defineField({name: 'freeQuotes', title: 'Quotes are free', type: 'boolean', group: 'claims', initialValue: false}),
-    defineField({name: 'responseTime', title: 'Response-time statement', type: 'string', group: 'claims', description: 'Only a confirmed, specific statement.'}),
+    defineField({
+      name: 'licenceNumber',
+      title: 'Trade licence number',
+      type: 'string',
+      group: 'claims',
+    }),
+    defineField({
+      name: 'licenceAuthority',
+      title: 'Issuing authority',
+      type: 'string',
+      group: 'claims',
+    }),
+    defineField({
+      name: 'is247',
+      title: 'Offer 24/7 emergency service',
+      type: 'boolean',
+      group: 'claims',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'dewaShow',
+      title: 'Show the DEWA compliance claim',
+      type: 'boolean',
+      group: 'claims',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'dewaShort',
+      title: 'DEWA claim (short)',
+      type: 'string',
+      group: 'claims',
+      initialValue: 'DEWA-compliant work',
+    }),
+    defineField({
+      name: 'dewaText',
+      title: 'DEWA proof (full text)',
+      type: 'text',
+      rows: 2,
+      group: 'claims',
+    }),
+    defineField({
+      name: 'insuranceText',
+      title: 'Insurance details',
+      type: 'text',
+      rows: 2,
+      group: 'claims',
+    }),
+    defineField({
+      name: 'freeQuotes',
+      title: 'Quotes are free',
+      type: 'boolean',
+      group: 'claims',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'responseTime',
+      title: 'Response-time statement',
+      type: 'string',
+      group: 'claims',
+      description: 'Only a confirmed, specific statement.',
+    }),
     defineField({name: 'warranty', title: 'Workmanship warranty', type: 'string', group: 'claims'}),
-    defineField({name: 'showPrices', title: 'Show prices on the site', type: 'boolean', group: 'claims', initialValue: false}),
-    defineField({name: 'priceNote', title: 'Note under price lists', type: 'string', group: 'claims'}),
+    defineField({
+      name: 'showPrices',
+      title: 'Show prices on the site',
+      type: 'boolean',
+      group: 'claims',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'priceNote',
+      title: 'Note under price lists',
+      type: 'string',
+      group: 'claims',
+    }),
 
-    defineField({name: 'gbpUrl', title: 'Google Business Profile link', type: 'url', group: 'reviews'}),
+    defineField({
+      name: 'gbpUrl',
+      title: 'Google Business Profile link',
+      type: 'url',
+      group: 'reviews',
+    }),
     defineField({name: 'reviewUrl', title: 'Google reviews link', type: 'url', group: 'reviews'}),
-    defineField({name: 'ratingShow', title: 'Show the Google rating', type: 'boolean', group: 'reviews', initialValue: false}),
-    defineField({name: 'ratingValue', title: 'Rating (out of 5)', type: 'number', group: 'reviews', validation: (r) => r.min(1).max(5).precision(1)}),
-    defineField({name: 'ratingCount', title: 'Number of reviews', type: 'number', group: 'reviews', validation: (r) => r.min(0).integer()}),
+    defineField({
+      name: 'ratingShow',
+      title: 'Show the Google rating',
+      type: 'boolean',
+      group: 'reviews',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'ratingValue',
+      title: 'Rating (out of 5)',
+      type: 'number',
+      group: 'reviews',
+      validation: (r) => r.min(1).max(5).precision(1),
+    }),
+    defineField({
+      name: 'ratingCount',
+      title: 'Number of reviews',
+      type: 'number',
+      group: 'reviews',
+      validation: (r) => r.min(0).integer(),
+    }),
     defineField({
       name: 'stats',
       title: 'Company numbers',
@@ -111,18 +218,36 @@ export const siteSettings = defineType({
       validation: (r) => r.max(4),
     }),
 
-    defineField({name: 'socials', title: 'Social profiles', type: 'array', group: 'social', of: [defineArrayMember({type: 'socialLink'})]}),
+    defineField({
+      name: 'socials',
+      title: 'Social profiles',
+      type: 'array',
+      group: 'social',
+      of: [defineArrayMember({type: 'socialLink'})],
+    }),
 
-    defineField({name: 'footerDescription', type: 'text', rows: 2, group: 'site', validation: (r) => r.max(200)}),
+    defineField({
+      name: 'footerDescription',
+      type: 'text',
+      rows: 2,
+      group: 'site',
+      validation: (r) => r.max(200),
+    }),
     defineField({name: 'defaultWhatsappMessage', type: 'string', group: 'site'}),
-    defineField({name: 'defaultOgImage', title: 'Default share image (1200 × 630)', type: 'imageWithAlt', group: 'site'}),
+    defineField({
+      name: 'defaultOgImage',
+      title: 'Default share image (1200 × 630)',
+      type: 'imageWithAlt',
+      group: 'site',
+    }),
     defineField({
       name: 'allowAiTraining',
       title: 'Allow AI training crawlers (GPTBot, Google-Extended, CCBot)',
       type: 'boolean',
       group: 'site',
       initialValue: true,
-      description: 'Search and answer crawlers are always allowed. This only controls crawlers that collect training data.',
+      description:
+        'Search and answer crawlers are always allowed. This only controls crawlers that collect training data.',
     }),
   ],
   preview: {prepare: () => ({title: 'Business info and settings'})},

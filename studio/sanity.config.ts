@@ -1,6 +1,11 @@
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
-import {defineDocuments, defineLocations, presentationTool, type DocumentLocation} from 'sanity/presentation'
+import {
+  defineDocuments,
+  defineLocations,
+  presentationTool,
+  type DocumentLocation,
+} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 
 import {schemaTypes, singletonTypes} from './schemaTypes'
@@ -62,7 +67,10 @@ export default defineConfig({
           page: defineLocations({
             select: {title: 'title', key: 'key'},
             resolve: (doc) => ({
-              locations: doc?.key && pageRoutes[doc.key] ? [{title: doc.title || 'Page', href: pageRoutes[doc.key]!}] : [],
+              locations:
+                doc?.key && pageRoutes[doc.key]
+                  ? [{title: doc.title || 'Page', href: pageRoutes[doc.key]!}]
+                  : [],
             }),
           }),
           service: defineLocations({
@@ -77,15 +85,21 @@ export default defineConfig({
           }),
           area: defineLocations({
             select: {title: 'title', slug: 'slug.current'},
-            resolve: (doc) => ({locations: [{title: doc?.title || 'Area', href: `/areas/${doc?.slug}/`}]}),
+            resolve: (doc) => ({
+              locations: [{title: doc?.title || 'Area', href: `/areas/${doc?.slug}/`}],
+            }),
           }),
           guide: defineLocations({
             select: {title: 'title', slug: 'slug.current'},
-            resolve: (doc) => ({locations: [{title: doc?.title || 'Guide', href: `/guides/${doc?.slug}/`}]}),
+            resolve: (doc) => ({
+              locations: [{title: doc?.title || 'Guide', href: `/guides/${doc?.slug}/`}],
+            }),
           }),
           project: defineLocations({
             select: {title: 'title', slug: 'slug.current'},
-            resolve: (doc) => ({locations: [{title: doc?.title || 'Project', href: `/projects/${doc?.slug}/`}, home]}),
+            resolve: (doc) => ({
+              locations: [{title: doc?.title || 'Project', href: `/projects/${doc?.slug}/`}, home],
+            }),
           }),
           faq: defineLocations({locations: [{title: 'FAQ', href: '/faq/'}, home]}),
           testimonial: defineLocations({locations: [{title: 'Reviews', href: '/reviews/'}, home]}),
@@ -103,7 +117,9 @@ export default defineConfig({
     // Singletons cannot be duplicated, unpublished or deleted.
     actions: (input, context) =>
       singletonTypes.has(context.schemaType)
-        ? input.filter(({action}) => action && ['publish', 'discardChanges', 'restore'].includes(action))
+        ? input.filter(
+            ({action}) => action && ['publish', 'discardChanges', 'restore'].includes(action),
+          )
         : input,
   },
 })

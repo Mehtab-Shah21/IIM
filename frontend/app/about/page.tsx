@@ -22,7 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
     path: routes.about,
     seo: page?.seo,
     fallbackTitle: 'About IIM Technical Services | Dubai Maintenance Team',
-    fallbackDescription: 'Meet the team behind IIM Technical Services and how we look after homes and businesses across Dubai.',
+    fallbackDescription:
+      'Meet the team behind IIM Technical Services and how we look after homes and businesses across Dubai.',
     defaultOgImage: settings.defaultOgImage,
   })
 }
@@ -38,17 +39,41 @@ export default async function AboutPage() {
   const details: Array<[IconName, string]> = [
     ['building-2', settings.legalName || settings.businessName || ''],
     ...(settings.licenceNumber
-      ? [['badge-check', `Trade licence ${settings.licenceNumber}${settings.licenceAuthority ? `, ${settings.licenceAuthority}` : ''}`] as [IconName, string]]
+      ? [
+          [
+            'badge-check',
+            `Trade licence ${settings.licenceNumber}${settings.licenceAuthority ? `, ${settings.licenceAuthority}` : ''}`,
+          ] as [IconName, string],
+        ]
       : []),
-    ...(settings.dewaShow && settings.dewaText ? [['shield-check', settings.dewaText] as [IconName, string]] : []),
-    ...(settings.insuranceText ? [['shield-check', settings.insuranceText] as [IconName, string]] : []),
+    ...(settings.dewaShow && settings.dewaText
+      ? [['shield-check', settings.dewaText] as [IconName, string]]
+      : []),
+    ...(settings.insuranceText
+      ? [['shield-check', settings.insuranceText] as [IconName, string]]
+      : []),
     ['map-pin', addressLine(settings)],
   ]
 
   return (
     <>
-      <JsonLd data={await pageGraph({path: routes.about, name: page.heroHeadline ?? 'About', description: page.seo?.metaDescription, crumbs, extraJsonLd: page.seo?.extraJsonLd, modified: page._updatedAt, pageType: 'AboutPage'})} />
-      <PageHero title={page.heroHeadline ?? 'About IIM Technical Services'} eyebrow="About IIM" lead={page.heroSubhead} crumbs={crumbs} />
+      <JsonLd
+        data={await pageGraph({
+          path: routes.about,
+          name: page.heroHeadline ?? 'About',
+          description: page.seo?.metaDescription,
+          crumbs,
+          extraJsonLd: page.seo?.extraJsonLd,
+          modified: page._updatedAt,
+          pageType: 'AboutPage',
+        })}
+      />
+      <PageHero
+        title={page.heroHeadline ?? 'About IIM Technical Services'}
+        eyebrow="About IIM"
+        lead={page.heroSubhead}
+        crumbs={crumbs}
+      />
       <ContentLayout
         asideLabel="Company details"
         aside={
@@ -71,7 +96,14 @@ export default async function AboutPage() {
       >
         <SectionRenderer sections={page.sections} />
       </ContentLayout>
-      <CtaBand heading="Work with us" text="Tell us what needs doing. We confirm a time, do the job and you pay after the service." quoteHref={quoteUrl()} whatsappHref={links.whatsapp} telHref={links.tel} phoneDisplay={links.phoneDisplay} />
+      <CtaBand
+        heading="Work with us"
+        text="Tell us what needs doing. We confirm a time, do the job and you pay after the service."
+        quoteHref={quoteUrl()}
+        whatsappHref={links.whatsapp}
+        telHref={links.tel}
+        phoneDisplay={links.phoneDisplay}
+      />
       <ContactDock message={message} />
     </>
   )
