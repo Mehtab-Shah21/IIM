@@ -7,7 +7,7 @@ Prepared 9 October 2026, from `CLAUDE.md`. No application code has been written 
 | Item | State |
 |---|---|
 | Toolchain on the dev machine | Node 24.13.0 (current LTS line), npm 11.5.2, Git 2.53. No PHP, Docker or `gh` CLI. |
-| Repository | `github.com/Mehtab-Shah21/IIM_Website`, `main` pushed. **The repo is currently public**; `CLAUDE.md` §18 asks for a private repo (see question Q1). |
+| Repository | `github.com/Mehtab-Shah21/IIM_Website`, `main` pushed. Private (changed by the owner on 9 Oct 2026; verified). |
 | What `main` contains | A complete **WordPress** build of the same site (theme `iim`, plugin `iim-core`, server config, docs), made earlier the same day and tested in WordPress Playground. That stack is superseded by `CLAUDE.md`. |
 | Reusable from that work | The live-site audit (`docs/01-current-site-audit.md`), the full old-URL inventory and redirect map (`docs/redirects.csv`), original Dubai-specific copy for 7 services, 3 AMC pages and About (`plugins/iim-core/seed/content.json`, answers validated at 40–60 words and titles/descriptions validated for length), the placeholder register, and the design decisions already agreed (see §6). |
 
@@ -79,7 +79,7 @@ Visitor ──HTTPS──> Cloudflare (DNS, WAF, rate-limit rule, Turnstile)
 | R7 | In-memory rate limit resets on restart or deploy. | A small window for abuse. | Cloudflare rate-limit rule as the primary control (T5); Turnstile + honeypot + timing check besides. |
 | R8 | **No lead store of our own.** Leads go only to the webhook and email. If both fail, the visitor gets a 503. | A lead could be lost if the visitor leaves. | The 503 page shows the WhatsApp and phone buttons prefilled with the reference and details summary, so the customer can still reach the owner; logs keep the reference (no PII). |
 | R9 | **Make free plan:** 2 active scenarios, monthly operation cap (about 1,000). | The reminder scenario uses operations daily. | Lead scenario ≈ 4 operations per lead; the reminder filter runs once a day. Well under the cap at expected volume; document the n8n self-hosted alternative. |
-| R10 | Repository is public. | `CLAUDE.md`, the plan and any future misconfiguration are visible; the brief says private. | Make it private now (T1). No secrets are in it. |
+| R10 | Repository was briefly public. | Code and plan were visible for a short time; no secrets were ever committed. | **Resolved:** made private on 9 Oct 2026. |
 | R11 | `CLAUDE.md` conflicts with decisions already made with you (colours, AC page, extra redirects, draft titles with unconfirmed claims). | Rework if guessed wrong. | Asked as Q3–Q6. |
 
 ## 5. Phase estimates (developer days, one engineer)
@@ -110,4 +110,4 @@ The brief says to ask before deviating from its numbers, so these are listed as 
 
 ## 7. Questions for the checkpoint
 
-See the checkpoint report; the same list is kept in `PLACEHOLDERS.md` (client facts) and here (project decisions): Q1 private repo, Q2 WordPress build handling, Q3 colours, Q4 AC, Q5 `next-sanity` vs `@sanity/client`, Q6 extended redirect map, Q7 JS budget, Q8 CSP, Q9 hosting tier and access.
+See the checkpoint report; the same list is kept in `PLACEHOLDERS.md` (client facts) and here (project decisions): Q1 private repo (done), Q2 WordPress build handling, Q3 colours, Q4 AC, Q5 `next-sanity` vs `@sanity/client`, Q6 extended redirect map, Q7 JS budget, Q8 CSP, Q9 hosting tier and access.

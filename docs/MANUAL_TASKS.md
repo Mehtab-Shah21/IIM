@@ -4,7 +4,7 @@ Initial version from Phase 0. Each task says who does it and what to send back t
 
 ## T1. GitHub (now)
 
-1. Make the repository private: github.com/Mehtab-Shah21/IIM_Website → **Settings → General → Danger Zone → Change visibility → Private**.
+1. ~~Make the repository private~~ **Done 9 Oct 2026** (verified: anonymous access returns 404).
 2. Turn on 2FA for every account with access.
 3. **Settings → Branches → Add rule** for `main`: require a pull request, require status checks (the `ci` workflow, once Phase 1 adds it), and block force pushes.
 4. **Settings → Code security**: enable Dependabot alerts and security updates.
