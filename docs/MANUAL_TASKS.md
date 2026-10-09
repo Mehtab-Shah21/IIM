@@ -92,6 +92,9 @@ The CSP ships in Report-Only mode. After a week of normal use on staging, includ
 
 ## T13. Owner decisions from the build (ADR-005)
 
-1. Approve the `groq-js` development dependency (fixture mode), or ask for it to be replaced.
-2. Approve the trimmed, self-hosted fonts (`next/font/local` instead of `next/font/google`; same fonts and weights in use).
-3. Mobile LCP in the lab is 2.5–2.8 s against the 2.5 s target. Choose: system fonts for body text, accept and judge by field data on staging, or wait for the real hero photos.
+**Done 9 Oct 2026.** `groq-js` and the trimmed self-hosted fonts are kept. Mobile LCP (2.5–2.8 s in the lab) is judged by field data on staging (T14).
+
+## T14. Check real-world speed (once staging runs behind Cloudflare)
+
+1. Run PageSpeed Insights (mobile) on `/`, `/services/plumbing-services-dubai/`, `/get-a-quote/` and `/contact/`. Send the developer the LCP and performance score of each.
+2. After launch, check Search Console → **Core Web Vitals** monthly. If mobile LCP is "Needs improvement" or "Poor", tell the developer: the next step is system fonts for body text (ADR-005).

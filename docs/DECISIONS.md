@@ -114,12 +114,17 @@ Accessibility, best practices and SEO score 100 / 96 / 100 everywhere.
 
 **Why LCP is still about 2.5–2.8 s.** The LCP element is text, painted with the first frame (about 0.2 s unthrottled). Lighthouse's simulator also counts every request that finished before that paint, which includes the framework JavaScript (about 130 KB). A bare Next 16 page with no fonts, CSS or site code already scores about 2.0 s. The remaining gap is the brand fonts and the site's own CSS and JS.
 
-**Remaining options, for the owner:**
+Options considered:
 
 - (a) System fonts for body text (about −0.2 s).
 - (b) Accept the lab result and judge by field data (CrUX/PageSpeed on staging behind Cloudflare: Brotli, HTTP/3).
-- (c) A real hero photo becomes the LCP element on most pages once supplied (PLACEHOLDERS B3), which changes the picture again.
+- (c) Wait for a real hero photo, which becomes the LCP element on most pages once supplied (PLACEHOLDERS B3).
 
-**Until decided:** LHCI fails on any category below target (performance 90, the others 95) and on CLS, and **warns** on LCP over 2.5 s. A permanently red CI would hide new regressions.
+**Decided (owner, 9 Oct 2026): (b).** The brand fonts stay. In CI, LHCI fails on any category below target (performance 90, the others 95) and on CLS, and **warns** on LCP over 2.5 s. LCP is judged on staging behind Cloudflare: PageSpeed Insights (mobile) on the templates above, and real-user data in Search Console's Core Web Vitals report once there is enough traffic (MANUAL_TASKS T14). If field LCP at the 75th percentile is over 2.5 s, revisit (a).
+
+**Owner sign-off on items 1 and 6** (9 Oct 2026, owner: "your choice"). Both kept:
+
+- `groq-js` stays: dev-only, never shipped, and it keeps the real GROQ queries under test.
+- The trimmed local fonts stay: same typefaces, about 0.3 s faster.
 
 **7. Sanity icons.** `@sanity/icons` 5 exports one module per icon (`@sanity/icons/Cog`), not named exports from the package root. The Studio imports them that way; the Studio build in CI catches regressions.
