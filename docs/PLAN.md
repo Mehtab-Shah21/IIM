@@ -8,10 +8,8 @@ Prepared 9 October 2026, from `CLAUDE.md`. No application code has been written 
 |---|---|
 | Toolchain on the dev machine | Node 24.13.0 (current LTS line), npm 11.5.2, Git 2.53. No PHP, Docker or `gh` CLI. |
 | Repository | `github.com/Mehtab-Shah21/IIM_Website`, `main` pushed. Private (changed by the owner on 9 Oct 2026; verified). |
-| What `main` contains | A complete **WordPress** build of the same site (theme `iim`, plugin `iim-core`, server config, docs), made earlier the same day and tested in WordPress Playground. That stack is superseded by `CLAUDE.md`. |
-| Reusable from that work | The live-site audit (`docs/01-current-site-audit.md`), the full old-URL inventory and redirect map (`docs/redirects.csv`), original Dubai-specific copy for 7 services, 3 AMC pages and About (`plugins/iim-core/seed/content.json`, answers validated at 40–60 words and titles/descriptions validated for length), the placeholder register, and the design decisions already agreed (see §6). |
-
-**Proposed handling of the WordPress build (Q2):** tag it `wordpress-v1`, keep it on an `archive/wordpress` branch, and remove it from `main` in the first Phase 1 commit. The audit, seed copy and redirect map move into the new structure (`docs/`, `sanity/seed/`).
+| What `main` contained | A WordPress version of the site built earlier the same day. **Removed on the owner's instruction** (ADR-001); it remains in Git history. |
+| Kept as reference | `docs/reference/`: the live-site audit and full old-URL inventory, the redirect map, and original copy for 7 services, 3 AMC pages and About (answers 40–60 words; titles and descriptions length-checked). |
 
 ## 2. Versions (from `npm view`, 9 Oct 2026)
 
@@ -102,7 +100,7 @@ The calendar time depends mostly on client inputs (logo, photos, confirmations) 
 
 The brief says to ask before deviating from its numbers, so these are listed as questions rather than assumed:
 
-1. **Brand colours:** the live site uses navy `#002366` and amber `#FFB800` (logo: black and gold). The brief proposes `#0b1f3a` and `#f5a300`.
+1. **Brand colours:** resolved: match the live site (charcoal + gold/amber, cream on dark, navy on light). See ADR-002 and `CLAUDE.md` §7.
 2. **AC services:** the live site sells AC cleaning, maintenance and repair. The brief's service list omits AC.
 3. **Prices:** 13 AED "from" prices are already public on the old `/book-online`. Agreed approach: store them, hidden until confirmed.
 4. **Redirect map:** the audit found about 30 more old URLs than the brief lists (13 `/service-page/*`, `/services-4-1`, `/book-online`, `/inquiry-services-page`, `/coming-soon-01`, 16 Arabic `/ar/*`), plus 12 Wix demo-store products that should return 410. The brief's five `copy-of-*` mappings were checked against each page's real H1 and are correct.
@@ -110,4 +108,4 @@ The brief says to ask before deviating from its numbers, so these are listed as 
 
 ## 7. Questions for the checkpoint
 
-See the checkpoint report; the same list is kept in `PLACEHOLDERS.md` (client facts) and here (project decisions): Q1 private repo (done), Q2 WordPress build handling, Q3 colours, Q4 AC, Q5 `next-sanity` vs `@sanity/client`, Q6 extended redirect map, Q7 JS budget, Q8 CSP, Q9 hosting tier and access.
+See the checkpoint report; the same list is kept in `PLACEHOLDERS.md` (client facts) and here (project decisions): Q1 private repo (done), Q2 WordPress build (removed), Q3 colours (live-site theme), Q4 AC, Q5 `next-sanity` vs `@sanity/client`, Q6 extended redirect map, Q7 JS budget, Q8 CSP, Q9 hosting tier and access.

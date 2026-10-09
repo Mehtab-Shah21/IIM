@@ -1,8 +1,0 @@
-/* Critical CSS: inlined in <head>. Everything needed to paint the header and first screen. */
-@import "./tokens.css";
-@import "./base.css";
-@import "./layout.css";
-@import "./buttons.css";
-@import "./header.css";
-@import "./hero.css";
-@import "./action-bar.css";

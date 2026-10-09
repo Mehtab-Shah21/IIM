@@ -189,26 +189,32 @@ Every box, width and corner must come from these tokens. **No arbitrary values a
   --header-h: 64px;
   --action-bar-h: 64px;
 
-  /* colour: derive from the logo when supplied [CONFIRM]; these are the default proposal */
-  --navy-900: #0b1f3a;
-  --navy-700: #12335f;
-  --navy-500: #2a4d80;
-  --accent: #f5a300;          /* primary CTAs, with navy text on it */
-  --accent-600: #d98f00;
+  /* colour: CONFIRMED by the owner on 9 Oct 2026: match the live site's theme
+     (charcoal/black + gold/amber, cream text on dark, navy text on light).
+     Sampled from www.iimtechnicalservices.com; see docs/DECISIONS.md ADR-002. */
+  --ink-950: #0f0f0f;         /* footer, deepest surfaces */
+  --ink-900: #1a1a1a;         /* header, dark sections, text on amber/gold */
+  --ink-800: #262626;         /* raised cards on dark */
+  --ink-700: #3a3a3a;         /* borders on dark */
+  --gold: #e6b215;            /* brand gold: bands, large panels (ink text on it) */
+  --accent: #ffb800;          /* primary CTAs and highlights, with ink-900 text on it */
+  --accent-600: #e6a600;      /* accent hover */
+  --cream: #f5f0de;           /* body text on dark; warm light surface */
+  --cream-muted: #c9c3ad;     /* secondary text on dark */
+  --navy: #002366;            /* headings and links on white/cream surfaces */
   --white: #ffffff;
-  --neutral-50: #f6f8fb;
-  --neutral-100: #eef1f6;
-  --neutral-200: #dde3ec;
-  --neutral-500: #6b7a90;
-  --neutral-800: #1c2a3f;
-  --success: #1f9d55;
-  --error: #d64545;
-  --whatsapp: #25d366;        /* WhatsApp buttons only, with navy text */
+  --neutral-50: #f7f7f5;
+  --neutral-100: #efeee9;
+  --neutral-200: #dedcd4;     /* the one border colour on light surfaces */
+  --neutral-600: #5c6370;     /* muted text on white */
+  --success: #1e7e46;
+  --error: #c0392b;
+  --whatsapp: #25d366;        /* WhatsApp buttons only, with ink-900 text */
 
   /* shadows: three levels only */
-  --shadow-sm: 0 1px 2px rgb(11 31 58 / 0.06);
-  --shadow-md: 0 6px 16px rgb(11 31 58 / 0.10);
-  --shadow-lg: 0 16px 40px rgb(11 31 58 / 0.14);
+  --shadow-sm: 0 1px 2px rgb(15 15 15 / 0.08);
+  --shadow-md: 0 6px 16px rgb(15 15 15 / 0.12);
+  --shadow-lg: 0 16px 40px rgb(15 15 15 / 0.18);
 
   /* motion */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -217,7 +223,7 @@ Every box, width and corner must come from these tokens. **No arbitrary values a
 @media (min-width: 768px)  { :root { --gutter: 24px; --header-h: 72px; } }
 @media (min-width: 1280px) { :root { --gutter: 32px; } }
 ```
-Map these into Tailwind's `@theme`. Disable Tailwind's default colour, spacing and radius scales (`--color-*: initial;` and similar) so only tokens exist. Verify every text and background pair meets **WCAG 2.2 AA** contrast with a script in CI. Dark navy text on the amber accent; never white on amber.
+Map these into Tailwind's `@theme`. Disable Tailwind's default colour, spacing and radius scales (`--color-*: initial;` and similar) so only tokens exist. Verify every text and background pair meets **WCAG 2.2 AA** contrast with a script in CI. Ink (`--ink-900`) text on amber and gold; never white on amber or gold, and never amber or gold as text on white or cream. Amber/gold text is allowed only on ink surfaces.
 
 ### Layout rules
 - Container: max 1200 px (1320 px for full-bleed hero sections), side gutters from `--gutter`. Reading text capped at 68 characters.
@@ -229,13 +235,13 @@ Map these into Tailwind's `@theme`. Disable Tailwind's default colour, spacing a
 ### Corner rules
 - Buttons, inputs, badges: `--radius-sm`. Cards and form panels: `--radius-md`. Hero media, large images, CTA bands: `--radius-lg`. Chips and floating buttons: `--radius-pill`.
 - **Nested radius rule:** an inner element's radius = outer radius minus the padding between them. Images inside cards are clipped with `overflow: hidden` at the card radius so corners always align.
-- One border style (1 px `--neutral-200`). Three shadow levels only.
+- One border style (1 px `--neutral-200` on light surfaces, `--ink-700` on dark). Three shadow levels only.
 
 ### Typography
 - Headings: Plus Jakarta Sans. Body: Inter. Fluid scale with `clamp()`: H1 about 32 to 56 px, H2 about 26 to 40 px, H3 about 20 to 26 px, body 16 to 18 px. Heading line-height 1.15, body 1.6. `font-display: swap` with a size-adjusted fallback (no layout shift).
 
 ### Components (spec)
-- **Button:** min-height 48 px, horizontal padding 24 px, radius 8 px, weight 600, visible focus ring (3 px, 2 px offset). Variants: primary (amber, navy text), secondary (outline navy), whatsapp (green, navy text), ghost. States: hover, active, focus-visible, disabled, loading.
+- **Button:** min-height 48 px, horizontal padding 24 px, radius 8 px, weight 600, visible focus ring (3 px, 2 px offset). Variants: primary (amber, ink text), secondary (outline: ink on light surfaces, cream on dark), whatsapp (green, ink text), ghost. States: hover, active, focus-visible, disabled, loading.
 - **Card:** padding 20 px mobile, 24 px desktop, equal heights per row (CSS grid stretch), media at a fixed `aspect-ratio: 16 / 10`, consistent title and text spacing, CTA pinned to the bottom.
 - **Input:** 48 px height, 8 px radius, visible label always, error text linked with `aria-describedby`, 16 px font minimum (prevents iOS zoom).
 - **Badge and chip:** pill or 8 px radius per section 7.

@@ -39,7 +39,7 @@ Status: **Open** (not asked yet or no answer) · **Asked** · **Hidden** (built 
 | # | Item | Where | Needed | Who | Status |
 |---|---|---|---|---|---|
 | B1 | Logo files (SVG + PNG) | Header, footer, schema, favicon, OG | | Owner | Open |
-| B2 | Brand colours | `src/styles/tokens.css` | Live site: navy `#002366` + amber `#FFB800`; brief proposes `#0b1f3a` + `#f5a300` | Owner | Asked (Q3) |
+| B2 | Brand colours | `src/styles/tokens.css` | Match the live site (ADR-002). Re-check against the logo files when supplied. | Owner | Done |
 | B3 | Hero photo or poster | Homepage hero (LCP) | Real team or job photo, 4:3 or 16:10 | Owner | Open |
 | B4 | Service card images (×6–7) | Service cards and pages | 16:10, real work | Owner | Open |
 | B5 | Before and after pairs | Homepage gallery, projects | Placeholder frames until supplied | Owner | Hidden |
