@@ -1,0 +1,60 @@
+# Placeholder and [CONFIRM] register
+
+Every fact, asset or decision the build needs from the client. Anything still open at launch must be hidden or removed, never shipped as fact (`CLAUDE.md` §20). "Where" refers to the Next.js/Sanity build; `siteSettings` is the Sanity singleton.
+
+Status: **Open** (not asked yet or no answer) · **Asked** · **Hidden** (built but switched off until confirmed) · **Done**.
+
+## A. Business facts
+
+| # | Item | Where | Needed | Who | Status |
+|---|---|---|---|---|---|
+| A1 | Correct phone number | `siteSettings.phone` → header, footer, action bar, contact, schema | The old footer **shows** +971 50 904 4115 but **dials** +971 50 962 6446. Which is right? | Owner | Open |
+| A2 | WhatsApp number | `siteSettings.whatsapp` → all WhatsApp links | Old links use +971 50 962 6446. Confirm. | Owner | Open |
+| A3 | Public email | `siteSettings.email` | The old footer shows iim@iimtechnicalservices.com; the old contact page shows info@iimuae.com | Owner | Open |
+| A4 | Lead notification recipients | `OWNER_EMAIL` env | Who receives every lead | Owner | Open |
+| A5 | Street address and area | `siteSettings.address`, schema, Google profile | The old schema said "Deira". It must match the Google Business Profile exactly. | Owner | Open |
+| A6 | Working hours | `siteSettings.openingHours`, schema | Including whether emergency cover is really 24/7 | Owner | Open |
+| A7 | Trade licence number and issuing authority | Footer, About, schema | | Owner | Open |
+| A8 | DEWA compliance proof | Trust strip, About, service copy | The old site claims "DEWA-compliant technicians". Keep the claim only with proof. | Owner | Hidden |
+| A9 | Insurance details | About | | Owner | Open |
+| A10 | 24/7 emergency availability | Trust strip, Emergency page title, schema hours | | Owner | Hidden |
+| A11 | Free quotes / inspections | Quote page, FAQ | The old service pages said "Get a FREE quote" | Owner | Hidden |
+| A12 | Response-time promise | Thank-you page, quote page | | Owner | Hidden |
+| A13 | Workmanship warranty | Terms, FAQ | | Owner | Hidden |
+| A14 | Final service list | `service` documents, nav, form enum | The old site sells AC; the brief omits it. Also: signage, tiling, masonry, waterproofing? | Owner | Asked (Q4) |
+| A15 | Prices / price ranges | Service pages, `Service` schema | 13 AED prices are already public on the old `/book-online` | Owner | Hidden |
+| A16 | Service areas | `area` documents, `areaServed` | Real communities only, each with genuinely local copy | Owner | Open |
+| A17 | Company numbers (jobs, years, areas) | Homepage counters | Section hidden until real figures exist | Owner | Hidden |
+| A18 | Google Business Profile and review links | Reviews, footer, `sameAs` | | Owner | Open |
+| A19 | Google rating and review count | Trust strip, `AggregateRating` | Only real and visible on the page | Owner | Hidden |
+| A20 | Real social profile URLs | Footer, `sameAs` | Old links point to wix.com, yelp.com and facebook.com/wix | Owner | Hidden |
+| A21 | Testimonial permissions | `testimonial` documents | Sandeep Kumar, Saifullah Khan, Hamdan Anjum (from the old site) | Owner | Hidden |
+| A22 | Data retention period | Privacy policy | | Owner + legal | Open |
+| A23 | Legal review of privacy policy and terms | `/privacy-policy/`, `/terms/` | UAE PDPL alignment | Legal reviewer | Open |
+| A24 | Old "eco-friendly practices" claim | About | Not carried over until confirmed | Owner | Hidden |
+| A25 | Old AMC wording "Get your property insured" | AMC copy | Not carried over: it implies insurance | Owner | Hidden |
+
+## B. Brand and media
+
+| # | Item | Where | Needed | Who | Status |
+|---|---|---|---|---|---|
+| B1 | Logo files (SVG + PNG) | Header, footer, schema, favicon, OG | | Owner | Open |
+| B2 | Brand colours | `src/styles/tokens.css` | Live site: navy `#002366` + amber `#FFB800`; brief proposes `#0b1f3a` + `#f5a300` | Owner | Asked (Q3) |
+| B3 | Hero photo or poster | Homepage hero (LCP) | Real team or job photo, 4:3 or 16:10 | Owner | Open |
+| B4 | Service card images (×6–7) | Service cards and pages | 16:10, real work | Owner | Open |
+| B5 | Before and after pairs | Homepage gallery, projects | Placeholder frames until supplied | Owner | Hidden |
+| B6 | Technician profiles | About | Names, roles, licences, photos, with consent | Owner | Hidden |
+| B7 | Default OG image 1200×630 | `siteSettings.defaultOgImage` | Can be generated from the logo | Developer | Open |
+
+## C. Policy decisions
+
+| # | Item | Where | Who | Status |
+|---|---|---|---|---|
+| C1 | Allow AI training crawlers (GPTBot, Google-Extended, CCBot)? | `src/app/robots.ts` config switch | Owner | Open |
+| C2 | Photo uploads: allowed, and on which storage? | `ENABLE_UPLOADS` (default false) | Owner | Open |
+| C3 | Cookie or consent notice needed? | Analytics loader | Owner | Open |
+| C4 | WhatsApp alert provider for the owner (Business API, Twilio) or the free fallback (email + Telegram) | Make/n8n scenario | Owner | Open |
+
+## D. Content placeholders in the code
+
+None yet: no application code exists. From Phase 1 on, every in-code or seed placeholder is added here with its file or Sanity document.

@@ -1,0 +1,113 @@
+# Phase 0 plan: Next.js + Sanity rebuild
+
+Prepared 9 October 2026, from `CLAUDE.md`. No application code has been written for this stack yet.
+
+## 1. Starting point
+
+| Item | State |
+|---|---|
+| Toolchain on the dev machine | Node 24.13.0 (current LTS line), npm 11.5.2, Git 2.53. No PHP, Docker or `gh` CLI. |
+| Repository | `github.com/Mehtab-Shah21/IIM_Website`, `main` pushed. **The repo is currently public**; `CLAUDE.md` §18 asks for a private repo (see question Q1). |
+| What `main` contains | A complete **WordPress** build of the same site (theme `iim`, plugin `iim-core`, server config, docs), made earlier the same day and tested in WordPress Playground. That stack is superseded by `CLAUDE.md`. |
+| Reusable from that work | The live-site audit (`docs/01-current-site-audit.md`), the full old-URL inventory and redirect map (`docs/redirects.csv`), original Dubai-specific copy for 7 services, 3 AMC pages and About (`plugins/iim-core/seed/content.json`, answers validated at 40–60 words and titles/descriptions validated for length), the placeholder register, and the design decisions already agreed (see §6). |
+
+**Proposed handling of the WordPress build (Q2):** tag it `wordpress-v1`, keep it on an `archive/wordpress` branch, and remove it from `main` in the first Phase 1 commit. The audit, seed copy and redirect map move into the new structure (`docs/`, `sanity/seed/`).
+
+## 2. Versions (from `npm view`, 9 Oct 2026)
+
+| Package | Latest stable | Notes |
+|---|---|---|
+| next | 16.4.0 | `engines.node >= 20.9`. Next 16 renamed `middleware.ts` to `proxy.ts`; to be confirmed against the installed docs in Phase 1. |
+| react / react-dom | 19.3.0 | |
+| tailwindcss / @tailwindcss/postcss | 4.3.3 | CSS-first `@theme`; defaults reset with `--color-*: initial` etc. |
+| next-sanity | 13.3.4 | Peer deps: `next ^16`, `react ^19.2.3`, `sanity ^5.29 || ^6`, **`styled-components ^6.1`** (not on the allowed list, see Q5). |
+| sanity (Studio) | 6.18.0 | `engines.node >= 22.12`. |
+| @sanity/image-url | 2.1.1 | |
+| zod | 4.6.5 | Zod 4 API (`z.email()`, `z.iso.date()` etc.); confirm from types before use. |
+| nodemailer / @types/nodemailer | 10.0.16 / 8.0.2 | |
+| clsx | 2.1.1 | |
+| typescript | 7.0.2 | The native (Go) compiler. Compatibility with Next 16.4 type-checking and typescript-eslint is **unverified** (see R3). |
+| eslint / eslint-config-next | 10.12.0 / 16.4.0 | Flat config. |
+| prettier | 3.9.9 | |
+| vitest | 5.0.3 | |
+| @playwright/test | 1.64.0 | |
+| @axe-core/playwright | 4.13.0 | |
+| @lhci/cli | 0.15.1 | |
+| sharp | 0.35.5 | Only if a local asset script needs it. |
+
+Node: pin **24 LTS** in `.nvmrc` and `engines` (`>=24 <25`). Hostinger must offer Node 24; if it only offers 22, pin 22.12+ (Sanity's floor). See MANUAL_TASKS T3.
+
+## 3. Architecture
+
+```
+Visitor ──HTTPS──> Cloudflare (DNS, WAF, rate-limit rule, Turnstile)
+                        │  cache: static assets; bypass /api/*
+                        ▼
+              Hostinger Node.js web app  (next build / next start, single instance)
+              ├─ proxy.ts         apex→www (backup to Cloudflare), Sanity redirects (60 s in-memory cache),
+              │                   staging Basic Auth + noindex header
+              ├─ app/ (RSC)       static + ISR pages, tags per document type
+              ├─ /api/revalidate  Sanity webhook (signature verified) → revalidateTag()
+              └─ /api/quote       validate → webhook (HMAC) → owner email → customer email
+                        │                       │                    │
+                        ▼                       ▼                    ▼
+      Sanity Content Lake (public dataset)   Make / n8n            SMTP mailbox
+      + Sanity image CDN (custom loader)     → Google Sheet        (nodemailer adapter)
+      + hosted Studio (sanity deploy)        → owner alert
+```
+
+**Rendering.** Every public page is statically generated and revalidated by tag (`service`, `area`, `siteSettings`…) when Sanity publishes, with a time-based fallback (1 hour) in case a webhook is missed. Hostinger runs one long-lived Node process, so Next's file-system cache persists between requests (it is rebuilt on each deploy, which is fine).
+
+**Redirects.** `proxy.ts` keeps the Sanity `redirect` documents in a module-level map refreshed at most every **60 seconds** (one CDN request a minute ≈ 43k a month, well inside the free 1M). This meets the "live within a minute" goal without depending on cache busting across bundles. Loops and chains are detected when the map is built; offending rules are logged and skipped. Old-URL 410s (Wix demo store) are handled in the same place.
+
+**Forms.** One Zod schema in `src/lib/forms/` shared by the client and the route handler. The form posts as a normal HTML form, so it works without JavaScript; JS adds steps, inline errors and fetch submission. The in-memory rate limiter works because there is a single instance; Cloudflare's rule is the primary limit.
+
+**Staging.** A second Hostinger web app from the `staging` branch, with `SITE_ENV=staging`. `proxy.ts` then adds HTTP Basic Auth (credentials from env) and `X-Robots-Tag: noindex`. This avoids relying on a Hostinger password-protection feature that may not exist for Node apps.
+
+**Images.** `next/image` with a custom loader that builds Sanity CDN URLs (`w`, `q`, `auto=format`, `fit`). `images.unoptimized` is not needed because the loader bypasses Next's optimiser, so Hostinger's CPU never resizes images.
+
+## 4. Risks and how each is handled
+
+| # | Risk | Impact | Plan |
+|---|---|---|---|
+| R1 | **First-load JS budget of 100 KB gzipped.** The shared Next.js + React runtime is already close to that before any of our code (about 100 KB in recent versions). | CI could fail on day one, through no fault of the site code. | Measure the empty-app baseline in Phase 1 and report it. Keep client components minimal (menu, form, counters). If the baseline alone breaks the budget, ask to restate it as "baseline + 30 KB" (Q7). |
+| R2 | **Static CSP vs Next inline scripts.** App Router streams the RSC payload in inline `<script>` tags. A static CSP without nonces can't allow them except with `'unsafe-inline'`; nonces force dynamic rendering, which loses ISR. | The CSP can't be both strict and static. | Recommend a static CSP with `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com <analytics>`, strict everything else (`object-src 'none'`, `base-uri 'self'`, `frame-ancestors 'none'`, `form-action 'self'`), Report-Only first. Check whether Next 16's SRI or hash support can remove `'unsafe-inline'`; record in `DECISIONS.md` (Q8). |
+| R3 | **TypeScript 7.0** (native compiler) may not yet be supported by Next's type-check step, typescript-eslint or the Sanity typegen. | Broken typecheck or lint in CI. | Try TS 7 first in Phase 1. If anything breaks, pin the newest 6.x/5.x that all tools support and record why. |
+| R4 | **`next-sanity` needs `styled-components`** (a peer dependency used by its Studio and visual-editing parts). | A dependency outside the allowed list; possible bundle weight. | Option A: add `styled-components` (server-only, tree-shaken; verify it never reaches the client bundle). Option B: skip `next-sanity` and use `@sanity/client` directly (also not on the list, but smaller). Recommend **B** (Q5). |
+| R5 | **Sanity free plan:** public datasets only, **2 permission roles**, 20 seats, 250k API and 1M CDN requests a month. Which two roles the free plan offers needs confirming; the brief assumes Administrator + Editor. | If the second role is "Viewer", the SEO specialist can't edit. | Verify in the Sanity project settings (T2). Never store leads or private data in Sanity. Traffic of ~1,000 visits a month is far below the limits. |
+| R6 | **Hostinger Node.js web apps:** published specs show the Business tier with 5 web apps, 2 CPU and 3 GB RAM, and Cloud Startup with 10 apps, 4 CPU and 4 GB. Not published: Node version choices, build-time memory/timeout, start command control, env var handling, persistence of `.next/cache`, outbound SMTP ports, logs, process restarts. | A failed or memory-starved `next build`. | Verify with T3 before Phase 1 ends. A `next build` of this size normally needs under 1.5 GB. Fallback: build in GitHub Actions and deploy the `standalone` output, if Hostinger allows it. |
+| R7 | In-memory rate limit resets on restart or deploy. | A small window for abuse. | Cloudflare rate-limit rule as the primary control (T5); Turnstile + honeypot + timing check besides. |
+| R8 | **No lead store of our own.** Leads go only to the webhook and email. If both fail, the visitor gets a 503. | A lead could be lost if the visitor leaves. | The 503 page shows the WhatsApp and phone buttons prefilled with the reference and details summary, so the customer can still reach the owner; logs keep the reference (no PII). |
+| R9 | **Make free plan:** 2 active scenarios, monthly operation cap (about 1,000). | The reminder scenario uses operations daily. | Lead scenario ≈ 4 operations per lead; the reminder filter runs once a day. Well under the cap at expected volume; document the n8n self-hosted alternative. |
+| R10 | Repository is public. | `CLAUDE.md`, the plan and any future misconfiguration are visible; the brief says private. | Make it private now (T1). No secrets are in it. |
+| R11 | `CLAUDE.md` conflicts with decisions already made with you (colours, AC page, extra redirects, draft titles with unconfirmed claims). | Rework if guessed wrong. | Asked as Q3–Q6. |
+
+## 5. Phase estimates (developer days, one engineer)
+
+| Phase | Scope | Estimate |
+|---|---|---|
+| 1 Foundation | Next/Tailwind/tokens, tooling, CI, layout shell, UI primitives, style guide, screenshot + overflow tests | 3–4 |
+| 2 Sanity | Schemas, Studio desk and previews, validation and counters, seed import (reusing the existing copy), typegen, queries with tags, revalidate route, image loader | 3–4 |
+| 3 Homepage | All 10 sections, motion, Lighthouse pass | 2–3 |
+| 4 Inner pages | Hubs, service/area/guide templates, AMC, about, projects, reviews, FAQ, contact, legal, 404, breadcrumbs | 3–4 |
+| 5 Forms and leads | Zod schema, multi-step form with no-JS fallback, AMC form, `/api/quote`, Turnstile, rate limit, HMAC webhook with retries, emails, thank-you, analytics events, Make/n8n spec, full e2e suite | 3–4 |
+| 6 SEO | Metadata builder, JSON-LD builders and tests, sitemap, robots, redirects in the proxy, OG images, SEO guide | 2–3 |
+| 7 Hardening | Budgets, axe, headers and CSP, audit | 1–2 |
+| 8 QA and handover | Full QA, docs, walkthrough | 1–2 |
+| **Total** | | **18–26 days** |
+
+The calendar time depends mostly on client inputs (logo, photos, confirmations) and account access.
+
+## 6. Decisions already made with you for the WordPress build
+
+The brief says to ask before deviating from its numbers, so these are listed as questions rather than assumed:
+
+1. **Brand colours:** the live site uses navy `#002366` and amber `#FFB800` (logo: black and gold). The brief proposes `#0b1f3a` and `#f5a300`.
+2. **AC services:** the live site sells AC cleaning, maintenance and repair. The brief's service list omits AC.
+3. **Prices:** 13 AED "from" prices are already public on the old `/book-online`. Agreed approach: store them, hidden until confirmed.
+4. **Redirect map:** the audit found about 30 more old URLs than the brief lists (13 `/service-page/*`, `/services-4-1`, `/book-online`, `/inquiry-services-page`, `/coming-soon-01`, 16 Arabic `/ar/*`), plus 12 Wix demo-store products that should return 410. The brief's five `copy-of-*` mappings were checked against each page's real H1 and are correct.
+5. **Draft titles and descriptions:** several drafts in `CLAUDE.md` §11 contain unconfirmed claims ("Licensed", "24/7", "DEWA-compliant", "same-day") and some are outside the length limits. The WordPress seed has validated versions without those claims.
+
+## 7. Questions for the checkpoint
+
+See the checkpoint report; the same list is kept in `PLACEHOLDERS.md` (client facts) and here (project decisions): Q1 private repo, Q2 WordPress build handling, Q3 colours, Q4 AC, Q5 `next-sanity` vs `@sanity/client`, Q6 extended redirect map, Q7 JS budget, Q8 CSP, Q9 hosting tier and access.
