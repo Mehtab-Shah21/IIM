@@ -1,0 +1,11 @@
+node_modules/
+dist-zip/
+*.log
+.DS_Store
+Thumbs.db
+
+# Secrets never live in the repo
+.env
+.env.*
+wp-config.php
+server/*.local.*

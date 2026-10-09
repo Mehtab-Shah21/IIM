@@ -1,0 +1,146 @@
+/* Home hero and inner page hero. LCP is the H1 text or the optional hero image. */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-8);
+  background: var(--c-navy-800);
+  color: var(--c-on-dark);
+}
+
+/* Subtle blueprint grid: pure CSS, no image request. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: var(--space-7) var(--space-7);
+  mask-image: linear-gradient(120deg, transparent 20%, #000 80%);
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.hero__copy {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+.hero h1 { color: var(--c-on-dark); }
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--c-amber-500);
+}
+
+.hero__promise {
+  font-size: var(--fs-lead);
+  color: var(--c-on-dark-muted);
+  max-width: 52ch;
+}
+
+.hero__media {
+  position: relative;
+  aspect-ratio: var(--ar-hero);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--c-navy-600);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Trust strip */
+.trust-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trust-strip li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-min);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+}
+
+.trust-strip .icon {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  color: var(--c-amber-500);
+}
+
+.trust-strip a { color: inherit; }
+
+@media (min-width: 768px) {
+  .trust-strip { grid-template-columns: repeat(4, max-content); }
+}
+
+@media (min-width: 1024px) {
+  .hero { padding-block: var(--space-9); }
+  .hero__inner { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--grid-gap); }
+  .hero__copy { grid-column: 1 / span 7; }
+  .hero__media { grid-column: 9 / span 4; }
+  .hero__inner--no-media .hero__copy { grid-column: 1 / span 9; }
+}
+
+/* Inner page hero (services, areas, pages) */
+.page-hero {
+  padding-block: var(--space-7) var(--space-8);
+  background: var(--c-navy-800);
+  color: var(--c-on-dark);
+}
+
+.page-hero h1 { color: var(--c-on-dark); }
+
+.page-hero__inner {
+  display: grid;
+  gap: var(--space-5);
+  max-width: var(--measure);
+}
+
+.page-hero .lead { color: var(--c-on-dark-muted); }
+
+.page-hero .eyebrow { color: var(--c-amber-500); }
+
+/* Breadcrumbs */
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-small);
+  color: var(--c-on-dark-muted);
+}
+
+.breadcrumbs li + li::before {
+  content: "/";
+  margin-right: var(--space-2);
+  color: var(--c-neutral-400);
+}
+
+.breadcrumbs a { color: var(--c-on-dark); }
+.breadcrumbs [aria-current="page"] { color: var(--c-on-dark-muted); }

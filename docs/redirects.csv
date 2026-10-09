@@ -1,0 +1,34 @@
+source,target,code,note
+/coming-soon-01,/,301,Duplicate of home (old canonical pointed to /)
+/copy-of-ac-services,/services/electrical-services-dubai/,301,H1 on old page: Electrical Services
+/copy-of-electrical-services,/services/plumbing-services-dubai/,301,H1: Plumbing Services
+/copy-of-plumbing-services,/services/painting-services-dubai/,301,H1: Painting Services
+/copy-of-painting-services,/services/handyman-services-dubai/,301,H1: Handyman Services
+/copy-of-handyman-services,/services/emergency-electrician-plumber-dubai/,301,H1: Emergency Services
+/services-4-1,/services/ac-services-dubai/,301,H1: AC Services & Repair
+/book-online,/services/,301,Wix booking list with prices
+/inquiry-services-page,/services/,301,Services overview
+/service-page/ac-deep-cleaning,/services/ac-services-dubai/,301,
+/service-page/ac-routine-maintenance,/services/ac-services-dubai/,301,
+/service-page/ac-repair-troubleshooting,/services/ac-services-dubai/,301,
+/service-page/db-dressing-upgrades,/services/electrical-services-dubai/,301,
+/service-page/electrical-fault-finding,/services/electrical-services-dubai/,301,
+/service-page/lighting-installation,/services/electrical-services-dubai/,301,
+/service-page/signage-installation,/services/electrical-services-dubai/,301,
+/service-page/flowing-perfection-zero-leaks,/services/plumbing-services-dubai/,301,Hidden leak detection
+/service-page/water-heater-services,/services/plumbing-services-dubai/,301,
+/service-page/sanitary-ware-installation,/services/plumbing-services-dubai/,301,
+/service-page/waterproofing-solutions,/services/home-renovation-dubai/,301,
+/service-page/tiling-masonry,/services/home-renovation-dubai/,301,
+/service-page/interior-exterior-painting,/services/painting-services-dubai/,301,
+/lead-collection,/annual-maintenance-contract/residential/,301,Old page was Wix template text
+/registration,/annual-maintenance-contract/commercial/,301,Old page was Wix template text
+/about-us,/about/,301,
+/accessibility-statement,/accessibility/,301,
+/contact,/contact/,301,Handled by WordPress (trailing slash)
+/privacy-policy,/privacy-policy/,301,Handled by WordPress (trailing slash)
+/ar,/,301,Arabic copy; Arabic is out of scope this phase
+/ar/*,English equivalent of the same path,301,Resolved by iim-core (16 URLs in ar_ar-pages-sitemap.xml)
+/product-page/*,,410,Wix demo store (12 URLs: eyeglasses, cap, vase...)
+/category/all-products,,410,Wix demo store
+/pricing-plans/list,,410,Empty Wix plans page

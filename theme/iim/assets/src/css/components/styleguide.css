@@ -1,0 +1,29 @@
+/* Internal style guide page (noindex). */
+.sg-section { display: grid; gap: var(--space-5); }
+.sg-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+
+.sg-swatch {
+  display: grid;
+  gap: var(--space-2);
+  width: calc(var(--space-10) + var(--space-6));
+  font-size: var(--fs-xs);
+}
+
+.sg-swatch span:first-child {
+  height: var(--space-8);
+  border: var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.sg-space {
+  height: var(--space-4);
+  background: var(--c-amber-500);
+  border-radius: var(--radius-sm);
+}
+
+.sg-radius {
+  width: var(--space-9);
+  height: var(--space-8);
+  background: var(--c-navy-100);
+  border: var(--border);
+}

@@ -1,0 +1,48 @@
+/* Long-form editor content (guides, legal pages, WYSIWYG fields). */
+.prose {
+  max-width: var(--measure);
+}
+
+.prose > * + * { margin-top: var(--space-4); }
+.prose > h2 { margin-top: var(--space-7); }
+.prose > h3 { margin-top: var(--space-6); }
+.prose > h2 + *,
+.prose > h3 + * { margin-top: var(--space-3); }
+
+.prose ul,
+.prose ol { padding-left: var(--space-5); }
+
+.prose li + li { margin-top: var(--space-2); }
+
+.prose img,
+.prose figure {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.prose figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--fs-small);
+  color: var(--c-text-muted);
+}
+
+.prose blockquote {
+  padding-left: var(--space-5);
+  border-left: var(--space-1) solid var(--c-amber-500);
+  font-size: var(--fs-lead);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-3);
+  border-bottom: var(--border);
+  text-align: left;
+}
+
+.table-scroll { overflow-x: auto; }

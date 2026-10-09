@@ -1,0 +1,477 @@
+{
+  "_note": "Seed content for `wp iim seed`. Original copy written for this rebuild; every factual claim needing client confirmation is listed in docs/placeholder-register.md. Unconfirmed claims (24/7, DEWA-compliant, licensed, free quotes, response times) are deliberately left out of public copy and meta until confirmed.",
+
+  "services": [
+    {
+      "slug": "electrical-services-dubai",
+      "title": "Electrical Services",
+      "order": 1,
+      "icon": "zap",
+      "menu_summary": "Faults, wiring, lighting, DB upgrades",
+      "card_summary": "Fault finding, tripping breakers, rewiring, lighting and distribution board upgrades for homes and businesses.",
+      "whatsapp_noun": "an electrician",
+      "schema_type": "Electrical repair and installation",
+      "hero_headline": "Electrician in Dubai",
+      "hero_subhead": "Fault finding, rewiring, lighting and DB upgrades for apartments, villas, offices and shops. Book in three steps and pay after the job.",
+      "direct_answer": "IIM Technical Services sends experienced electricians to homes and businesses across Dubai for fault finding, tripping breakers, rewiring, lighting installation, distribution board upgrades and signage. Send a photo of the problem on WhatsApp or through our quote form, choose a visit time, and pay only after the work is finished and tested.",
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "What our electricians handle", "intro": "", "items": [
+          "Breakers that trip and power cuts in part of the home",
+          "Fault finding for sockets, switches and hidden wiring problems",
+          "Distribution board (DB) cleaning, labelling and upgrades",
+          "Light fittings, spotlights, chandeliers and outdoor lighting",
+          "New sockets, isolators and dedicated lines for ovens, water heaters and AC units",
+          "Signage and shopfront lighting",
+          "Rewiring in older villas and apartments"
+        ] },
+        { "acf_fc_layout": "text", "heading": "Why electrical faults are common in Dubai properties", "body": "<p>Summer loads are heavy. When every AC unit runs through the afternoon, older circuits and loose connections heat up, and that is when breakers trip and sockets scorch. Villas that have been renovated over the years often have distribution boards that were never re-labelled, which makes faults slow to trace.</p><p>We start every visit by testing and isolating the circuit, explain what we found in plain words, and only then agree the repair with you.</p>" },
+        { "acf_fc_layout": "callout", "heading": "If you smell burning", "text": "Switch off the breaker for that circuit, keep away from the outlet and contact us. Do not keep resetting a breaker that trips again straight away: it is telling you something is wrong." }
+      ],
+      "faqs": [
+        { "question": "Why does my breaker keep tripping?", "answer": "A breaker trips to protect the circuit. The usual causes are too many high-power appliances on one line, a faulty appliance, damp getting into a socket or fitting, or worn wiring. If it trips again straight after you reset it, leave it off and book a fault-finding visit." },
+        { "question": "How much does an electrician cost in Dubai?", "answer": "It depends on the job. Replacing a socket or a light fitting costs less than tracing a hidden fault or rewiring a room. Send a photo on WhatsApp and we will explain the expected cost before the visit. You pay after the work is done." },
+        { "question": "Can you install light fittings I bought myself?", "answer": "Yes. We fit customer-supplied lights, fans and chandeliers, as long as they are rated for UAE voltage and the ceiling can carry the weight." }
+      ],
+      "prices": [
+        { "name": "Electrical fault finding", "price_from": 160, "note": "" },
+        { "name": "Lighting installation", "price_from": 110, "note": "" },
+        { "name": "DB dressing and upgrades", "price_from": 260, "note": "" },
+        { "name": "Signage installation", "price_from": 360, "note": "" }
+      ],
+      "seo_title": "Electrician in Dubai | Electrical Repairs & Wiring | IIM",
+      "seo_description": "Electricians in Dubai for fault finding, tripping breakers, rewiring, lighting and DB upgrades. Book on WhatsApp in 3 steps and pay after the service."
+    },
+    {
+      "slug": "plumbing-services-dubai",
+      "title": "Plumbing Services",
+      "order": 2,
+      "icon": "droplets",
+      "menu_summary": "Leaks, drains, water heaters",
+      "card_summary": "Leak detection, blocked drains, water heaters and bathroom or kitchen fittings, traced to the source.",
+      "whatsapp_noun": "a plumber",
+      "schema_type": "Plumbing repair and installation",
+      "hero_headline": "Plumber in Dubai",
+      "hero_subhead": "Leak detection, blocked drains, water heaters and bathroom fittings for Dubai homes and businesses.",
+      "direct_answer": "IIM Technical Services fixes leaks, blocked drains, low water pressure, faulty water heaters and bathroom or kitchen fittings across Dubai. Hidden leaks in walls and under floors are traced with non-invasive methods before anything is opened up. Share a photo or video on WhatsApp, pick a time, and pay after the repair.",
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "Plumbing jobs we take on", "intro": "", "items": [
+          "Dripping taps, mixers and shower valves",
+          "Leaks under sinks, behind toilets and through ceilings",
+          "Hidden leak detection in walls, ceilings and floors",
+          "Blocked sinks, floor drains and toilets",
+          "Water heater repair and replacement",
+          "Toilets, basins, shower screens and other sanitary ware",
+          "Low water pressure and noisy pipes"
+        ] },
+        { "acf_fc_layout": "text", "heading": "Water problems we see in Dubai buildings", "body": "<p>A leak from the flat upstairs, a damp patch spreading across a ceiling, or a water bill that suddenly jumps are the calls we get most. Hot summers are hard on water heaters and on the flexible hoses under basins, which harden and split. Hard water leaves scale in mixers and shower heads and slowly cuts the pressure.</p><p>We look for the source first, so you are not paying to fix the same leak twice.</p>" },
+        { "acf_fc_layout": "callout", "heading": "Burst pipe or water through the ceiling?", "text": "Close the main water valve for your home, switch off electrics near the water, then call or WhatsApp us with a photo and your location." }
+      ],
+      "faqs": [
+        { "question": "Who do I call for a burst pipe at night?", "answer": "Turn off the main water valve for your home first and switch off electrics near the water. Then call or WhatsApp us with a photo and your location. Our emergency repairs page explains how urgent call-outs work." },
+        { "question": "How do you find a hidden leak?", "answer": "We first confirm there is a leak by checking the water meter with every tap closed. Then we trace it with moisture readings and pressure tests before opening any wall or floor, which keeps the damage and the repair cost down." },
+        { "question": "Can you replace my water heater?", "answer": "Yes. We repair and replace electric water heaters. Send a photo of the label on the old unit so we can bring the right parts." }
+      ],
+      "prices": [
+        { "name": "Hidden leak detection and repair", "price_from": 150, "note": "" },
+        { "name": "Water heater service", "price_from": 200, "note": "" },
+        { "name": "Sanitary ware installation", "price_from": 150, "note": "" }
+      ],
+      "seo_title": "Plumber in Dubai | Leak & Pipe Repair Services | IIM",
+      "seo_description": "Plumbers in Dubai for hidden leaks, blocked drains, water heaters and bathroom fittings. Send a photo on WhatsApp, pick a time and pay after the repair."
+    },
+    {
+      "slug": "ac-services-dubai",
+      "title": "AC Services",
+      "order": 3,
+      "icon": "snowflake",
+      "menu_summary": "Cleaning, servicing, repairs",
+      "card_summary": "AC deep cleaning, routine servicing and repairs for units that are not cooling, leaking or noisy.",
+      "whatsapp_noun": "an AC technician",
+      "schema_type": "Air conditioning maintenance and repair",
+      "hero_headline": "AC Repair and Maintenance in Dubai",
+      "hero_subhead": "Deep cleaning, routine servicing and repairs for home and office air conditioning.",
+      "direct_answer": "IIM Technical Services cleans, services and repairs air conditioning in Dubai homes and offices. A routine service before summer keeps units efficient, while a deep clean of coils, drain lines and filters removes dust and mould that affect air quality and power bills. Tell us what the AC is doing, and pay after the visit.",
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "AC services", "intro": "", "items": [
+          "Deep cleaning: chemical wash of coils, drain lines and filters",
+          "Routine maintenance: filter cleaning, drain check and performance test",
+          "Repairs when the AC is not cooling, leaking or noisy",
+          "Water dripping from indoor units",
+          "Thermostat and control problems"
+        ] },
+        { "acf_fc_layout": "text", "heading": "Signs your AC needs attention", "body": "<p>If the air feels weak, the unit runs all day without reaching the set temperature, water drips from the indoor unit, or there is a musty smell when it starts, book a check.</p><p>In Dubai, units run for most of the year, so dust and moisture build up quickly. A blocked drain line is one of the most common reasons for water stains on the ceiling under an AC unit.</p>" }
+      ],
+      "faqs": [
+        { "question": "How often should I service my AC in Dubai?", "answer": "Most households book a routine service before summer and another after it, because units run for most of the year. Homes with pets, nearby construction or heavy use benefit from more frequent filter cleaning." },
+        { "question": "Why is my AC leaking water?", "answer": "Usually the drain line is blocked with dust and slime, or the coil has iced up because of dirty filters. Switch the unit off, put a towel underneath and send us a photo." }
+      ],
+      "prices": [
+        { "name": "AC repair and troubleshooting", "price_from": 160, "note": "" },
+        { "name": "AC routine maintenance", "price_from": 170, "note": "" },
+        { "name": "AC deep cleaning", "price_from": 190, "note": "" }
+      ],
+      "seo_title": "AC Repair & Maintenance in Dubai | AC Cleaning | IIM",
+      "seo_description": "AC deep cleaning, routine servicing and repairs in Dubai for units that are not cooling, leaking or noisy. Book on WhatsApp and pay after the service."
+    },
+    {
+      "slug": "painting-services-dubai",
+      "title": "Painting Services",
+      "order": 4,
+      "icon": "paint-roller",
+      "menu_summary": "Interior and exterior painting",
+      "card_summary": "Interior and exterior painting for apartments, villas and offices, with proper preparation and a clean handover.",
+      "whatsapp_noun": "a painter",
+      "schema_type": "Interior and exterior painting",
+      "hero_headline": "Painting Services in Dubai",
+      "hero_subhead": "Interior and exterior painting for apartments, villas and offices, with proper surface preparation and a clean handover.",
+      "direct_answer": "IIM Technical Services paints apartments, villas, offices and shops across Dubai, inside and out. Every job starts with surface preparation: filling cracks, sanding, treating damp patches and protecting floors and furniture. We agree colours, finishes and the schedule with you first, work tidily, and you pay after the final walk-through.",
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "Painting work we do", "intro": "", "items": [
+          "Full apartment and villa repaints, including move-in and move-out",
+          "Feature walls and single rooms",
+          "Ceilings, doors, frames and skirting",
+          "Exterior walls, boundary walls and gates",
+          "Damp and crack treatment before painting",
+          "Office and shop repaints planned around opening hours"
+        ] },
+        { "acf_fc_layout": "text", "heading": "Painting for the Dubai climate", "body": "<p>Strong sun fades and chalks exterior paint, and AC condensation can leave damp marks on interior walls. We choose paint suited to each surface, treat the cause of a stain before covering it, and let every coat dry properly.</p><p>Moving out? We can match the original colour for a handover repaint.</p>" }
+      ],
+      "faqs": [
+        { "question": "How long does it take to paint an apartment?", "answer": "It depends on the size, the condition of the walls and how many coats are needed. You get a schedule with the quote, so you know how long each room will be out of use." },
+        { "question": "Do I need to move my furniture?", "answer": "We move and cover furniture and protect floors as part of the job. Fragile or valuable items are best packed away by you beforehand." }
+      ],
+      "prices": [
+        { "name": "Interior and exterior painting", "price_from": 1800, "note": "Depends on the size of the property" }
+      ],
+      "seo_title": "Painting Services in Dubai | Interior & Exterior | IIM",
+      "seo_description": "Interior and exterior painting for Dubai villas, apartments and offices, with proper surface preparation, tidy crews and clear quotes before work starts."
+    },
+    {
+      "slug": "handyman-services-dubai",
+      "title": "Handyman Services",
+      "order": 5,
+      "icon": "hammer",
+      "menu_summary": "Repairs, mounting, assembly",
+      "card_summary": "Furniture assembly, TV and shelf mounting, door and cabinet repairs and the small jobs on your list.",
+      "whatsapp_noun": "a handyman",
+      "schema_type": "Handyman services",
+      "hero_headline": "Handyman Services in Dubai",
+      "hero_subhead": "Small repairs, installations and odd jobs, finished in one visit where possible.",
+      "direct_answer": "IIM Technical Services handyman visits cover the small jobs that pile up: furniture assembly, curtain rails and blinds, TV and shelf mounting, door and cabinet repairs, silicone and grout touch-ups, and minor fixes across Dubai homes and offices. Send us your list with photos so the technician brings the right tools, then pay after the visit.",
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "Typical handyman jobs", "intro": "", "items": [
+          "Furniture and flat-pack assembly",
+          "Curtain rails, blinds and pictures",
+          "TV wall mounting and shelves",
+          "Door handles, hinges, locks and sticking doors",
+          "Kitchen cabinet doors and drawers",
+          "Re-sealing baths, showers and sinks",
+          "Small tiling and grout repairs"
+        ] },
+        { "acf_fc_layout": "text", "heading": "One visit, one list", "body": "<p>Most handyman calls are not a single job but a list. Send everything in one WhatsApp message with a photo of each item, and we plan the visit so it can be finished in one trip where possible. If something turns out to need an electrician or a plumber, the same team can arrange it.</p>" }
+      ],
+      "faqs": [
+        { "question": "Can you mount a TV on any wall?", "answer": "Most walls can take a TV mount, but plasterboard partitions need special fixings and some walls hide pipes or cables. The technician checks the wall before drilling." },
+        { "question": "Do you bring the materials?", "answer": "We bring standard fixings and tools. Items such as blinds, shelves or fittings are usually supplied by you; tell us in advance if you need help sourcing them." }
+      ],
+      "prices": [],
+      "seo_title": "Handyman Services in Dubai | Home Repairs & Fixes | IIM",
+      "seo_description": "Handyman services in Dubai for furniture assembly, TV mounting, door and cabinet repairs and small fixes. Send your list on WhatsApp, pay after the visit."
+    },
+    {
+      "slug": "home-renovation-dubai",
+      "title": "Home Renovation",
+      "order": 6,
+      "icon": "house",
+      "menu_summary": "Kitchens, bathrooms, tiling",
+      "card_summary": "Kitchen, bathroom, flooring, tiling and waterproofing upgrades, managed by one team from survey to handover.",
+      "whatsapp_noun": "help with a renovation",
+      "schema_type": "Home renovation",
+      "hero_headline": "Home Renovation and Makeovers in Dubai",
+      "hero_subhead": "Kitchen, bathroom, flooring, tiling and waterproofing upgrades managed end to end.",
+      "direct_answer": "IIM Technical Services renovates kitchens, bathrooms and living spaces in Dubai apartments and villas, covering tiling, flooring, waterproofing, plumbing, electrics and paint under one team. You get one point of contact from survey to handover, a clear scope agreed before work starts, and the site left clean at the end.",
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "What we renovate", "intro": "", "items": [
+          "Bathroom refits: tiles, sanitary ware, vanity and shower",
+          "Kitchen upgrades: cabinets, worktops, sinks and appliance points",
+          "Floor tiling and replacement",
+          "Wall tiling and masonry repairs",
+          "Waterproofing for bathrooms, balconies and roofs",
+          "Lighting and socket changes as part of the refit"
+        ] },
+        { "acf_fc_layout": "text", "heading": "Before you start: building approvals", "body": "<p>Most Dubai buildings and communities ask for approval, often called an NOC, from the building management or developer before renovation work starts. Check this early. We can give you the scope of work details the application usually asks for.</p>" },
+        { "acf_fc_layout": "steps", "heading": "How a renovation runs", "items": [
+          { "title": "Survey", "text": "We visit, measure and listen to what you want to change." },
+          { "title": "Scope and quote", "text": "You receive the scope of work and price to review before anything is booked." },
+          { "title": "Work in order", "text": "Removal, plumbing and electrics, waterproofing, tiling, fitting and paint, with updates on WhatsApp." },
+          { "title": "Handover", "text": "A walk-through together, so you can point out anything that still needs finishing." }
+        ] }
+      ],
+      "faqs": [
+        { "question": "Do I need permission to renovate my apartment in Dubai?", "answer": "Usually yes. Most buildings and communities ask for approval (an NOC) from the building management or developer before work starts. Ask them early, because approval can take time." },
+        { "question": "Can you fix a leaking balcony or bathroom floor?", "answer": "Yes. New waterproofing goes down after the old tiles are removed and before new tiles are laid. For a leak into the flat below, we first confirm the source, because the cause is not always the waterproofing." }
+      ],
+      "prices": [
+        { "name": "Tiling and masonry", "price_from": 150, "note": "" },
+        { "name": "Waterproofing", "price_from": 400, "note": "" }
+      ],
+      "seo_title": "Home Renovation & Makeovers Dubai | Kitchens & Baths | IIM",
+      "seo_description": "Kitchen, bathroom, flooring, tiling and waterproofing renovations for Dubai homes, managed by one team from survey to handover. Request a quote today."
+    },
+    {
+      "slug": "emergency-electrician-plumber-dubai",
+      "title": "Emergency Repairs",
+      "order": 7,
+      "icon": "siren",
+      "menu_summary": "Urgent electrical and water faults",
+      "card_summary": "Power loss, burning smells, burst pipes and serious leaks: make it safe, then call or WhatsApp us.",
+      "whatsapp_noun": "urgent help",
+      "schema_type": "Emergency electrical and plumbing repair",
+      "hero_headline": "Emergency Electrician and Plumber in Dubai",
+      "hero_subhead": "Power cuts, burning smells, burst pipes and serious leaks. Call or WhatsApp us now.",
+      "direct_answer": "For an urgent electrical fault, burst pipe, serious leak or AC breakdown in Dubai, call or WhatsApp IIM Technical Services with a photo and your location. Make the area safe first: switch off the breaker or the main water valve. We confirm when a technician can reach you, and you pay after the repair.",
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "What counts as an emergency", "intro": "", "items": [
+          "A burning smell, sparks, or a hot socket or switch",
+          "Power lost in your home only, not across the building or area",
+          "A burst pipe or water coming through a ceiling",
+          "Sewage backing up into drains",
+          "AC failure in summer with elderly people, babies or unwell people at home",
+          "A water heater leaking or tripping the power"
+        ] },
+        { "acf_fc_layout": "text", "heading": "What to do while you wait", "body": "<p><strong>Electrical:</strong> switch off the breaker for the affected circuit, or the main switch if you are unsure, and do not touch scorched fittings.</p><p><strong>Water:</strong> close the main valve for your home and switch off electrics in wet areas.</p><p>Check whether neighbours have the same problem. If the whole building is affected, it may be a building or DEWA supply issue, and we will tell you so before sending anyone.</p>" }
+      ],
+      "faqs": [
+        { "question": "Who do I call if the power goes off in my apartment?", "answer": "First check whether the whole building or area is affected. If it is, the supply is the problem and DEWA or your building management should be contacted. If only your home is off, look at the main breaker in your distribution board, then call or WhatsApp us with a photo of the board." },
+        { "question": "Is it safe to reset a breaker that keeps tripping?", "answer": "Reset it once. If it trips again straight away, leave it off: there is a fault on that circuit, and resetting it repeatedly can damage wiring or appliances." }
+      ],
+      "prices": [],
+      "seo_title": "Emergency Electrician & Plumber in Dubai | Urgent Help | IIM",
+      "seo_description": "Power cut, burning smell, burst pipe or serious leak in Dubai? Make it safe, then call or WhatsApp IIM with a photo and your location for urgent repairs."
+    }
+  ],
+
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "template": "",
+      "front_page": true,
+      "fields": {
+        "hero_headline": "Electricians, plumbers and handymen in Dubai.",
+        "hero_accent": "Your property, our priority.",
+        "hero_subhead": "Book in three steps on WhatsApp or online. A technician visits at a time that suits you, and you pay after the job is done."
+      },
+      "seo_title": "IIM Technical Services | Electrician & Plumber in Dubai",
+      "seo_description": "Electrical, plumbing, AC, painting and handyman services for Dubai homes and businesses. Book in 3 steps on WhatsApp and pay after the service is done."
+    },
+    {
+      "slug": "annual-maintenance-contract",
+      "title": "Annual Maintenance Contract",
+      "template": "templates/page-amc.php",
+      "fields": {
+        "hero_headline": "Annual Maintenance Contracts in Dubai",
+        "hero_subhead": "One yearly plan for scheduled check-ups and priority repairs, for homes and businesses.",
+        "direct_answer": "An annual maintenance contract (AMC) from IIM Technical Services covers planned check-ups of your property's electrical, plumbing and AC systems through the year, plus priority response when something breaks. Plans are available for apartments, villas, offices, shops and buildings in Dubai, and the visit schedule is agreed with you before you sign."
+      },
+      "sections": [
+        { "acf_fc_layout": "text", "heading": "What an annual contract includes", "body": "<p>Each contract is built around the property: how many AC units, bathrooms and kitchens it has, how old it is and how it is used. A typical plan combines scheduled preventive visits with priority call-outs for breakdowns.</p><p>The visits, the response priority and what is included are written into your contract before you sign, so there are no surprises.</p>" },
+        { "acf_fc_layout": "checklist", "heading": "Who it suits", "intro": "", "items": [
+          "Families in villas who want the AC, water heater and electrics checked before summer",
+          "Landlords who need dependable maintenance between tenants",
+          "Offices and shops that cannot afford downtime",
+          "Building and facility managers who want one contractor for several trades"
+        ] }
+      ],
+      "faqs": [
+        { "question": "What is an AMC?", "answer": "An annual maintenance contract is a yearly agreement for planned check-ups of your property's systems, with priority help when something breaks, instead of booking each repair separately." },
+        { "question": "Is an annual contract worth it for an apartment?", "answer": "It makes most sense if you want regular AC servicing and quick help with breakdowns without arranging each visit. Ask us to price both options so you can compare." }
+      ],
+      "seo_title": "Annual Maintenance Contract Dubai | Home & Business | IIM",
+      "seo_description": "Protect your property with an annual package covering electrical, plumbing and AC check-ups and priority repairs. Residential and commercial plans, Dubai."
+    },
+    {
+      "slug": "residential",
+      "parent": "annual-maintenance-contract",
+      "title": "Residential Maintenance Contract",
+      "template": "templates/page-amc-plan.php",
+      "fields": {
+        "hero_headline": "Residential Maintenance Contract in Dubai",
+        "hero_subhead": "Scheduled care for apartments, villas and townhouses, with priority help when something breaks.",
+        "card_summary": "Apartments, villas and townhouses: scheduled AC, electrical and plumbing check-ups with priority repairs.",
+        "direct_answer": "IIM's residential maintenance contract keeps your apartment, villa or townhouse in Dubai in working order through the year. Your plan includes scheduled check-ups of air conditioning, electrics and plumbing, agreed in advance, plus priority response for breakdowns. Apply with your property details and we will call to tailor the plan before anything is signed."
+      },
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "Typical checks on a home visit", "intro": "", "items": [
+          "AC filters, drain lines and cooling performance",
+          "Distribution board, sockets and earth-leakage protection test",
+          "Taps, mixers, hoses and drains checked for leaks",
+          "Water heater condition and safety valve",
+          "Silicone around baths, showers and sinks",
+          "A short note of anything that needs attention"
+        ] },
+        { "acf_fc_layout": "text", "heading": "For tenants and landlords", "body": "<p>Tenancy contracts in Dubai split maintenance between landlord and tenant in different ways. Either party can take out a contract, and we can share visit notes with both so everyone sees the condition of the property.</p>" }
+      ],
+      "faqs": [
+        { "question": "Can a tenant take out the contract?", "answer": "Yes. Either the tenant or the landlord can hold the contract. Check your tenancy agreement to see who is responsible for which repairs." }
+      ],
+      "seo_title": "Residential Maintenance Contract Dubai | Villas, Flats | IIM",
+      "seo_description": "Annual maintenance for villas, apartments and townhouses in Dubai, with scheduled AC, electrical and plumbing check-ups and priority help for breakdowns."
+    },
+    {
+      "slug": "commercial",
+      "parent": "annual-maintenance-contract",
+      "title": "Commercial Maintenance Contract",
+      "template": "templates/page-amc-plan.php",
+      "fields": {
+        "hero_headline": "Commercial Maintenance Contract in Dubai",
+        "hero_subhead": "Planned maintenance for offices, shops and buildings, scheduled around your working hours.",
+        "card_summary": "Offices, shops and buildings: planned maintenance scheduled around your hours, with priority response.",
+        "direct_answer": "IIM's commercial maintenance contract gives offices, shops and buildings in Dubai one contractor for electrical, plumbing, AC and general repairs. Planned visits are scheduled around your opening hours to avoid disruption, breakdowns get priority response, and every visit is recorded so you have a maintenance history for landlords and inspections."
+      },
+      "sections": [
+        { "acf_fc_layout": "checklist", "heading": "What a commercial plan can cover", "intro": "", "items": [
+          "AC servicing on a fixed schedule",
+          "Lighting, sockets and distribution boards",
+          "Washrooms, pantry plumbing and drains",
+          "Signage lighting",
+          "Doors, fixtures and paint touch-ups",
+          "Urgent call-outs between planned visits"
+        ] },
+        { "acf_fc_layout": "text", "heading": "Built around your hours", "body": "<p>Shops and offices cannot close for a repair. We agree visit times that suit your opening hours, and urgent repairs are prioritised for contract customers.</p>" }
+      ],
+      "faqs": [
+        { "question": "Can one contract cover several branches or units?", "answer": "Yes. Tell us how many locations or units you have when you apply, and we will plan the visits and pricing across all of them." }
+      ],
+      "seo_title": "Commercial Maintenance Contract Dubai | Offices, Shops | IIM",
+      "seo_description": "Annual maintenance for offices, shops and buildings in Dubai: planned visits around your opening hours, priority response and one contractor for all jobs."
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "template": "templates/page-about.php",
+      "fields": {
+        "hero_headline": "About IIM Technical Services",
+        "hero_subhead": "A Dubai maintenance team for homes and businesses: electrical, plumbing, AC, painting, handyman and renovation work."
+      },
+      "sections": [
+        { "acf_fc_layout": "text", "heading": "Who we are", "body": "<p>IIM Technical Services L.L.C. is a Dubai maintenance company covering electrical, plumbing, AC, painting, handyman and renovation work for homes and businesses. Our approach is simple: booking a technician should be as easy as sending a WhatsApp message, and you should pay only once the job is done.</p>" },
+        { "acf_fc_layout": "checklist", "heading": "How we work", "intro": "", "items": [
+          "Quick replies and clear updates on WhatsApp",
+          "Transparent pricing, agreed before work starts",
+          "Maintenance contracts tailored to each home or business",
+          "Tidy work and a check with you before we leave",
+          "Payment after the service"
+        ] },
+        { "acf_fc_layout": "text", "heading": "Where we work", "body": "<p>We cover Dubai, with technicians travelling to apartments, villas, offices and shops across the city. See the areas page for the communities we visit most.</p>" }
+      ],
+      "seo_title": "About IIM Technical Services | Dubai Maintenance Team",
+      "seo_description": "Meet the team behind IIM Technical Services: how we work, what we cover and how we look after homes and businesses across Dubai, paying after the service."
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "template": "templates/page-contact.php",
+      "fields": { "hero_headline": "Contact IIM Technical Services" },
+      "seo_title": "Contact IIM Technical Services | Call or WhatsApp in Dubai",
+      "seo_description": "Call, WhatsApp or email IIM Technical Services for repairs, maintenance and renovation in Dubai. Send a photo of the issue for the quickest reply from us."
+    },
+    {
+      "slug": "get-a-quote",
+      "title": "Get a Quote",
+      "template": "templates/page-quote.php",
+      "fields": { "hero_headline": "Get a quote" },
+      "seo_title": "Get a Quote | IIM Technical Services Dubai | Book Online",
+      "seo_description": "Tell us the issue, share a photo and choose a time. We reply to confirm your visit and you pay after the service. Electrical, plumbing, AC and more, Dubai."
+    },
+    {
+      "slug": "thank-you",
+      "title": "Thank you",
+      "template": "templates/page-thank-you.php",
+      "fields": {},
+      "seo_title": "Thank you | IIM Technical Services",
+      "seo_description": ""
+    },
+    {
+      "slug": "reviews",
+      "title": "Reviews",
+      "template": "templates/page-reviews.php",
+      "fields": { "hero_headline": "Customer reviews" },
+      "seo_title": "Customer Reviews | IIM Technical Services Dubai Ratings",
+      "seo_description": "Read what customers in Dubai say about IIM Technical Services: our response, workmanship and service on electrical, plumbing, AC and maintenance jobs."
+    },
+    {
+      "slug": "faq",
+      "title": "FAQ",
+      "template": "templates/page-faq.php",
+      "fields": { "hero_headline": "Frequently asked questions" },
+      "seo_title": "FAQs | Maintenance & Repair Services in Dubai | IIM",
+      "seo_description": "Answers on booking, pricing, payment after service, emergencies and annual maintenance contracts with IIM Technical Services in Dubai, all in one place."
+    },
+    {
+      "slug": "style-guide",
+      "title": "Style guide",
+      "template": "templates/page-styleguide.php",
+      "status": "private",
+      "fields": {},
+      "seo_title": "",
+      "seo_description": ""
+    },
+    {
+      "slug": "accessibility",
+      "title": "Accessibility",
+      "template": "",
+      "status": "draft",
+      "content": "<p>IIM Technical Services wants everyone to be able to use this website, including people who use a screen reader, keyboard, magnification or voice control.</p><h2>Our standard</h2><p>We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA. The site was built with semantic headings and landmarks, a skip link, keyboard-operable menus and forms, visible focus outlines, sufficient colour contrast, text alternatives for images and support for reduced motion.</p><h2>Known limitations</h2><p>The spam check on our forms is provided by Cloudflare. If it gives you trouble, contact us by phone or WhatsApp instead and we will take your request directly.</p><h2>Feedback</h2><p>If something on this site is hard to use, please tell us. Call or WhatsApp us using the details on our contact page and describe the page and the problem. We will reply and fix what we can.</p>",
+      "fields": {},
+      "seo_title": "Accessibility Statement | IIM Technical Services Dubai",
+      "seo_description": "How IIM Technical Services makes its website usable for everyone, the WCAG 2.2 AA standard we aim for, known limitations, and how to report a problem."
+    },
+    {
+      "slug": "privacy-policy",
+      "title": "Privacy Policy",
+      "template": "",
+      "status": "draft",
+      "content": "<p><strong>Draft for legal review. Do not publish until approved.</strong></p><p>This policy explains how IIM Technical Services L.L.C. (\"we\") collects and uses personal data through this website, in line with the UAE Personal Data Protection Law (Federal Decree-Law No. 45 of 2021).</p><h2>What we collect</h2><ul><li>Details you send in our forms: name, phone number, optional email, location, property type, the job description, your preferred date and time, and any photos you attach.</li><li>Technical data needed to protect the forms from spam: a one-way hashed version of your IP address (kept for one hour) and the result of a Cloudflare Turnstile check.</li><li>If you accept analytics cookies: anonymous usage data through Google Analytics.</li></ul><h2>Why we use it</h2><p>To respond to your request, arrange and carry out the service, send you a confirmation, and keep records of the work. We do not sell your data or use it for unrelated marketing.</p><h2>Who processes it for us</h2><ul><li>Our website host (Hostinger) and Cloudflare (security and spam protection).</li><li>Our email provider, to send confirmations.</li><li>Our automation provider (Make or n8n) and Google Workspace, to log requests in a spreadsheet and alert our team on WhatsApp.</li></ul><h2>How long we keep it</h2><p>Form submissions and photos are deleted automatically after the retention period of [CONFIRM: 24] months, unless we need them for an ongoing contract or a legal obligation.</p><h2>Your rights</h2><p>You can ask to see, correct or delete your data, or withdraw consent, by contacting us using the details on our contact page.</p><h2>Contact</h2><p>IIM Technical Services L.L.C., Dubai, United Arab Emirates. [CONFIRM: email and address]</p>",
+      "fields": {},
+      "seo_title": "Privacy Policy | How IIM Technical Services Uses Your Data",
+      "seo_description": "How IIM Technical Services collects, uses, stores and protects the personal data you send through our website, and how to ask us to access or delete it."
+    },
+    {
+      "slug": "terms",
+      "title": "Terms",
+      "template": "",
+      "status": "draft",
+      "content": "<p><strong>Draft for legal review. Do not publish until approved.</strong></p><h2>Using this website</h2><p>The information on this site is general. Prices, where shown, are starting prices and the final price is confirmed after we see the job.</p><h2>Bookings</h2><p>A request through the website or WhatsApp is not a contract until we confirm the visit. [CONFIRM: cancellation terms]</p><h2>Payment</h2><p>Payment is due after the service is completed. [CONFIRM: accepted payment methods]</p><h2>Warranty</h2><p>[CONFIRM: workmanship warranty terms]</p><h2>Annual maintenance contracts</h2><p>Contracts are governed by the written agreement signed by both parties.</p><h2>Governing law</h2><p>These terms are governed by the laws of the Emirate of Dubai and the federal laws of the UAE.</p>",
+      "fields": {},
+      "seo_title": "Terms of Service | IIM Technical Services Dubai Bookings",
+      "seo_description": "Terms for using the IIM Technical Services website and booking electrical, plumbing, AC, painting, handyman and renovation services with us in Dubai."
+    }
+  ],
+
+  "faq_topics": [
+    { "slug": "booking-and-payment", "name": "Booking and payment" },
+    { "slug": "services", "name": "Services and coverage" },
+    { "slug": "emergencies", "name": "Emergencies" },
+    { "slug": "annual-contracts", "name": "Annual contracts" }
+  ],
+
+  "faqs": [
+    { "q": "How do I book a technician?", "a": "Send us a WhatsApp message or fill in the quote form. Tell us what the problem is, add a photo or short video, and share your location and a date that suits you. We confirm the visit before the technician comes.", "topic": "booking-and-payment", "home": true },
+    { "q": "When do I pay?", "a": "You pay after the service, once the work is done and you have checked it.", "topic": "booking-and-payment", "home": true },
+    { "q": "Will I know the price before the work starts?", "a": "Yes. We explain the cost before starting any work. If the technician finds something different once on site, we agree the change with you before going ahead.", "topic": "booking-and-payment", "home": true },
+    { "q": "Why do you ask for a photo or video?", "a": "It lets the technician understand the job before arriving, bring the right parts and give you a more accurate price, which often saves a second visit.", "topic": "booking-and-payment", "home": true },
+    { "q": "Which areas of Dubai do you cover?", "a": "We work across Dubai. Send your location when you book and we will confirm the visit time. Our areas page lists the communities we visit most.", "topic": "services", "home": true },
+    { "q": "Do you work for businesses as well as homes?", "a": "Yes. We look after offices, shops and buildings as well as apartments and villas, for one-off repairs or under a commercial maintenance contract.", "topic": "services", "home": true },
+    { "q": "What should I do in an electrical or water emergency?", "a": "Make it safe first: switch off the breaker for the affected circuit, or close the main water valve. Then call or WhatsApp us with a photo and your location.", "topic": "emergencies", "home": true },
+    { "q": "What is included in an annual maintenance contract?", "a": "Scheduled check-ups of your AC, electrics and plumbing through the year, plus priority help when something breaks. The exact visits and coverage are agreed in writing before you sign.", "topic": "annual-contracts", "home": true },
+    { "q": "Are quotes free?", "a": "[CONFIRM before publishing] Yes, quotes are free. Send a photo on WhatsApp or use the quote form.", "topic": "booking-and-payment", "home": false, "status": "draft" },
+    { "q": "Are you available 24 hours a day?", "a": "[CONFIRM before publishing] Yes, for emergencies we answer calls and WhatsApp messages 24 hours a day, 7 days a week.", "topic": "emergencies", "home": false, "status": "draft" }
+  ],
+
+  "testimonials": [
+    { "name": "Sandeep Kumar", "text": "IIM provided exceptional service for our annual maintenance contract. Their commitment to quality and customer satisfaction is truly commendable.", "context": "Annual maintenance contract" },
+    { "name": "Saifullah Khan", "text": "The IIM team delivered fast and reliable emergency repair services for our business. We are highly impressed with their professionalism and expertise.", "context": "Emergency repair for a business" },
+    { "name": "Hamdan Anjum", "text": "Choosing IIM for our customized maintenance solution was the best decision. Their transparent pricing and skilled technicians exceeded our expectations.", "context": "Customised maintenance plan" }
+  ]
+}
