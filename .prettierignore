@@ -1,0 +1,10 @@
+node_modules
+.next
+dist
+coverage
+package-lock.json
+sanity.schema.json
+frontend/sanity.types.ts
+studio/sanity.types.ts
+docs/reference
+CLAUDE.md

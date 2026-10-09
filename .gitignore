@@ -1,11 +1,26 @@
 node_modules/
-dist-zip/
+.next/
+out/
+dist/
+coverage/
+.turbo/
 *.log
 .DS_Store
 Thumbs.db
 
-# Secrets never live in the repo
+# Env and secrets
 .env
 .env.*
-wp-config.php
-server/*.local.*
+!.env.example
+
+# Test artefacts
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+frontend/.lighthouseci/
+frontend/tests/visual/__screenshots__/
+
+# Sanity
+studio/dist/
+studio/.sanity/
+studio/seed/*.ndjson

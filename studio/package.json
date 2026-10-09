@@ -1,0 +1,26 @@
+{
+  "name": "studio",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "schema:extract": "sanity schema extract --enforce-required-fields --path ../sanity.schema.json",
+    "typecheck": "tsc --noEmit",
+    "seed:export": "sanity exec scripts/export-seed.ts",
+    "seed:import": "sanity dataset import seed/seed.ndjson production --replace"
+  },
+  "dependencies": {
+    "@sanity/icons": "5.2.3",
+    "@sanity/vision": "6.18.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "sanity": "6.18.0",
+    "styled-components": "6.5.3"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}

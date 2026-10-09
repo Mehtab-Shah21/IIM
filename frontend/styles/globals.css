@@ -1,0 +1,435 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/*
+ * Tailwind is locked to the design tokens: every default scale is reset (`--*: initial`)
+ * and only the names below exist. `inline` makes utilities reference the token variables,
+ * so responsive token changes (gutter, section padding) apply automatically.
+ */
+@theme inline {
+  --*: initial;
+
+  --breakpoint-sm: 30rem; /* 480 */
+  --breakpoint-md: 48rem; /* 768 */
+  --breakpoint-lg: 64rem; /* 1024 */
+  --breakpoint-xl: 80rem; /* 1280 */
+  --breakpoint-2xl: 90rem; /* 1440 */
+
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-800: var(--ink-800);
+  --color-ink-700: var(--ink-700);
+  --color-gold: var(--gold);
+  --color-accent: var(--accent);
+  --color-accent-600: var(--accent-600);
+  --color-cream: var(--cream);
+  --color-cream-muted: var(--cream-muted);
+  --color-navy: var(--navy);
+  --color-white: var(--white);
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-600: var(--neutral-600);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-error: var(--error);
+  --color-error-bg: var(--error-bg);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-600: var(--whatsapp-600);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --spacing-0: 0px;
+  --spacing-px: 1px;
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-7: var(--space-7);
+  --spacing-8: var(--space-8);
+  --spacing-9: var(--space-9);
+  --spacing-10: var(--space-10);
+  --spacing-gutter: var(--gutter);
+  --spacing-gap: var(--grid-gap);
+  --spacing-section: var(--section-pad);
+  --spacing-card: var(--card-pad);
+  --spacing-header: var(--header-h);
+  --spacing-action-bar: var(--action-bar-h);
+  --spacing-control: var(--control-h);
+  --spacing-tap: var(--tap-min);
+  --spacing-icon-sm: var(--icon-sm);
+  --spacing-icon: var(--icon-md);
+  --spacing-icon-lg: var(--icon-lg);
+  --spacing-icon-tile: var(--icon-tile);
+  --spacing-float: var(--float-h);
+  --spacing-drawer: var(--drawer-w);
+
+  --container-content: var(--container);
+  --container-wide: var(--container-wide);
+  --container-prose: var(--prose);
+  --container-drawer: var(--drawer-w);
+
+  --radius-none: 0px;
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-none: none;
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --font-heading: var(--font-jakarta), 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: var(--font-inter), 'Inter', system-ui, sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --text-h1: var(--fs-h1);
+  --text-h1--line-height: var(--lh-heading);
+  --text-h2: var(--fs-h2);
+  --text-h2--line-height: var(--lh-heading);
+  --text-h3: var(--fs-h3);
+  --text-h3--line-height: var(--lh-heading);
+  --text-h4: var(--fs-h4);
+  --text-h4--line-height: var(--lh-tight);
+  --text-lead: var(--fs-lead);
+  --text-lead--line-height: var(--lh-body);
+  --text-body: var(--fs-body);
+  --text-body--line-height: var(--lh-body);
+  --text-small: var(--fs-small);
+  --text-small--line-height: var(--lh-tight);
+  --text-xs: var(--fs-xs);
+  --text-xs--line-height: var(--lh-tight);
+  --text-stat: var(--fs-stat);
+  --text-stat--line-height: 1;
+
+  --leading-heading: var(--lh-heading);
+  --leading-tight: var(--lh-tight);
+  --leading-body: var(--lh-body);
+  --leading-none: 1;
+
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.08em;
+
+  --ease-brand: var(--ease);
+  --default-transition-duration: var(--dur);
+  --default-transition-timing-function: var(--ease);
+
+  --aspect-card: 16 / 10;
+  --aspect-hero: 4 / 3;
+  --aspect-square: 1 / 1;
+  --aspect-og: 1200 / 630;
+
+  --animate-spin: spin 700ms linear infinite;
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border-color: var(--neutral-200);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + var(--space-4));
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--white);
+    color: var(--ink-900);
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+  }
+
+  /* The mobile action bar is fixed to the bottom: reserve matching space. */
+  @media (max-width: 1023.98px) {
+    body {
+      padding-bottom: calc(var(--action-bar-h) + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    font-family: var(--font-heading);
+    line-height: var(--lh-heading);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p,
+  ul,
+  ol,
+  dl,
+  figure,
+  blockquote {
+    margin: 0;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  img {
+    height: auto;
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: var(--focus-w) solid var(--accent);
+    outline-offset: var(--focus-offset);
+  }
+
+  /* The hidden attribute always wins over component display rules. */
+  [hidden] {
+    display: none !important;
+  }
+}
+
+@layer components {
+  .container-content {
+    width: 100%;
+    max-width: calc(var(--container) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .container-wide {
+    width: 100%;
+    max-width: calc(var(--container-wide) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section {
+    padding-block: var(--section-pad);
+  }
+
+  /* Focus ring that stays visible on amber and gold surfaces. */
+  .focus-on-accent:focus-visible {
+    outline-color: var(--ink-900);
+  }
+
+  /* Makes a single link cover its positioned card. */
+  .stretched-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Neutral striped frame until a real photo is supplied. */
+  .photo-placeholder {
+    background: repeating-linear-gradient(
+      45deg,
+      var(--neutral-100) 0 var(--space-3),
+      var(--neutral-50) var(--space-3) var(--space-5)
+    );
+  }
+
+  /* Radio tile used by ChoiceGroup */
+  .choice-tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--control-h);
+    padding: var(--space-3);
+    border: 1px solid var(--neutral-600);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    font-weight: 500;
+    line-height: var(--lh-tight);
+    cursor: pointer;
+  }
+  .choice-tile:hover {
+    border-color: var(--ink-900);
+  }
+  .choice-tile:has(input:checked) {
+    border: 2px solid var(--ink-900);
+    background: var(--cream);
+  }
+  .choice-tile:has(input:focus-visible) {
+    outline: var(--focus-w) solid var(--accent);
+    outline-offset: var(--focus-offset);
+  }
+
+  /* Services mega menu: opens on hover (pointer devices), focus or the toggle button. */
+  .mega-panel {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--space-2)));
+    transition:
+      opacity var(--dur-fast) var(--ease),
+      transform var(--dur-fast) var(--ease),
+      visibility 0s linear var(--dur-fast);
+  }
+  .mega-panel.is-open,
+  .group\/mega:focus-within .mega-panel {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
+  @media (hover: hover) {
+    .group\/mega:hover .mega-panel {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      transition-delay: 0s;
+    }
+  }
+
+  /* Mobile drawer: native <dialog> sliding in from the right. */
+  .drawer {
+    margin: 0 0 0 auto;
+    padding: 0;
+    width: min(100%, var(--drawer-w));
+    max-width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    background: var(--white);
+  }
+  .drawer::backdrop {
+    background: rgb(15 15 15 / 0.6);
+  }
+  .drawer[open] {
+    animation: drawer-in var(--dur) var(--ease);
+  }
+  .drawer-foot {
+    padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  }
+  @keyframes drawer-in {
+    from {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Mobile action bar height includes the iOS safe area. */
+  .action-bar {
+    height: calc(var(--action-bar-h) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(var(--space-2) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-min);
+    color: var(--cream);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .footer-link:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Long-form CMS text */
+  .prose-iim {
+    max-width: var(--prose);
+  }
+  .prose-iim > * + * {
+    margin-top: var(--space-4);
+  }
+  .prose-iim h2 {
+    margin-top: var(--space-7);
+    font-size: var(--fs-h2);
+  }
+  .prose-iim h3 {
+    margin-top: var(--space-6);
+    font-size: var(--fs-h3);
+  }
+  .prose-iim ul,
+  .prose-iim ol {
+    padding-left: var(--space-5);
+  }
+  .prose-iim li + li {
+    margin-top: var(--space-2);
+  }
+  .prose-iim a {
+    color: var(--navy);
+    text-decoration: underline;
+  }
+  .prose-iim strong {
+    font-weight: 600;
+  }
+}
+
+/* Scroll reveal: opacity and transform only (no layout shift); armed by JS below the fold. */
+@layer utilities {
+  .reveal-armed {
+    opacity: 0;
+    transform: translateY(var(--rise));
+    transition:
+      opacity var(--dur-slow) var(--ease),
+      transform var(--dur-slow) var(--ease);
+  }
+  .reveal-armed.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    /* none, not 0.01ms: a near-zero transition still makes inherited visibility
+       briefly hidden, which blocks focus moving into the menu drawer. */
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-armed {
+    opacity: 1;
+    transform: none;
+  }
+}

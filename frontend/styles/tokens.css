@@ -1,0 +1,117 @@
+/*
+ * Design tokens: the single source of every size, colour, radius, shadow and duration.
+ * Values come from CLAUDE.md §7 (palette: ADR-002). globals.css maps them into Tailwind's
+ * @theme with every Tailwind default scale reset, so only these tokens exist as utilities.
+ */
+:root {
+  /* spacing: 8px grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* radii (nested rule: inner = outer - padding between them) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* layout */
+  --container: 1200px;
+  --container-wide: 1320px;
+  --prose: 68ch;
+  --gutter: 16px;
+  --grid-gap: 16px;
+  --section-pad: 64px;
+  --header-h: 64px;
+  --action-bar-h: 64px;
+  --card-pad: 20px;
+  --control-h: 48px;
+  --tap-min: 44px;
+  --icon-sm: 20px;
+  --icon-md: 24px;
+  --icon-lg: 32px;
+  --icon-tile: 48px;
+  --drawer-w: 400px;
+  --float-h: 56px;
+  --turnstile-h: 65px;
+  --focus-w: 3px;
+  --focus-offset: 2px;
+
+  /* colour (ADR-002: matches the live site) */
+  --ink-950: #0f0f0f;
+  --ink-900: #1a1a1a;
+  --ink-800: #262626;
+  --ink-700: #3a3a3a;
+  --gold: #e6b215;
+  --accent: #ffb800;
+  --accent-600: #e6a600;
+  --cream: #f5f0de;
+  --cream-muted: #c9c3ad;
+  --navy: #002366;
+  --white: #ffffff;
+  --neutral-50: #f7f7f5;
+  --neutral-100: #efeee9;
+  --neutral-200: #dedcd4;
+  --neutral-600: #5c6370;
+  --success: #1e7e46;
+  --success-bg: #e8f4ed;
+  --error: #c0392b;
+  --error-bg: #fbeceb;
+  --whatsapp: #25d366;
+  --whatsapp-600: #1ebe5a;
+
+  /* shadows: three levels only */
+  --shadow-sm: 0 1px 2px rgb(15 15 15 / 0.08);
+  --shadow-md: 0 6px 16px rgb(15 15 15 / 0.12);
+  --shadow-lg: 0 16px 40px rgb(15 15 15 / 0.18);
+
+  /* typography: fluid between 360px and 1440px viewports */
+  --fs-h1: clamp(2rem, 1.5rem + 2.222vw, 3.5rem);
+  --fs-h2: clamp(1.625rem, 1.333rem + 1.296vw, 2.5rem);
+  --fs-h3: clamp(1.25rem, 1.125rem + 0.556vw, 1.625rem);
+  --fs-h4: 1.125rem;
+  --fs-lead: clamp(1.125rem, 1.083rem + 0.185vw, 1.25rem);
+  --fs-body: clamp(1rem, 0.958rem + 0.185vw, 1.125rem);
+  --fs-small: 0.875rem;
+  --fs-xs: 0.8125rem;
+  --fs-stat: clamp(2.25rem, 1.833rem + 1.852vw, 3.5rem);
+  --lh-heading: 1.15;
+  --lh-tight: 1.3;
+  --lh-body: 1.6;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 400ms;
+  --rise: 16px;
+  --lift: -4px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 24px;
+    --grid-gap: 24px;
+    --header-h: 72px;
+    --card-pad: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-pad: 96px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --gutter: 32px;
+  }
+}

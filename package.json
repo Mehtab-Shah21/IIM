@@ -1,0 +1,45 @@
+{
+  "name": "iim-website",
+  "private": true,
+  "description": "IIM Technical Services website: Next.js frontend + Sanity Studio (npm workspaces).",
+  "workspaces": [
+    "frontend",
+    "studio"
+  ],
+  "engines": {
+    "node": ">=22.12 <25"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "dev:studio": "npm run dev --workspace=studio",
+    "build": "npm run build --workspace=frontend",
+    "start": "npm run start --workspace=frontend",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspace=frontend",
+    "test:e2e": "npm run test:e2e --workspace=frontend",
+    "format": "prettier --cache --write .",
+    "format:check": "prettier --cache --check .",
+    "typegen": "npm run schema:extract --workspace=studio && npm run typegen --workspace=frontend",
+    "seed:export": "npm run seed:export --workspace=studio",
+    "prepare": "simple-git-hooks || true"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,mjs,cjs,json,css,md,yml}": "prettier --write"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100,
+    "bracketSpacing": false,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "lint-staged": "^17.6.0",
+    "prettier": "3.9.9",
+    "simple-git-hooks": "^2.14.0"
+  }
+}
