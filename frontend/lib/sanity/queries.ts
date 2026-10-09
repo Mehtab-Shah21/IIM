@@ -62,6 +62,7 @@ export const serviceQuery = defineQuery(`*[_type == "service" && slug.current ==
   schemaServiceType,
   heroHeadline,
   heroSubhead,
+  "heroImage": heroImage${image},
   directAnswer,
   ${sections},
   prices,

@@ -126,9 +126,47 @@ const seo = (metaTitle, metaDescription, extra = {}) => ({
 })
 const ref = (id) => ({_type: 'reference', _ref: id, _key: key()})
 
+/* ---------- Photos supplied by the owner (frontend/public/images/work, PLACEHOLDERS B3/B4) ---------- */
+
+const photos = JSON.parse(readFileSync(join(here, '..', 'content', 'seed', 'images.json'), 'utf8'))
+const assetId = (name) => `image-local-${name}`
+
+/** An image field value pointing at a local photo; studio/scripts/export-seed.ts uploads it to Sanity. */
+function photo(name) {
+  if (!photos[name]) throw new Error(`Unknown photo ${name}`)
+  return {
+    _type: 'imageWithAlt',
+    asset: {_type: 'reference', _ref: assetId(name)},
+    alt: photos[name].alt,
+  }
+}
+
+const servicePhotos = {
+  'electrical-services-dubai': {
+    card: 'electrician-breaker-panel',
+    hero: 'electrician-testing-panel',
+  },
+  'plumbing-services-dubai': {card: 'plumber-under-sink', hero: 'plumber-pipework'},
+  'ac-services-dubai': {card: 'ac-technician-split-unit', hero: 'ac-maintenance-collage'},
+  'painting-services-dubai': {card: 'painter-roller-wall', hero: 'painter-roller-wall'},
+  'handyman-services-dubai': {card: 'handyman-tool-belt', hero: 'carpenter-cutting-wood'},
+  'home-renovation-dubai': {card: 'renovation-drywall', hero: 'renovation-planning'},
+  'emergency-electrician-plumber-dubai': {
+    card: 'plumber-water-heater',
+    hero: 'plumber-water-heater',
+  },
+}
+
 /* ---------- Documents ---------- */
 
-const docs = []
+const docs = Object.entries(photos).map(([name, p]) => ({
+  _id: assetId(name),
+  _type: 'sanity.imageAsset',
+  url: `/images/work/${name}.webp`,
+  localPath: `frontend/public/images/work/${name}.webp`,
+  mimeType: 'image/webp',
+  metadata: {dimensions: {width: p.width, height: p.height, aspectRatio: p.width / p.height}},
+}))
 
 docs.push({
   _id: 'siteSettings',
@@ -179,6 +217,8 @@ copy.services.forEach((s, i) => {
     heroHeadline: s.hero_headline,
     heroSubhead: s.hero_subhead,
     directAnswer: s.direct_answer,
+    cardImage: servicePhotos[s.slug] ? photo(servicePhotos[s.slug].card) : undefined,
+    heroImage: servicePhotos[s.slug] ? photo(servicePhotos[s.slug].hero) : undefined,
     sections: [...s.sections.map(section), faqList(`${s.title}: common questions`, s.faqs)],
     prices: s.prices.map((p) => ({
       _type: 'priceItem',
@@ -221,6 +261,7 @@ function pageFromCopy(slug, key_, extra = {}) {
 docs.push({
   ...pageFromCopy('home', 'home'),
   title: 'Home',
+  heroImage: photo('electrician-testing-panel'),
   heroHeadline: 'Electricians, plumbers and handymen in Dubai.',
   heroAccent: 'Your property, our priority.',
   heroSubhead:
@@ -309,7 +350,7 @@ docs.push({
 docs.push({
   ...pageFromCopy('commercial', 'amc-commercial', {faqHeading: 'Questions about this plan'}),
 })
-docs.push(pageFromCopy('about', 'about'))
+docs.push({...pageFromCopy('about', 'about'), heroImage: photo('electrical-work-collage')})
 docs.push({
   ...pageFromCopy('contact', 'contact'),
   heroSubhead:

@@ -209,6 +209,13 @@ export const service = defineType({
     }),
     heroHeadline,
     heroSubhead,
+    defineField({
+      name: 'heroImage',
+      title: 'Hero image (4:3)',
+      type: 'imageWithAlt',
+      description:
+        'A real photo of this kind of job. Shown next to the headline; it loads first, so keep it under 200 KB.',
+    }),
     directAnswerField,
     sectionsField,
     defineField({

@@ -72,6 +72,7 @@ export default async function AboutPage() {
         title={page.heroHeadline ?? 'About IIM Technical Services'}
         eyebrow="About IIM"
         lead={page.heroSubhead}
+        image={page.heroImage}
         crumbs={crumbs}
       />
       <ContentLayout

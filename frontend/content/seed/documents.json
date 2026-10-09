@@ -1,5 +1,201 @@
 [
   {
+    "_id": "image-local-electrical-work-collage",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/electrical-work-collage.webp",
+    "localPath": "frontend/public/images/work/electrical-work-collage.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 600,
+        "height": 600,
+        "aspectRatio": 1
+      }
+    }
+  },
+  {
+    "_id": "image-local-electrician-breaker-panel",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/electrician-breaker-panel.webp",
+    "localPath": "frontend/public/images/work/electrician-breaker-panel.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 576,
+        "height": 384,
+        "aspectRatio": 1.5
+      }
+    }
+  },
+  {
+    "_id": "image-local-electrician-testing-panel",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/electrician-testing-panel.webp",
+    "localPath": "frontend/public/images/work/electrician-testing-panel.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 493,
+        "height": 740,
+        "aspectRatio": 0.6662162162162162
+      }
+    }
+  },
+  {
+    "_id": "image-local-plumber-pipework",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/plumber-pipework.webp",
+    "localPath": "frontend/public/images/work/plumber-pipework.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 678,
+        "height": 452,
+        "aspectRatio": 1.5
+      }
+    }
+  },
+  {
+    "_id": "image-local-plumber-water-heater",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/plumber-water-heater.webp",
+    "localPath": "frontend/public/images/work/plumber-water-heater.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 597,
+        "height": 335,
+        "aspectRatio": 1.782089552238806
+      }
+    }
+  },
+  {
+    "_id": "image-local-plumber-under-sink",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/plumber-under-sink.webp",
+    "localPath": "frontend/public/images/work/plumber-under-sink.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 678,
+        "height": 452,
+        "aspectRatio": 1.5
+      }
+    }
+  },
+  {
+    "_id": "image-local-ac-maintenance-collage",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/ac-maintenance-collage.webp",
+    "localPath": "frontend/public/images/work/ac-maintenance-collage.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 599,
+        "height": 333,
+        "aspectRatio": 1.7987987987987988
+      }
+    }
+  },
+  {
+    "_id": "image-local-ac-technician-split-unit",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/ac-technician-split-unit.webp",
+    "localPath": "frontend/public/images/work/ac-technician-split-unit.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 733,
+        "height": 417,
+        "aspectRatio": 1.7577937649880095
+      }
+    }
+  },
+  {
+    "_id": "image-local-painter-roller-wall",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/painter-roller-wall.webp",
+    "localPath": "frontend/public/images/work/painter-roller-wall.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 678,
+        "height": 452,
+        "aspectRatio": 1.5
+      }
+    }
+  },
+  {
+    "_id": "image-local-handyman-tool-belt",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/handyman-tool-belt.webp",
+    "localPath": "frontend/public/images/work/handyman-tool-belt.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 678,
+        "height": 452,
+        "aspectRatio": 1.5
+      }
+    }
+  },
+  {
+    "_id": "image-local-handyman-drill",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/handyman-drill.webp",
+    "localPath": "frontend/public/images/work/handyman-drill.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 500,
+        "height": 333,
+        "aspectRatio": 1.5015015015015014
+      }
+    }
+  },
+  {
+    "_id": "image-local-carpenter-cutting-wood",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/carpenter-cutting-wood.webp",
+    "localPath": "frontend/public/images/work/carpenter-cutting-wood.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 678,
+        "height": 452,
+        "aspectRatio": 1.5
+      }
+    }
+  },
+  {
+    "_id": "image-local-renovation-drywall",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/renovation-drywall.webp",
+    "localPath": "frontend/public/images/work/renovation-drywall.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 547,
+        "height": 365,
+        "aspectRatio": 1.4986301369863013
+      }
+    }
+  },
+  {
+    "_id": "image-local-renovation-planning",
+    "_type": "sanity.imageAsset",
+    "url": "/images/work/renovation-planning.webp",
+    "localPath": "frontend/public/images/work/renovation-planning.webp",
+    "mimeType": "image/webp",
+    "metadata": {
+      "dimensions": {
+        "width": 547,
+        "height": 365,
+        "aspectRatio": 1.4986301369863013
+      }
+    }
+  },
+  {
     "_id": "siteSettings",
     "_type": "siteSettings",
     "businessName": "IIM Technical Services",
@@ -46,6 +242,22 @@
     "heroHeadline": "Electrician in Dubai",
     "heroSubhead": "Fault finding, rewiring, lighting and DB upgrades for apartments, villas, offices and shops. Book in three steps and pay after the job.",
     "directAnswer": "IIM Technical Services sends experienced electricians to homes and businesses across Dubai for fault finding, tripping breakers, rewiring, lighting installation, distribution board upgrades and signage. Send a photo of the problem on WhatsApp or through our quote form, choose a visit time, and pay only after the work is finished and tested.",
+    "cardImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-electrician-breaker-panel"
+      },
+      "alt": "Technician wiring circuit breakers in a distribution board"
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-electrician-testing-panel"
+      },
+      "alt": "Electrician testing a distribution board with a multimeter"
+    },
     "sections": [
       {
         "_type": "checklistSection",
@@ -193,6 +405,22 @@
     "heroHeadline": "Plumber in Dubai",
     "heroSubhead": "Leak detection, blocked drains, water heaters and bathroom fittings for Dubai homes and businesses.",
     "directAnswer": "IIM Technical Services fixes leaks, blocked drains, low water pressure, faulty water heaters and bathroom or kitchen fittings across Dubai. Hidden leaks in walls and under floors are traced with non-invasive methods before anything is opened up. Share a photo or video on WhatsApp, pick a time, and pay after the repair.",
+    "cardImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-plumber-under-sink"
+      },
+      "alt": "Plumber replacing the waste pipes under a kitchen sink"
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-plumber-pipework"
+      },
+      "alt": "Plumber tightening a pipe fitting with an adjustable wrench"
+    },
     "sections": [
       {
         "_type": "checklistSection",
@@ -334,6 +562,22 @@
     "heroHeadline": "AC Repair and Maintenance in Dubai",
     "heroSubhead": "Deep cleaning, routine servicing and repairs for home and office air conditioning.",
     "directAnswer": "IIM Technical Services cleans, services and repairs air conditioning in Dubai homes and offices. A routine service before summer keeps units efficient, while a deep clean of coils, drain lines and filters removes dust and mould that affect air quality and power bills. Tell us what the AC is doing, and pay after the visit.",
+    "cardImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-ac-technician-split-unit"
+      },
+      "alt": "Technician servicing an open split air conditioning unit"
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-ac-maintenance-collage"
+      },
+      "alt": "Technicians servicing ceiling and split air conditioning units"
+    },
     "sections": [
       {
         "_type": "checklistSection",
@@ -461,6 +705,22 @@
     "heroHeadline": "Painting Services in Dubai",
     "heroSubhead": "Interior and exterior painting for apartments, villas and offices, with proper surface preparation and a clean handover.",
     "directAnswer": "IIM Technical Services paints apartments, villas, offices and shops across Dubai, inside and out. Every job starts with surface preparation: filling cracks, sanding, treating damp patches and protecting floors and furniture. We agree colours, finishes and the schedule with you first, work tidily, and you pay after the final walk-through.",
+    "cardImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-painter-roller-wall"
+      },
+      "alt": "Painter rolling white paint onto an interior wall"
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-painter-roller-wall"
+      },
+      "alt": "Painter rolling white paint onto an interior wall"
+    },
     "sections": [
       {
         "_type": "checklistSection",
@@ -578,6 +838,22 @@
     "heroHeadline": "Handyman Services in Dubai",
     "heroSubhead": "Small repairs, installations and odd jobs, finished in one visit where possible.",
     "directAnswer": "IIM Technical Services handyman visits cover the small jobs that pile up: furniture assembly, curtain rails and blinds, TV and shelf mounting, door and cabinet repairs, silicone and grout touch-ups, and minor fixes across Dubai homes and offices. Send us your list with photos so the technician brings the right tools, then pay after the visit.",
+    "cardImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-handyman-tool-belt"
+      },
+      "alt": "Handyman with a tool belt holding a folding ruler"
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-carpenter-cutting-wood"
+      },
+      "alt": "Carpenter cutting a timber board with a hand saw"
+    },
     "sections": [
       {
         "_type": "checklistSection",
@@ -674,6 +950,22 @@
     "heroHeadline": "Home Renovation and Makeovers in Dubai",
     "heroSubhead": "Kitchen, bathroom, flooring, tiling and waterproofing upgrades managed end to end.",
     "directAnswer": "IIM Technical Services renovates kitchens, bathrooms and living spaces in Dubai apartments and villas, covering tiling, flooring, waterproofing, plumbing, electrics and paint under one team. You get one point of contact from survey to handover, a clear scope agreed before work starts, and the site left clean at the end.",
+    "cardImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-renovation-drywall"
+      },
+      "alt": "Workers fitting plasterboard during a room renovation"
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-renovation-planning"
+      },
+      "alt": "Two builders reviewing plans in a room under renovation"
+    },
     "sections": [
       {
         "_type": "checklistSection",
@@ -813,6 +1105,22 @@
     "heroHeadline": "Emergency Electrician and Plumber in Dubai",
     "heroSubhead": "Power cuts, burning smells, burst pipes and serious leaks. Call or WhatsApp us now.",
     "directAnswer": "For an urgent electrical fault, burst pipe, serious leak or AC breakdown in Dubai, call or WhatsApp IIM Technical Services with a photo and your location. Make the area safe first: switch off the breaker or the main water valve. We confirm when a technician can reach you, and you pay after the repair.",
+    "cardImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-plumber-water-heater"
+      },
+      "alt": "Plumber connecting the water supply to a water heater"
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-plumber-water-heater"
+      },
+      "alt": "Plumber connecting the water supply to a water heater"
+    },
     "sections": [
       {
         "_type": "checklistSection",
@@ -948,6 +1256,14 @@
       "metaTitle": "IIM Technical Services | Electrician & Plumber in Dubai",
       "metaDescription": "Electrical, plumbing, AC, painting and handyman services for Dubai homes and businesses. Book in 3 steps on WhatsApp and pay after the service is done.",
       "noindex": false
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-electrician-testing-panel"
+      },
+      "alt": "Electrician testing a distribution board with a multimeter"
     },
     "heroAccent": "Your property, our priority.",
     "home": {
@@ -1304,6 +1620,14 @@
       "metaTitle": "About IIM Technical Services | Dubai Maintenance Team",
       "metaDescription": "Meet the team behind IIM Technical Services: how we work, what we cover and how we look after homes and businesses across Dubai, paying after the service.",
       "noindex": false
+    },
+    "heroImage": {
+      "_type": "imageWithAlt",
+      "asset": {
+        "_type": "reference",
+        "_ref": "image-local-electrical-work-collage"
+      },
+      "alt": "Electrician fitting pendant lights, a technician at a distribution board, and testing tools"
     }
   },
   {

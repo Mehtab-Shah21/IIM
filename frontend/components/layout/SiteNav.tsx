@@ -49,8 +49,9 @@ export function SiteNav({
               data-track-location="header"
             >
               <Icon name="phone" size="sm" />
-              <span className="hidden xl:inline">{phoneDisplay}</span>
-              <span className="sr-only xl:hidden">Call {phoneDisplay}</span>
+              {/* The number fits beside the full menu only from 1440 px; icon-only below that. */}
+              <span className="hidden 2xl:inline">{phoneDisplay}</span>
+              <span className="sr-only 2xl:hidden">Call {phoneDisplay}</span>
             </a>
           </div>
         ) : null}
@@ -109,7 +110,7 @@ function DesktopNav({
               href={item.href}
               aria-current={current ? 'page' : undefined}
               className={clsx(
-                'inline-flex min-h-tap items-center rounded-sm px-3 font-medium text-cream no-underline hover:text-accent',
+                'inline-flex min-h-tap items-center rounded-sm px-2 font-medium whitespace-nowrap text-cream xl:px-3 no-underline hover:text-accent',
                 current && 'text-accent underline decoration-2 underline-offset-8',
               )}
             >

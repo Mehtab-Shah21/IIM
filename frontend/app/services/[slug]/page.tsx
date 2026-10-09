@@ -92,6 +92,7 @@ export default async function ServicePage({params}: Props) {
         title={service.heroHeadline ?? service.title ?? ''}
         eyebrow={service.title}
         lead={service.heroSubhead}
+        image={service.heroImage}
         crumbs={crumbs}
         actions={{quoteHref: quoteUrl(slug), whatsappHref: links.whatsapp}}
         meta={

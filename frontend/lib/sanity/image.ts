@@ -26,10 +26,14 @@ const builder = createImageUrlBuilder({
 /** Props for Img from a Sanity image (crop applied; width added by the loader). */
 export function sanityImage(image: SanityImageValue) {
   if (!image?.asset?._id) return null
-  const src = builder
-    .image(image as SanityImageSource)
-    .auto('format')
-    .url()
+  // Fixture mode: seed photos are served from /public (frontend/public/images/work).
+  const local = image.asset.url?.startsWith('/') ? image.asset.url : null
+  const src =
+    local ??
+    builder
+      .image(image as SanityImageSource)
+      .auto('format')
+      .url()
   return {
     src,
     alt: image.alt ?? '',

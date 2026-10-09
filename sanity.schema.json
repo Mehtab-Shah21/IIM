@@ -2525,6 +2525,14 @@
         },
         "optional": true
       },
+      "heroImage": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "imageWithAlt"
+        },
+        "optional": true
+      },
       "directAnswer": {
         "type": "objectAttribute",
         "value": {

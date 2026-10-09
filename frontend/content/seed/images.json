@@ -1,0 +1,86 @@
+{
+  "electrical-work-collage": {
+    "width": 600,
+    "height": 600,
+    "alt": "Electrician fitting pendant lights, a technician at a distribution board, and testing tools",
+    "bytes": 67798
+  },
+  "electrician-breaker-panel": {
+    "width": 576,
+    "height": 384,
+    "alt": "Technician wiring circuit breakers in a distribution board",
+    "bytes": 36996
+  },
+  "electrician-testing-panel": {
+    "width": 493,
+    "height": 740,
+    "alt": "Electrician testing a distribution board with a multimeter",
+    "bytes": 72466
+  },
+  "plumber-pipework": {
+    "width": 678,
+    "height": 452,
+    "alt": "Plumber tightening a pipe fitting with an adjustable wrench",
+    "bytes": 39816
+  },
+  "plumber-water-heater": {
+    "width": 597,
+    "height": 335,
+    "alt": "Plumber connecting the water supply to a water heater",
+    "bytes": 15302
+  },
+  "plumber-under-sink": {
+    "width": 678,
+    "height": 452,
+    "alt": "Plumber replacing the waste pipes under a kitchen sink",
+    "bytes": 34316
+  },
+  "ac-maintenance-collage": {
+    "width": 599,
+    "height": 333,
+    "alt": "Technicians servicing ceiling and split air conditioning units",
+    "bytes": 26088
+  },
+  "ac-technician-split-unit": {
+    "width": 733,
+    "height": 417,
+    "alt": "Technician servicing an open split air conditioning unit",
+    "bytes": 22392
+  },
+  "painter-roller-wall": {
+    "width": 678,
+    "height": 452,
+    "alt": "Painter rolling white paint onto an interior wall",
+    "bytes": 14050
+  },
+  "handyman-tool-belt": {
+    "width": 678,
+    "height": 452,
+    "alt": "Handyman with a tool belt holding a folding ruler",
+    "bytes": 29718
+  },
+  "handyman-drill": {
+    "width": 500,
+    "height": 333,
+    "alt": "Handyman holding a cordless drill",
+    "bytes": 21954
+  },
+  "carpenter-cutting-wood": {
+    "width": 678,
+    "height": 452,
+    "alt": "Carpenter cutting a timber board with a hand saw",
+    "bytes": 40490
+  },
+  "renovation-drywall": {
+    "width": 547,
+    "height": 365,
+    "alt": "Workers fitting plasterboard during a room renovation",
+    "bytes": 23874
+  },
+  "renovation-planning": {
+    "width": 547,
+    "height": 365,
+    "alt": "Two builders reviewing plans in a room under renovation",
+    "bytes": 19734
+  }
+}

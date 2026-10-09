@@ -24,7 +24,7 @@ export function buttonClasses({
   // Never pass display or min-height overrides in className: they conflict with these base
   // classes. Wrap the button for responsive visibility, use `size` for the compact action bar.
   return clsx(
-    'inline-flex items-center justify-center gap-2 rounded-sm',
+    'inline-flex items-center justify-center gap-2 rounded-sm whitespace-nowrap',
     size === 'bar' ? 'h-full px-2 py-1 text-small' : 'min-h-control px-5 py-3 text-body',
     'text-center font-semibold leading-tight no-underline transition-colors',
     'disabled:cursor-not-allowed disabled:opacity-60 aria-disabled:cursor-not-allowed aria-disabled:opacity-60',
