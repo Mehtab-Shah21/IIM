@@ -4,6 +4,7 @@ import {QuoteForm} from '@/components/forms/QuoteForm'
 import {Icon, type IconName} from '@/components/icons/Icon'
 import {addressLine} from '@/components/layout/Footer'
 import {ContactDock} from '@/components/sections/ContactDock'
+import {ContactFlip} from '@/components/sections/ContactFlip'
 import {PageHero} from '@/components/sections/PageHero'
 import {JsonLd} from '@/components/seo/JsonLd'
 import {Section} from '@/components/ui/Layout'
@@ -105,6 +106,49 @@ export default async function ContactPage() {
         <div className="grid items-start gap-7 lg:grid-cols-12 lg:gap-gap">
           <div className="grid content-start gap-5 lg:col-span-5" data-track-zone="contact">
             <h2 className="text-h2 font-bold">Get in touch</h2>
+            <ContactFlip
+              tiles={[
+                ...(links.tel
+                  ? [
+                      {
+                        letter: 'C',
+                        label: `Call ${links.phoneDisplay}`,
+                        icon: 'phone' as IconName,
+                        href: links.tel,
+                        track: 'phone_click',
+                      },
+                    ]
+                  : []),
+                ...(links.whatsapp
+                  ? [
+                      {
+                        letter: 'W',
+                        label: 'WhatsApp',
+                        icon: 'whatsapp' as IconName,
+                        href: links.whatsapp,
+                        external: true,
+                        track: 'whatsapp_click',
+                      },
+                    ]
+                  : []),
+                ...(settings.email
+                  ? [
+                      {
+                        letter: 'E',
+                        label: `Email ${settings.email}`,
+                        icon: 'mail' as IconName,
+                        href: `mailto:${settings.email}`,
+                      },
+                    ]
+                  : []),
+                {
+                  letter: 'Q',
+                  label: 'Quote form',
+                  icon: 'file-text' as IconName,
+                  href: '#quote-form',
+                },
+              ]}
+            />
             <ul className="m-0 grid list-none gap-4 p-0">
               {rows.map((r) => (
                 <li key={r.label} className="flex items-center gap-3">
@@ -143,7 +187,9 @@ export default async function ContactPage() {
             ) : null}
           </div>
           <div className="rounded-md border border-neutral-200 bg-white p-card shadow-md md:p-6 lg:col-span-7">
-            <h2 className="mb-2 text-h3 font-bold">Request a quote</h2>
+            <h2 id="quote-form" className="mb-2 text-h3 font-bold">
+              Request a quote
+            </h2>
             <p className="mb-5 text-neutral-600">
               Three short steps. We reply to confirm the visit.
             </p>

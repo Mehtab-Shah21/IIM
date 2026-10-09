@@ -8,7 +8,6 @@ import {
   CtaBand,
   FaqList,
   ProofPoints,
-  ServiceGrid,
   Steps,
 } from '@/components/sections/Blocks'
 import {ContactDock} from '@/components/sections/ContactDock'
@@ -37,6 +36,10 @@ import {quoteUrl, routes} from '@/lib/routes'
 import {faqNode} from '@/lib/seo/jsonld'
 import {absoluteUrl, buildMetadata} from '@/lib/seo/metadata'
 import {pageGraph} from '@/lib/seo/page-graph'
+import type {HeroSlide} from '@/components/sections/HeroCarousel'
+import {ServiceReveal} from '@/components/sections/ServiceReveal'
+import {isIconName} from '@/components/icons/Icon'
+import {sanityImage, type SanityImageValue} from '@/lib/sanity/image'
 
 export async function generateMetadata(): Promise<Metadata> {
   const [page, settings] = await Promise.all([getPage('home'), getSettings()])
@@ -87,6 +90,7 @@ export default async function HomePage() {
         accent={page?.heroAccent}
         subhead={page?.heroSubhead}
         image={page?.heroImage}
+        slides={heroSlides(page?.heroImage, services)}
         quoteHref={quoteUrl()}
         whatsappHref={links.whatsapp}
         settings={settings}
@@ -100,7 +104,19 @@ export default async function HomePage() {
           title={home?.servicesHeading ?? 'One team for every repair in your home or business'}
           lead={home?.servicesIntro}
         />
-        <ServiceGrid services={trades} />
+        <ServiceReveal
+          services={trades
+            .filter((s) => s.slug)
+            .map((s) => ({
+              id: s._id,
+              title: s.title ?? '',
+              href: routes.service(s.slug!),
+              icon: isIconName(s.icon) ? s.icon : 'wrench',
+              tagline: s.menuSummary,
+              summary: s.cardSummary,
+              image: sanityImage(s.cardImage),
+            }))}
+        />
         {emergency ? (
           <EmergencyBand service={emergency} telHref={links.tel} whatsappHref={links.whatsapp} />
         ) : null}
@@ -224,4 +240,20 @@ export default async function HomePage() {
       <ContactDock message={message} />
     </>
   )
+}
+
+/** Hero carousel: the homepage hero photo first (the LCP image), then one photo per service. */
+function heroSlides(
+  hero: SanityImageValue,
+  services: Awaited<ReturnType<typeof getServices>>,
+): HeroSlide[] {
+  const slides: HeroSlide[] = []
+  const first = sanityImage(hero)
+  if (first) slides.push(first)
+  for (const s of services) {
+    const img = sanityImage(s.cardImage)
+    if (!img || !s.slug || slides.some((x) => x.src === img.src)) continue
+    slides.push({...img, caption: s.title ?? undefined, href: routes.service(s.slug)})
+  }
+  return slides
 }

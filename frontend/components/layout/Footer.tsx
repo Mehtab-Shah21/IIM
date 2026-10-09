@@ -108,7 +108,7 @@ export function Footer({
                   data-track-location="footer"
                 >
                   <Icon name="phone" size="sm" className="text-accent" />
-                  {settings.phoneDisplay}
+                  <span className="link-sweep">{settings.phoneDisplay}</span>
                 </a>
               </li>
             ) : null}
@@ -123,7 +123,7 @@ export function Footer({
                   data-track-location="footer"
                 >
                   <Icon name="whatsapp" size="sm" className="text-accent" />
-                  WhatsApp
+                  <span className="link-sweep">WhatsApp</span>
                 </a>
               </li>
             ) : null}
@@ -131,7 +131,7 @@ export function Footer({
               <li>
                 <a href={`mailto:${settings.email}`} className="footer-link">
                   <Icon name="mail" size="sm" className="text-accent" />
-                  {settings.email}
+                  <span className="link-sweep">{settings.email}</span>
                 </a>
               </li>
             ) : null}
@@ -190,7 +190,7 @@ function FooterLink({href, children}: {href: string; children: React.ReactNode})
   return (
     <li>
       <Link href={href} className="footer-link">
-        {children}
+        <span className="link-sweep">{children}</span>
       </Link>
     </li>
   )

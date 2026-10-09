@@ -57,3 +57,11 @@ CI (`.github/workflows/ci.yml`) runs all of these on every pull request.
 | [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md)     | Tokens, components and the rules the build enforces                |
 | [docs/LEAD_AUTOMATION.md](docs/LEAD_AUTOMATION.md) | Make/n8n scenarios and Google Sheet for leads                      |
 | [docs/reference/](docs/reference/)                 | Audit of the old Wix site, old-URL redirect map, checked seed copy |
+
+## Credits
+
+Interface effects adapted (rebuilt without their libraries, see `docs/DECISIONS.md` ADR-006) from:
+
+- [Skiper UI](https://skiper-ui.com) by Gurvinder Singh: Skiper 4 (after [toggles.dev](https://toggles.dev) by Alfie Jones), 34, 40, 50 and 106.
+- Owner-supplied components "SocialFlipButton", "TextAnimation", "TeamRevealGrid", "CursorCard" and "FaqAccordion" (the accordion's demo text names Vengeance UI; the source of the others was not given).
+- Icons: [Lucide](https://lucide.dev) (ISC) and [Simple Icons](https://simpleicons.org) (CC0). Fonts: Inter and Plus Jakarta Sans (SIL OFL 1.1).

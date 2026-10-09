@@ -92,6 +92,9 @@
   --dur: 250ms;
   --dur-slow: 400ms;
   --rise: 16px;
+  --dur-words: 500ms;
+  --stagger-words: 40ms;
+  --rail-w: 6px; /* FAQ accordion rail */
   --lift: -4px;
 }
 
@@ -101,6 +104,7 @@
     --grid-gap: 24px;
     --header-h: 72px;
     --card-pad: 24px;
+    --rail-w: 10px;
   }
 }
 
@@ -114,4 +118,63 @@
   :root {
     --gutter: 32px;
   }
+}
+
+/*
+ * Dark theme (ADR-006). The header, heroes, footer, bands and every ink, amber, gold or
+ * WhatsApp element are dark-on-light-safe already and keep their colours. Only the light
+ * surfaces are re-coloured, by re-pointing the light-surface tokens inside them. `data-theme`
+ * is set on <html> before first paint (app/layout.tsx) from the visitor's choice or system.
+ */
+:root {
+  --dark-surface: #0f0f0f;
+  --dark-raised: #1a1a1a;
+  --dark-raised-2: #262626;
+  --dark-border: #3a3a3a;
+  --dark-text: #f5f0de;
+  --dark-text-muted: #c9c3ad;
+  --dark-link: #ffb800;
+  --dark-success: #5fd08f;
+  --dark-success-bg: #12301f;
+  --dark-error: #ff8f80;
+  --dark-error-bg: #3a1714;
+}
+
+:root[data-theme='dark'] :is(main, .drawer, .action-bar) {
+  color-scheme: dark;
+  --white: var(--dark-surface);
+  --neutral-50: var(--dark-raised);
+  --neutral-100: var(--dark-raised-2);
+  --neutral-200: var(--dark-border);
+  --neutral-600: var(--dark-text-muted);
+  --cream: var(--dark-raised);
+  --ink-900: var(--dark-text);
+  --ink-800: var(--dark-text);
+  --ink-700: var(--dark-text-muted);
+  --navy: var(--dark-link);
+  --success: var(--dark-success);
+  --success-bg: var(--dark-success-bg);
+  --error: var(--dark-error);
+  --error-bg: var(--dark-error-bg);
+}
+
+/* Dark and brand-coloured islands inside a light surface keep the original palette. */
+:root[data-theme='dark']
+  :is(main, .drawer, .action-bar)
+  :is(.bg-ink-950, .bg-ink-900, .bg-ink-800, .bg-accent, .bg-gold, .bg-whatsapp, .theme-fixed) {
+  color-scheme: light;
+  --white: #ffffff;
+  --neutral-50: #f7f7f5;
+  --neutral-100: #efeee9;
+  --neutral-200: #dedcd4;
+  --neutral-600: #5c6370;
+  --cream: #f5f0de;
+  --ink-900: #1a1a1a;
+  --ink-800: #262626;
+  --ink-700: #3a3a3a;
+  --navy: #002366;
+  --success: #1e7e46;
+  --success-bg: #eff8f2;
+  --error: #c0392b;
+  --error-bg: #fbeceb;
 }

@@ -128,3 +128,39 @@ Options considered:
 - The trimmed local fonts stay: same typefaces, about 0.3 s faster.
 
 **7. Sanity icons.** `@sanity/icons` 5 exports one module per icon (`@sanity/icons/Cog`), not named exports from the package root. The Studio imports them that way; the Studio build in CI catches regressions.
+
+## ADR-006: Owner-supplied UI effects and a dark theme (9 Oct 2026)
+
+**Request (owner).** Use a set of supplied React components across the site:
+
+- Skiper UI 4, 34, 40, 50 and 106
+- "SocialFlipButton", "TextAnimation", "TeamRevealGrid", "CursorCard" and "FaqAccordion"
+
+Also add a light/dark theme.
+
+**Decision: rebuild each effect without new dependencies.** The supplied code depends on `framer-motion`, `swiper`, `lenis`, `dialkit`, `react-icons` and `lucide-react`. Those are outside the allowed list (`CLAUDE.md` §4). Together they would add well over 70 KB of gzipped JavaScript against a 30 KB per-page budget (ADR-005). Each effect is therefore rebuilt with CSS (transitions, scroll-snap, sticky, `details`) plus small `requestAnimationFrame` handlers. The site still adds 30 KB or less per route.
+
+| Supplied component                   | Where                                                       | Notes                                                                                                                                                                  |
+| ------------------------------------ | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Skiper 4 theme toggles (No. 2)       | Header (`ThemeToggle`)                                      | Sun-to-moon morph in CSS, driven by `<html data-theme>`; `aria-pressed` toggle                                                                                         |
+| Skiper 40 animated links (Link000)   | Footer links (`.link-sweep`)                                | Not in running text: links there keep a permanent underline (WCAG 1.4.1)                                                                                               |
+| Skiper 50 carousel (creative effect) | Homepage hero (`HeroCarousel`)                              | Native scroll-snap (works without JS); no autoplay (WCAG 2.2.2); prev/next and dots, 44 px tall targets                                                                |
+| Skiper 34 sticky cards               | Projects page (`StickyStack`)                               | One example photo per service, labelled as such: stock photos are not presented as completed IIM projects                                                              |
+| SocialFlipButton                     | Contact page (`ContactFlip`)                                | Call / WhatsApp / Email / Quote form tiles; real links with accessible names; icons and labels shown directly on touch screens                                         |
+| TextAnimation                        | Page H1s (on load) and section H2s (in view) (`WordReveal`) | Headings only; H2s are armed by JS below the fold only, so text is never hidden without JS                                                                             |
+| TeamRevealGrid                       | Homepage "What we do" (`ServiceReveal`)                     | Cards remain links to the service pages; fixed card size (no layout shift); rotation pauses on hover/focus, off-screen and with reduced motion, and has a pause button |
+| CursorCard                           | About page, "What we cover" (`CursorCard`)                  | Mouse only, decorative (`aria-hidden`); plain links on touch and keyboard                                                                                              |
+| FaqAccordion                         | Every FAQ list (`FaqList`)                                  | Native `<details name>`: one open at a time, works without JS; smooth open where supported                                                                             |
+| Skiper 106 smooth input              | Single-line text inputs (`TextInput`)                       | Gliding caret; email and date inputs keep the native caret (browsers don't expose their cursor position)                                                               |
+
+The developer-only `dialkit` tuning panel from Skiper 106 is not used.
+
+**Dark theme.** It follows the system setting, or the visitor's choice (remembered in `localStorage`). An inline script sets it before first paint, so there is no flash.
+
+- Only light surfaces change: page sections, cards, forms, the mobile drawer and the action bar. Their tokens are re-pointed to a dark set in `styles/tokens.css`.
+- Anything already dark or brand-coloured keeps its exact colours: header, heroes, footer, ink, amber, gold and WhatsApp elements. Dark text on amber therefore never changes.
+- Every dark pair is in `scripts/check-contrast.mjs`. Axe also runs in dark mode on five templates, and a test checks that the toggle remembers the choice.
+
+**Attribution.** The Skiper UI free licence requires credit to Skiper UI. Each adapted component names its source in a header comment, and `README.md` lists the credits. If the owner wants a visible credit (for example in the footer), it is a one-line change.
+
+**Rejected:** `<Suspense>` around islands (ADR-005), and Lenis smooth scrolling. Lenis takes over the browser's own scrolling, which hurts keyboard and assistive-technology users and adds a dependency.

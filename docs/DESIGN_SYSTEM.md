@@ -67,11 +67,34 @@ The visual rules in code form. The live reference is `/style-guide/` (noindex), 
 | `sections/*`                                                         | Page-builder renderers (`SectionRenderer`) and the fixed homepage, service, area and contract sections                                                                                                                                                            |
 | `forms/*`                                                            | Quote form (3 steps; one long form without JS), contract form, Turnstile (lazy)                                                                                                                                                                                   |
 
-## 6. Motion
+## 6. Dark theme
+
+`<html data-theme="light|dark">` is set before first paint (system setting or the visitor's choice from the header toggle). In dark mode only the light-surface tokens are re-pointed (`styles/tokens.css`, ADR-006). Anything with `bg-ink-*`, `bg-accent`, `bg-gold` or `bg-whatsapp`, or with the `theme-fixed` class, keeps the light palette inside it.
+
+Rules for new components:
+
+- Use `ink-900` / `neutral-600` / `navy` for text on light surfaces, as before; they become cream, muted cream and amber in dark mode.
+- Text that must stay light over a photo or a dark overlay uses `--dark-text`, not `cream`. (`cream` is a light surface colour in dark mode.)
+- Add any new colour pair to `scripts/check-contrast.mjs` for both themes.
+
+## 7. Motion
 
 Only `opacity` and `transform`, 150–300 ms. Reveal-on-scroll applies only below the first screen, so above-the-fold content is never hidden. `prefers-reduced-motion` turns all of it off.
 
-## 7. Adding something new
+Interactive effects (ADR-006), each with a no-JS and a reduced-motion fallback:
+
+- **Header theme toggle.**
+- **Homepage hero carousel** (`HeroCarousel`): scroll-snap, no autoplay.
+- **Homepage "What we do" grid** (`ServiceReveal`): pausable highlight.
+- **Word-by-word heading reveal** (`WordReveal`): headings only.
+- **Footer link sweep** (`.link-sweep`): not for links in running text.
+- **FAQ accordion** (`FaqList`): native `details`.
+- **Contact flip tiles** (`ContactFlip`).
+- **About hover previews** (`CursorCard`).
+- **Projects stacking photos** (`StickyStack`).
+- **Smooth text caret** (`TextInput`).
+
+## 8. Adding something new
 
 1. Need a new value? Add a token to `tokens.css` and map it in the `@theme` block in `globals.css`. Don't use an arbitrary value.
 2. A new colour pair? Add it to `scripts/check-contrast.mjs` and run it.

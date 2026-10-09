@@ -24,7 +24,8 @@ test('every WhatsApp link uses the configured number and a page-specific message
 
 test('call links dial the number shown', async ({page}) => {
   await page.goto('/contact/')
-  const tel = page.locator('main a[href^="tel:"]').first()
+  // The contact flip tiles show a letter; the contact list shows the number itself.
+  const tel = page.locator('main a[href^="tel:"]:not(.contact-flip-tile)').first()
   await expect(tel).toHaveAttribute('href', 'tel:+971509626446')
   await expect(tel).toHaveText('+971 50 962 6446')
 })

@@ -6,6 +6,9 @@ import {ButtonLink} from '@/components/ui/Button'
 import type {ServiceCard, Settings, Testimonial} from '@/lib/content'
 import {routes} from '@/lib/routes'
 import {sanityImage, type SanityImageValue} from '@/lib/sanity/image'
+import {WordReveal} from '@/components/ui/WordReveal'
+
+import {HeroCarousel, type HeroSlide} from './HeroCarousel'
 
 /** Homepage hero: the H1 (or the optional hero photo) is the LCP element. No video. */
 export function HomeHero({
@@ -13,6 +16,7 @@ export function HomeHero({
   accent,
   subhead,
   image,
+  slides = [],
   quoteHref,
   whatsappHref,
   settings,
@@ -21,6 +25,8 @@ export function HomeHero({
   accent?: string | null
   subhead?: string | null
   image?: SanityImageValue
+  /** More than one photo: a carousel replaces the single hero image. */
+  slides?: HeroSlide[]
   quoteHref: string
   whatsappHref: string | null
   settings: Settings
@@ -35,13 +41,22 @@ export function HomeHero({
         <div className="grid items-center gap-7 lg:grid-cols-12 lg:gap-gap">
           <div
             className={
-              img
+              img || slides.length > 1
                 ? 'grid content-start gap-5 lg:col-span-7'
                 : 'grid content-start gap-5 lg:col-span-9'
             }
           >
             <h1 className="text-h1 font-extrabold text-cream">
-              {headline} {accent ? <span className="text-accent">{accent}</span> : null}
+              <WordReveal text={headline} mode="load" />{' '}
+              {accent ? (
+                <span className="text-accent">
+                  <WordReveal
+                    text={accent}
+                    mode="load"
+                    startIndex={headline.trim().split(/\s+/).length}
+                  />
+                </span>
+              ) : null}
             </h1>
             {subhead ? <p className="max-w-prose text-lead text-cream-muted">{subhead}</p> : null}
             <div className="flex flex-wrap gap-3">
@@ -70,7 +85,11 @@ export function HomeHero({
             </div>
             <TrustStrip settings={settings} />
           </div>
-          {img ? (
+          {slides.length > 1 ? (
+            <div className="min-w-0 lg:col-span-5 lg:col-start-8">
+              <HeroCarousel slides={slides} label="Photos of our work" />
+            </div>
+          ) : img ? (
             <div className="aspect-hero overflow-hidden rounded-lg bg-ink-800 shadow-lg lg:col-span-4 lg:col-start-9">
               <Img
                 src={img.src}

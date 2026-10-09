@@ -4,6 +4,7 @@ import {Breadcrumbs, type Crumb} from '@/components/layout/Breadcrumbs'
 import {ButtonLink} from '@/components/ui/Button'
 import {Img} from '@/components/ui/Img'
 import {Eyebrow} from '@/components/ui/Layout'
+import {WordReveal} from '@/components/ui/WordReveal'
 import {sanityImage, type SanityImageValue} from '@/lib/sanity/image'
 
 /**
@@ -34,7 +35,9 @@ export function PageHero({
         <div className={img ? 'grid gap-5 lg:col-span-7' : 'grid max-w-prose gap-5 lg:col-span-12'}>
           <Breadcrumbs items={crumbs} />
           {eyebrow ? <Eyebrow tone="dark">{eyebrow}</Eyebrow> : null}
-          <h1 className="text-h1 font-extrabold text-cream">{title}</h1>
+          <h1 className="text-h1 font-extrabold text-cream">
+            <WordReveal text={title} mode="load" />
+          </h1>
           {lead ? <p className="text-lead text-cream-muted">{lead}</p> : null}
           {actions ? (
             <div className="flex flex-wrap gap-3" data-track-zone="page-hero">

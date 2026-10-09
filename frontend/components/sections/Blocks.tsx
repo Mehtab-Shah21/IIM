@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import {Img} from '@/components/ui/Img'
 import Link from 'next/link'
 import {PortableText, type PortableTextComponents} from 'next-sanity'
-import type {ReactNode} from 'react'
+import {type ReactNode, useId} from 'react'
 
 import {Icon, isIconName} from '@/components/icons/Icon'
 import {ArrowLink, ButtonLink} from '@/components/ui/Button'
@@ -176,6 +176,11 @@ export function Callout({heading, text}: {heading?: string | null; text?: string
 
 /* ---------- FAQ (native details: no JS, indexable, matches FAQPage schema) ---------- */
 
+/**
+ * Questions and answers as an accordion (styling adapted from the "FaqAccordion" design the
+ * owner supplied): a rail on the left that darkens when open, plus/minus and chevron markers.
+ * Native <details name> keeps it working without JavaScript and opens one answer at a time.
+ */
 export function FaqList({
   items,
   center = false,
@@ -183,25 +188,19 @@ export function FaqList({
   items: Array<{question?: string | null; answer?: string | null}>
   center?: boolean
 }) {
+  const group = useId()
   const list = items.filter((f) => f.question && f.answer)
   if (!list.length) return null
   return (
-    <div className={clsx('grid max-w-prose gap-3', center && 'mx-auto')}>
-      {list.map((f, i) => (
-        <details
-          key={f.question}
-          className="faq-item group rounded-md border border-neutral-200 bg-white"
-          open={i === 0}
-        >
-          <summary className="flex min-h-control cursor-pointer list-none items-center justify-between gap-4 rounded-md px-card py-4 font-heading font-bold text-ink-900">
-            <span>{f.question}</span>
-            <Icon
-              name="chevron-down"
-              size="sm"
-              className="transition-transform group-open:rotate-180"
-            />
+    <div className={clsx('faq-accordion max-w-prose', center && 'mx-auto')}>
+      {list.map((f) => (
+        <details key={f.question} name={group} className="faq-item">
+          <summary className="faq-summary">
+            <span className="faq-sign" aria-hidden="true" />
+            <span className="font-heading font-bold">{f.question}</span>
+            <span className="faq-chevron" aria-hidden="true" />
           </summary>
-          <div className="px-card pb-card text-neutral-600">
+          <div className="faq-answer">
             <p>{f.answer}</p>
           </div>
         </details>

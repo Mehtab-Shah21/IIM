@@ -57,6 +57,20 @@ const pairs = [
   ['error', 'error-bg', 4.5],
   ['neutral-600', 'white', 3], // form control borders (UI graphics)
   ['accent', 'white', 1], // listed to document it: amber is never text on white (1.7:1)
+  // Dark theme (ADR-006): light surfaces re-pointed to these tokens.
+  ['dark-text', 'dark-surface', 4.5],
+  ['dark-text', 'dark-raised', 4.5],
+  ['dark-text', 'dark-raised-2', 4.5],
+  ['dark-text-muted', 'dark-surface', 4.5],
+  ['dark-text-muted', 'dark-raised', 4.5],
+  ['dark-text-muted', 'dark-raised-2', 4.5],
+  ['dark-link', 'dark-surface', 4.5],
+  ['dark-link', 'dark-raised', 4.5],
+  ['dark-success', 'dark-surface', 4.5],
+  ['dark-success', 'dark-success-bg', 4.5],
+  ['dark-error', 'dark-surface', 4.5],
+  ['dark-error', 'dark-error-bg', 4.5],
+  ['dark-text-muted', 'dark-surface', 3], // form control borders in dark mode
 ]
 
 let failed = 0

@@ -162,6 +162,20 @@
     overflow-wrap: break-word;
   }
 
+  /* Light surfaces take their text colour from the (theme-aware) ink token. */
+  main,
+  .drawer,
+  .action-bar {
+    color: var(--ink-900);
+  }
+  :root[data-theme='dark'] body {
+    background: var(--dark-surface);
+  }
+  /* Dark theme: cards on a page-coloured section sit on a slightly raised surface. */
+  :root[data-theme='dark'] main .bg-white .bg-white {
+    background-color: var(--dark-raised);
+  }
+
   /* The mobile action bar is fixed to the bottom: reserve matching space. */
   @media (max-width: 1023.98px) {
     body {
@@ -364,11 +378,148 @@
   }
   .footer-link:hover {
     color: var(--accent);
-    text-decoration: underline;
   }
 
+  /*
+   * Underline that sweeps in from the left and out to the right (adapted from Skiper UI
+   * "Skiper 40" animated links). For navigation-style lists only: links inside running text
+   * keep a permanent underline so they never rely on colour alone (WCAG 1.4.1).
+   */
+  .link-sweep {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    background-size: 0% 0.08em;
+    transition:
+      background-size var(--dur) var(--ease),
+      color var(--dur-fast) var(--ease);
+  }
+  .link-sweep:hover,
+  .link-sweep:focus-visible,
+  :hover > .link-sweep,
+  :focus-visible > .link-sweep {
+    background-position: 0% 100%;
+    background-size: 100% 0.08em;
+  }
+
+  /* Theme switch: sun (light) morphs into a moon (dark); state comes from <html data-theme>. */
+  .theme-toggle .tt-clip,
+  .theme-toggle .tt-rays {
+    transition:
+      transform var(--dur-slow) var(--ease),
+      opacity var(--dur-slow) var(--ease);
+  }
+  .theme-toggle .tt-rays {
+    transform-origin: 16px 16px;
+  }
+  .theme-toggle .tt-sun {
+    transition: r var(--dur-slow) var(--ease);
+  }
+  :root[data-theme='dark'] .theme-toggle .tt-clip {
+    transform: translate(-12px, 10px);
+  }
+  :root[data-theme='dark'] .theme-toggle .tt-sun {
+    r: 10px;
+  }
+  :root[data-theme='dark'] .theme-toggle .tt-rays {
+    opacity: 0;
+    transform: rotate(-100deg) scale(0.5);
+  }
+
+  /* FAQ accordion (components/sections/Blocks.tsx FaqList) */
+  .faq-item {
+    border-bottom: 2px solid var(--neutral-100);
+    interpolate-size: allow-keywords;
+  }
+  .faq-item:last-child {
+    border-bottom: 0;
+  }
   .faq-item summary::-webkit-details-marker {
     display: none;
+  }
+  .faq-summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: var(--control-h);
+    padding: var(--space-4) var(--space-8) var(--space-4) calc(var(--space-7) + var(--space-1));
+    border-left: var(--rail-w) solid var(--neutral-200);
+    color: var(--neutral-600);
+    list-style: none;
+    cursor: pointer;
+    transition:
+      border-color var(--dur-fast) var(--ease),
+      background-color var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
+  }
+  .faq-summary:hover {
+    border-left-color: var(--neutral-600);
+    background: var(--neutral-50);
+    color: var(--ink-900);
+  }
+  .faq-item[open] .faq-summary {
+    border-left-color: var(--ink-900);
+    background: var(--neutral-50);
+    color: var(--ink-900);
+  }
+  /* Plus becomes minus: two bars, the vertical one collapses. */
+  .faq-sign {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    width: var(--space-4);
+    height: var(--space-4);
+    transform: translateY(-50%);
+  }
+  .faq-sign::before,
+  .faq-sign::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1px);
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform var(--dur) var(--ease);
+  }
+  .faq-sign::after {
+    transform: rotate(90deg);
+  }
+  .faq-item[open] .faq-sign::after {
+    transform: rotate(0deg);
+  }
+  .faq-chevron {
+    position: absolute;
+    right: var(--space-5);
+    top: 50%;
+    width: var(--space-2);
+    height: var(--space-2);
+    border-top: 3px solid currentColor;
+    border-right: 3px solid currentColor;
+    transform: translateY(-75%) rotate(135deg);
+    transition: transform var(--dur) var(--ease);
+  }
+  .faq-item[open] .faq-chevron {
+    transform: translateY(-25%) rotate(-45deg);
+  }
+  .faq-answer {
+    padding: var(--space-2) var(--space-5) var(--space-5) calc(var(--space-7) + var(--space-1));
+    border-left: var(--rail-w) solid var(--ink-900);
+    background: var(--neutral-50);
+    color: var(--ink-700);
+  }
+  /* Smooth open/close where supported (Chromium); elsewhere it simply opens. */
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size var(--dur) var(--ease),
+      content-visibility var(--dur) allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
   }
 
   /* Multi-step form: only the active step shows (no-JS: <noscript> style shows all). */
@@ -406,6 +557,497 @@
     background-size: var(--space-7) var(--space-7);
     mask-image: linear-gradient(120deg, transparent 20%, black 80%);
     pointer-events: none;
+  }
+
+  /* Homepage "What we do" grid (components/sections/ServiceReveal.tsx) */
+  .service-reveal {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 1024px) {
+    .service-reveal {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 479.98px) {
+    .service-reveal {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .service-reveal-card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--dur-slow) var(--ease),
+      border-color var(--dur-slow) var(--ease),
+      box-shadow var(--dur-slow) var(--ease);
+  }
+  .service-reveal-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--neutral-100);
+  }
+  .service-reveal-media img {
+    transition:
+      filter var(--dur-slow) var(--ease),
+      transform var(--dur-slow) var(--ease);
+  }
+  .service-reveal-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgb(15 15 15 / 0.85),
+      rgb(15 15 15 / 0.15) 60%,
+      transparent
+    );
+    opacity: 0;
+    transition: opacity var(--dur-slow) var(--ease);
+  }
+  .service-reveal-summary {
+    position: absolute;
+    inset: auto var(--space-4) var(--space-4) var(--space-4);
+    z-index: 1;
+    color: var(--dark-text);
+    font-size: var(--fs-small);
+    line-height: var(--lh-tight);
+    opacity: 0;
+    transform: translateY(var(--space-3));
+    transition:
+      opacity var(--dur-slow) var(--ease),
+      transform var(--dur-slow) var(--ease);
+  }
+  .service-reveal-arrow {
+    color: var(--neutral-600);
+    transition:
+      transform var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+  /* Greyscale only once JavaScript runs, so no-JS visitors see every photo in colour. */
+  .service-reveal.is-armed .service-reveal-card:not(.is-active) img {
+    filter: grayscale(1);
+  }
+  .service-reveal-card.is-active {
+    transform: translateY(var(--lift));
+    border-color: var(--gold);
+    box-shadow: var(--shadow-md);
+  }
+  .service-reveal-card.is-active img {
+    transform: scale(1.03);
+  }
+  .service-reveal-card.is-active .service-reveal-media::after,
+  .service-reveal-card.is-active .service-reveal-summary {
+    opacity: 1;
+    transform: none;
+  }
+  .service-reveal-card.is-active .service-reveal-arrow {
+    color: var(--ink-900);
+    transform: translateX(var(--space-1));
+  }
+  /* On phones the description over a small photo is hard to read: keep it below instead. */
+  @media (max-width: 479.98px) {
+    .service-reveal-summary {
+      display: none;
+    }
+  }
+
+  /* Stacking photo cards (components/sections/StickyStack.tsx) */
+  .sticky-stack {
+    display: grid;
+    gap: 12vh;
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+  .sticky-stack-card {
+    position: sticky;
+    top: calc(var(--header-h) + 4vh);
+    height: min(70vh, 34rem);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--ink-950);
+    box-shadow: var(--shadow-lg);
+    transform: scale(calc(1 - var(--p) * 0.12)) rotate(calc(var(--p) * -3deg));
+    transform-origin: center top;
+  }
+  .sticky-stack-photo {
+    position: absolute;
+    inset: 0;
+  }
+  .sticky-stack-photo img {
+    transform: scale(1.12) rotate(calc(var(--p) * 3deg));
+  }
+  /* Covered cards dim as the next one slides over. */
+  .sticky-stack-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgb(15 15 15);
+    opacity: calc(var(--p) * 0.6);
+    pointer-events: none;
+  }
+  .sticky-stack-caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
+    padding: var(--space-7) var(--space-5) var(--space-5);
+    background: linear-gradient(to top, rgb(15 15 15 / 0.85), transparent);
+    color: var(--dark-text);
+  }
+  .sticky-stack-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-min);
+    font-family: var(--font-heading);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: var(--dark-text);
+    text-decoration: none;
+  }
+  .sticky-stack-link:hover {
+    color: var(--accent);
+  }
+
+  /* Contact flip tiles (components/sections/ContactFlip.tsx) */
+  .contact-flip {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-5) var(--space-4) var(--space-4);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+  }
+  .contact-flip-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: flip-sweep 2.5s linear infinite;
+    pointer-events: none;
+  }
+  .contact-flip-line-top {
+    top: 0;
+  }
+  .contact-flip-line-bottom {
+    bottom: 0;
+    animation-direction: reverse;
+  }
+  @keyframes flip-sweep {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  .contact-flip-tile {
+    position: relative;
+    display: block;
+    width: var(--space-8);
+    height: var(--space-8);
+    perspective: 1000px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .contact-flip-inner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 700ms cubic-bezier(0.34, 1.4, 0.5, 1);
+    transition-delay: calc(var(--i) * 80ms);
+  }
+  .contact-flip-front,
+  .contact-flip-back {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    backface-visibility: hidden;
+  }
+  .contact-flip-front {
+    background: var(--neutral-100);
+    color: var(--ink-900);
+    font-family: var(--font-heading);
+    font-size: var(--fs-h4);
+    font-weight: 800;
+  }
+  .contact-flip-back {
+    background: var(--ink-950);
+    color: var(--accent);
+    transform: rotateY(180deg);
+  }
+  .contact-flip:hover .contact-flip-inner,
+  .contact-flip:focus-within .contact-flip-inner {
+    transform: rotateY(180deg);
+  }
+  .contact-flip-tip {
+    position: absolute;
+    bottom: calc(100% + var(--space-2));
+    left: 50%;
+    z-index: 2;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--ink-950);
+    color: var(--dark-text);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, var(--space-2));
+    transition:
+      opacity var(--dur-fast) var(--ease),
+      transform var(--dur-fast) var(--ease);
+    pointer-events: none;
+  }
+  .contact-flip-tile:hover .contact-flip-tip,
+  .contact-flip-tile:focus-visible .contact-flip-tip {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .contact-flip-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--neutral-600);
+  }
+  /* Pointer devices get the playful letters; touch screens see icons and labels directly. */
+  @media (hover: hover) {
+    .contact-flip-label {
+      display: none;
+    }
+    .contact-flip {
+      padding-top: var(--space-7);
+    }
+  }
+  @media (hover: none) {
+    .contact-flip-inner {
+      transform: rotateY(180deg);
+      transition: none;
+    }
+    .contact-flip-tip {
+      display: none;
+    }
+  }
+
+  /* Hover preview links (components/ui/CursorCard.tsx) */
+  .cursor-card-link {
+    font-weight: 700;
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .cursor-card-link:hover {
+    background: var(--cream);
+  }
+  .cursor-card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    display: grid;
+    gap: var(--space-3);
+    width: 15rem;
+    padding: var(--space-3);
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    scale: 0.85;
+    pointer-events: none;
+    transition:
+      opacity var(--dur-fast) var(--ease),
+      scale var(--dur-fast) var(--ease);
+  }
+  .cursor-card.is-open {
+    opacity: 1;
+    scale: 1;
+  }
+  .cursor-card-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+  }
+  @media (hover: none) {
+    .cursor-card {
+      display: none;
+    }
+  }
+
+  /* Smooth caret (components/ui/Field.tsx TextInput + Enhancements) */
+  .smooth-input {
+    position: relative;
+    display: block;
+  }
+  .smooth-input.is-armed input {
+    caret-color: transparent;
+  }
+  .smooth-caret {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 2px;
+    height: 1.1em;
+    margin-top: -0.55em;
+    border-radius: 1px;
+    background: var(--ink-900);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 140ms cubic-bezier(0.25, 1.3, 0.5, 1),
+      opacity var(--dur-fast) linear;
+  }
+  .smooth-input.is-armed.is-caret .smooth-caret {
+    opacity: 1;
+  }
+
+  /* Homepage hero carousel (components/sections/HeroCarousel.tsx) */
+  .hero-carousel {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .hero-carousel-track {
+    display: flex;
+    gap: var(--space-3);
+    margin: 0;
+    padding: var(--space-2) 11%;
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    perspective: 1000px;
+  }
+  .hero-carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-carousel-slide {
+    position: relative;
+    flex: 0 0 78%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--ink-800);
+    box-shadow: var(--shadow-lg);
+    scroll-snap-align: center;
+    transform: translateZ(calc(var(--a, 0) * -180px)) rotateY(calc(var(--o, 0) * -32deg));
+    transform-origin: center;
+    opacity: calc(1 - var(--a, 0) * 0.35);
+    will-change: transform;
+  }
+  .hero-carousel-caption {
+    position: absolute;
+    inset: auto var(--space-3) var(--space-3) var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    min-height: var(--tap-min);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: rgb(15 15 15 / 0.78);
+    color: var(--cream);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .hero-carousel-caption:hover {
+    color: var(--accent);
+  }
+  .hero-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+  .hero-carousel-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--tap-min);
+    height: var(--tap-min);
+    border: 1px solid var(--ink-700);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--cream);
+    cursor: pointer;
+  }
+  .hero-carousel-arrow:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .hero-carousel-arrow:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  /* Dots from 768px (44px hit areas); a "2 / 7" counter on smaller screens. */
+  .hero-carousel-dots {
+    display: none;
+  }
+  .hero-carousel-count {
+    min-width: var(--space-8);
+    color: var(--cream-muted);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    text-align: center;
+  }
+  @media (min-width: 768px) {
+    .hero-carousel-dots {
+      display: flex;
+      align-items: center;
+    }
+    .hero-carousel-count {
+      display: none;
+    }
+  }
+  .hero-carousel-dot {
+    position: relative;
+    width: var(--space-6);
+    height: var(--tap-min);
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .hero-carousel-dot::before {
+    content: '';
+    position: absolute;
+    inset: calc(50% - var(--space-1));
+    border-radius: var(--radius-pill);
+    background: var(--cream-muted);
+    opacity: 0.5;
+    transition:
+      inset var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+  }
+  .hero-carousel-dot[aria-current='true']::before {
+    inset: calc(50% - var(--space-1)) 0;
+    background: var(--accent);
+    opacity: 1;
   }
 
   .skip-link {
@@ -459,6 +1101,35 @@
 
 /* Scroll reveal: opacity and transform only (no layout shift); armed by JS below the fold. */
 @layer utilities {
+  /* Word-by-word heading reveal (components/ui/WordReveal.tsx). Transforms only: no layout shift. */
+  .word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    /* Room for descenders inside the clipping box. */
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
+  }
+  .word-in {
+    display: inline-block;
+  }
+  .words-load .word-in {
+    animation: word-rise var(--dur-words) var(--ease) both;
+    animation-delay: calc(var(--i) * var(--stagger-words));
+  }
+  .words-armed .word-in {
+    transform: translateY(110%);
+  }
+  .words-armed.is-visible .word-in {
+    transform: none;
+    transition: transform var(--dur-words) var(--ease) calc(var(--i) * var(--stagger-words));
+  }
+  @keyframes word-rise {
+    from {
+      transform: translateY(110%);
+    }
+  }
+
   .reveal-armed {
     opacity: 0;
     transform: translateY(var(--rise));
@@ -483,7 +1154,8 @@
     transition: none !important;
     scroll-behavior: auto !important;
   }
-  .reveal-armed {
+  .reveal-armed,
+  .words-armed .word-in {
     opacity: 1;
     transform: none;
   }

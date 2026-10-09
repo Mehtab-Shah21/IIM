@@ -1,6 +1,8 @@
 import clsx from 'clsx'
 import type {ReactNode} from 'react'
 
+import {WordReveal} from './WordReveal'
+
 export type Surface = 'white' | 'neutral' | 'cream' | 'dark' | 'darker'
 
 const surfaces: Record<Surface, string> = {
@@ -70,7 +72,7 @@ export function SectionHeader({
         id={id}
         className={clsx('text-h2 font-bold', tone === 'dark' ? 'text-cream' : 'text-ink-900')}
       >
-        {title}
+        <WordReveal text={title} />
       </h2>
       {lead ? (
         <p className={clsx('text-lead', tone === 'dark' ? 'text-cream-muted' : 'text-neutral-600')}>

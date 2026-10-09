@@ -14,6 +14,8 @@ import {useEffect, useId, useRef, useState} from 'react'
 import {Icon, type IconName} from '@/components/icons/Icon'
 import {buttonClasses} from '@/components/ui/Button'
 
+import {ThemeToggle} from './ThemeToggle'
+
 export type NavService = {title: string; href: string; icon: IconName; summary?: string | null}
 export type NavItem = {label: string; href: string; match: string; mega?: boolean}
 
@@ -39,7 +41,8 @@ export function SiteNav({
   return (
     <>
       <DesktopNav items={items} services={services} isCurrent={isCurrent} />
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 xl:gap-3">
+        <ThemeToggle />
         {telHref ? (
           <div className="hidden lg:block">
             <a

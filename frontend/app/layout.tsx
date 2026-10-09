@@ -43,6 +43,9 @@ const inter = localFont({
 
 const isLive = process.env.SITE_ENV === 'production'
 
+// Visitor's saved choice (components/layout/ThemeToggle.tsx), otherwise the system setting.
+const themeScript = `try{var t=localStorage.getItem('iim-theme');if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='light'}`
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   // Staging and local builds are never indexed (the proxy also sends X-Robots-Tag).
@@ -79,7 +82,12 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   }
 
   return (
-    <html lang="en" className={`${jakarta.variable} ${inter.variable}`}>
+    // suppressHydrationWarning: the theme script below sets data-theme before React hydrates.
+    <html lang="en" className={`${jakarta.variable} ${inter.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Runs before first paint, so a dark-theme visitor never sees a light flash. */}
+        <script dangerouslySetInnerHTML={{__html: themeScript}} />
+      </head>
       <body>
         <a
           href="#main"

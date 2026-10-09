@@ -4,11 +4,13 @@ import {BeforeAfter, CtaBand} from '@/components/sections/Blocks'
 import {ContactDock} from '@/components/sections/ContactDock'
 import {PageHero} from '@/components/sections/PageHero'
 import {JsonLd} from '@/components/seo/JsonLd'
-import {Section} from '@/components/ui/Layout'
-import {getPage, getProjects, getSettings} from '@/lib/content'
+import {StickyStack, type StackItem} from '@/components/sections/StickyStack'
+import {Section, SectionHeader} from '@/components/ui/Layout'
+import {getPage, getProjects, getServices, getSettings} from '@/lib/content'
 import {defaultWhatsappMessage} from '@/lib/contact'
 import {contactLinks} from '@/lib/page-data'
 import {quoteUrl, routes} from '@/lib/routes'
+import {sanityImage} from '@/lib/sanity/image'
 import {buildMetadata} from '@/lib/seo/metadata'
 import {homeCrumb, pageGraph} from '@/lib/seo/page-graph'
 
@@ -31,11 +33,17 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProjectsHub() {
-  const [page, settings, projects] = await Promise.all([
+  const [page, settings, projects, services] = await Promise.all([
     getPage('projects'),
     getSettings(),
     getProjects(),
+    getServices(),
   ])
+  // One example photo per service (not presented as completed IIM projects).
+  const stack: StackItem[] = services.flatMap((s) => {
+    const img = sanityImage(s.cardImage)
+    return img && s.slug && s.title ? [{...img, title: s.title, href: routes.service(s.slug)}] : []
+  })
   const message = settings.defaultWhatsappMessage || defaultWhatsappMessage
   const links = contactLinks(settings, message)
   const title = page?.heroHeadline ?? 'Our work in Dubai'
@@ -66,6 +74,17 @@ export default async function ProjectsHub() {
           </p>
         )}
       </Section>
+      {stack.length > 1 ? (
+        <Section surface="neutral" labelledBy="work-types">
+          <SectionHeader
+            id="work-types"
+            eyebrow="What we work on"
+            title="The kind of jobs we take on"
+            lead="One example photo for each service. Scroll through, then open a service for the details."
+          />
+          <StickyStack items={stack} />
+        </Section>
+      ) : null}
       <CtaBand
         heading="Need something similar?"
         quoteHref={quoteUrl()}

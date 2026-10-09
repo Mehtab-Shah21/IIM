@@ -31,7 +31,15 @@ for (const width of widths) {
               )
                 return false
               const r = el.getBoundingClientRect()
-              return r.width > 0 && (r.right > vw + 1 || r.left < -1)
+              if (!(r.width > 0 && (r.right > vw + 1 || r.left < -1))) return false
+              // Content clipped by an ancestor that itself fits (a carousel track, a photo
+              // frame) cannot cause page scroll: only count what actually spills out.
+              for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+                if (getComputedStyle(a).overflowX === 'visible') continue
+                const ar = a.getBoundingClientRect()
+                if (ar.right <= vw + 1 && ar.left >= -1) return false
+              }
+              return true
             })
             .slice(0, 5)
             .map((el) => `${el.tagName.toLowerCase()}.${[...el.classList].slice(0, 3).join('.')}`)

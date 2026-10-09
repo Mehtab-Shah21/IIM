@@ -27,7 +27,7 @@ export function Header({
 }) {
   return (
     <header className="sticky top-0 z-40 h-header border-b border-ink-700 bg-ink-900 text-cream">
-      <div className="container-wide flex h-full items-center justify-between gap-5">
+      <div className="container-wide flex h-full items-center justify-between gap-3 xl:gap-5">
         <Logo name={settings.businessName ?? 'IIM Technical Services'} />
         <SiteNav
           items={navItems}

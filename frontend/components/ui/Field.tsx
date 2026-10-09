@@ -74,8 +74,24 @@ export function describedBy(id: string, hint?: unknown): string {
   return [hint ? `${id}-hint` : null, `${id}-error`].filter(Boolean).join(' ')
 }
 
+/** Input types whose cursor position the browser exposes (selectionStart), so the smooth
+ * caret can follow it. Email, date and number inputs keep the native caret. */
+const smoothCaretTypes = new Set(['text', 'tel', 'search', 'url'])
+
+/**
+ * Text input. Single-line text fields get a caret that glides between characters (adapted
+ * from the owner-supplied "SmoothInput"; driven by components/layout/Enhancements.tsx). The
+ * native caret is only hidden once that script is running, so it never disappears without JS.
+ */
 export function TextInput({className, ...props}: ComponentProps<'input'>) {
-  return <input className={clsx(control, className)} {...props} />
+  const input = <input className={clsx(control, className)} {...props} />
+  if (!smoothCaretTypes.has(props.type ?? 'text')) return input
+  return (
+    <span className="smooth-input">
+      {input}
+      <span className="smooth-caret" aria-hidden="true" />
+    </span>
+  )
 }
 
 export function Textarea({className, ...props}: ComponentProps<'textarea'>) {

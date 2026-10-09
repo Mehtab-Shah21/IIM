@@ -1,5 +1,6 @@
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
+import {Fragment} from 'react'
 
 import {Icon, type IconName} from '@/components/icons/Icon'
 import {addressLine} from '@/components/layout/Footer'
@@ -8,11 +9,13 @@ import {ContactDock} from '@/components/sections/ContactDock'
 import {ContentLayout} from '@/components/sections/Inner'
 import {PageHero} from '@/components/sections/PageHero'
 import {SectionRenderer} from '@/components/sections/SectionRenderer'
+import {CursorCard} from '@/components/ui/CursorCard'
 import {JsonLd} from '@/components/seo/JsonLd'
-import {getPage, getSettings} from '@/lib/content'
+import {getPage, getServices, getSettings} from '@/lib/content'
 import {defaultWhatsappMessage} from '@/lib/contact'
 import {contactLinks} from '@/lib/page-data'
 import {quoteUrl, routes} from '@/lib/routes'
+import {sanityImage} from '@/lib/sanity/image'
 import {buildMetadata} from '@/lib/seo/metadata'
 import {homeCrumb, pageGraph} from '@/lib/seo/page-graph'
 
@@ -29,8 +32,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const [page, settings] = await Promise.all([getPage('about'), getSettings()])
+  const [page, settings, allServices] = await Promise.all([
+    getPage('about'),
+    getSettings(),
+    getServices(),
+  ])
   if (!page) notFound()
+  // Trades only: emergency repairs is a way of booking, not a kind of work.
+  const services = allServices.filter((s) => s.slug && !s.isEmergency)
   const message = settings.defaultWhatsappMessage || defaultWhatsappMessage
   const links = contactLinks(settings, message)
   const crumbs = [homeCrumb, {name: 'About'}]
@@ -96,6 +105,29 @@ export default async function AboutPage() {
         }
       >
         <SectionRenderer sections={page.sections} />
+        {services.length ? (
+          <section aria-labelledby="about-services" className="mt-8 grid gap-4">
+            <h2 id="about-services" className="text-h2 font-bold">
+              What we cover
+            </h2>
+            <p className="max-w-prose text-lead">
+              {services.map((s, i) => (
+                <Fragment key={s._id}>
+                  {i > 0 ? (i === services.length - 1 ? ' and ' : ', ') : 'We handle '}
+                  <CursorCard
+                    href={routes.service(s.slug!)}
+                    image={sanityImage(s.cardImage)}
+                    description={s.cardSummary ?? ''}
+                  >
+                    {tradeName(s.title)}
+                  </CursorCard>
+                </Fragment>
+              ))}{' '}
+              work for homes and businesses across Dubai. Each service page explains what is
+              included and how booking works.
+            </p>
+          </section>
+        ) : null}
       </ContentLayout>
       <CtaBand
         heading="Work with us"
@@ -108,4 +140,13 @@ export default async function AboutPage() {
       <ContactDock message={message} />
     </>
   )
+}
+
+/** "AC Services" -> "AC", "Home Renovation" -> "home renovation" (acronyms keep their capitals). */
+function tradeName(title: string | null | undefined): string {
+  return (title ?? '')
+    .replace(/ Services$/, '')
+    .split(' ')
+    .map((w) => (w.length > 1 && w === w.toUpperCase() ? w : w.toLowerCase()))
+    .join(' ')
 }
