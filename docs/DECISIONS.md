@@ -40,3 +40,27 @@ Short architecture decision records. Newest last.
 Forbidden: amber or gold as text on white or cream (1.7), and white on amber or gold.
 
 **Open.** Fonts stay as specified (Plus Jakarta Sans, Inter). The live site uses Anton (condensed) for its big headings; switching the display font is possible if the owner wants a closer match.
+
+## ADR-003: Content Security Policy (9 Oct 2026)
+
+**Options (Next.js 16.4 docs, "Content Security Policy" guide).**
+1. **Nonces:** strictest, but every page must render per request, which disables static generation and ISR. That costs LCP and puts every visit on the Hostinger CPU. Rejected.
+2. **Static CSP with `'unsafe-inline'`** for scripts: keeps static pages; weaker against injected inline script.
+3. **Experimental SRI (`experimental.sri`)** with a static `script-src 'self'`: keeps static pages and is strict, but the docs note it can't cover dynamically generated scripts, and App Router streams inline data scripts.
+
+**Decision (owner: "use the best one").** Use **3 if a real production build proves it works**: a Playwright test loads every template with the CSP and fails on any `securitypolicyviolation`. Otherwise use **2**, with every other directive strict (`object-src 'none'`, `base-uri 'self'`, `form-action 'self'`, `frame-ancestors` limited to the Sanity Studio origin for Presentation). SRI stays on either way, so external chunks are integrity-checked. Report-Only first, then enforce (Phase 7). The verified outcome is recorded below when known.
+
+## ADR-004: Base on the official Sanity + Next.js template (9 Oct 2026)
+
+**Decision (owner).** Follow `sanity-io/sanity-template-nextjs-clean` (inspected at commit `2ad95bf`, 3 Aug 2026):
+- npm-workspaces monorepo with `frontend/` (Next.js 16 App Router) and `studio/` (Sanity Studio).
+- `next-sanity` (approved, including its `styled-components` peer for the Studio) with `defineLive` (`sanityFetch` / `SanityLive`), draft mode and the Presentation tool for click-to-edit visual editing.
+- Typegen from the extracted schema.
+
+**Adapted, not copied.**
+- Dropped: Turbo, Vercel Speed Insights, the Unsplash and AI Assist plugins, `sonner`, the blog/person types and demo content.
+- Content changes reach the site through `SanityLive` **and** a signed `/api/revalidate` webhook (live events rely on an open browser; the webhook doesn't).
+- All content reads go through `frontend/lib/content/`, which falls back to typed local fixtures when no Sanity project is configured. The site, CI and tests then run before the client creates the Sanity project, and the same seed source produces the Sanity import file.
+- `CLAUDE.md` §5's layout maps to `frontend/` (app, components, lib, styles, tests) and `studio/` (schemas, structure, seed).
+
+**Versions.** TypeScript **5.9.3** and ESLint **9.39** (as used by the template). TypeScript 7.0 and ESLint 10 are not yet proven with Next 16 and `eslint-config-next`; revisit later.

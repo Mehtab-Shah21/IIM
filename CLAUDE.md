@@ -88,6 +88,8 @@ Logo files and brand colours, correct phone numbers, trade licence number, DEWA 
 
 ## 5. Repository structure
 
+> **Updated 9 Oct 2026 (ADR-004):** the project follows the official Sanity + Next.js template, an npm-workspaces monorepo. `src/*` below lives in `frontend/` and `sanity/` is `studio/`; tests live in `frontend/tests/`. The tree below shows the intended contents.
+
 ```
 /
 ├─ CLAUDE.md                      (this file)
