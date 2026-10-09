@@ -66,7 +66,12 @@ export function buildCsp({studioUrl, allowInlineScripts, isDev}: CspOptions): st
 export type Header = {key: string; value: string}
 
 export function securityHeaders(opts: CspOptions & {cspMode: 'report-only' | 'enforce'}): Header[] {
-  const csp = buildCsp(opts)
+  // Browsers ignore upgrade-insecure-requests in a Report-Only policy and log a console error
+  // saying so; send it only when the policy is enforced.
+  const csp =
+    opts.cspMode === 'enforce'
+      ? buildCsp(opts)
+      : buildCsp(opts).replace('; upgrade-insecure-requests', '')
   return [
     {
       key:

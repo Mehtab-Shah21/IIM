@@ -42,6 +42,9 @@ for (const variant of [
           .isVisible({timeout: 3000})
           .catch(() => false)
 
+        // Stop intercepting before the test ends (lazy images may still be loading).
+        await page.unrouteAll({behavior: 'ignoreErrors'})
+
         if (variant.allowInlineScripts) {
           expect(violations).toEqual([])
           expect(hydrated).toBe(true)
