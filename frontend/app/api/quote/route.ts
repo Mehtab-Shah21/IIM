@@ -6,7 +6,7 @@
 import {type NextRequest, NextResponse} from 'next/server'
 
 import {getServices, getSettings} from '@/lib/content'
-import {getServerEnv, siteUrl} from '@/lib/env'
+import {getServerEnv, isDemoLeadMode, siteUrl} from '@/lib/env'
 import {processLead, type LeadResult} from '@/lib/forms/process'
 import {newReference} from '@/lib/forms/reference'
 import {sendWebhook} from '@/lib/forms/webhook'
@@ -79,7 +79,13 @@ export async function POST(req: NextRequest) {
     sendWebhook:
       env.LEAD_WEBHOOK_URL && env.LEAD_WEBHOOK_SECRET
         ? (payload) => sendWebhook(env.LEAD_WEBHOOK_URL!, env.LEAD_WEBHOOK_SECRET!, payload)
-        : null,
+        : isDemoLeadMode(env)
+          ? // Review site: accept without sending anything anywhere (reference only in the log).
+            async (payload) => {
+              log({event: 'lead_demo', ref: payload.ref, type: payload.type})
+              return {ok: true}
+            }
+          : null,
     sendEmail,
     ownerEmail: env.OWNER_EMAIL,
     business: {

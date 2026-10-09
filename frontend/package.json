@@ -13,7 +13,8 @@
     "test:e2e": "playwright test",
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:budgets": "node scripts/check-budgets.mjs",
-    "lhci": "lhci autorun"
+    "lhci": "lhci autorun",
+    "check:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "@sanity/image-url": "2.1.1",

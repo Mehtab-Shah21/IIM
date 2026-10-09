@@ -4,7 +4,16 @@ import {securityHeaders} from './lib/security/headers'
 
 const isDev = process.env.NODE_ENV === 'development'
 
+// On Vercel, a review deployment without NEXT_PUBLIC_SITE_URL uses its own address for
+// canonical, share-image and sitemap URLs (set the variable to the real domain at launch).
+const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
+const siteUrlFallback =
+  !process.env.NEXT_PUBLIC_SITE_URL && vercelHost
+    ? {NEXT_PUBLIC_SITE_URL: `https://${vercelHost}`}
+    : {}
+
 const nextConfig: NextConfig = {
+  env: {...siteUrlFallback},
   // URLs in the brief end with a slash (/services/, /about/ …).
   trailingSlash: true,
   // The proxy adds the trailing slash itself, after checking redirects, so old URLs such as

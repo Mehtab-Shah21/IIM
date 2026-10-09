@@ -5,7 +5,7 @@ import {RichText} from '@/components/sections/Blocks'
 import {PageHero} from '@/components/sections/PageHero'
 import {JsonLd} from '@/components/seo/JsonLd'
 import {Section} from '@/components/ui/Layout'
-import {getPage, getSettings, type PageKey} from '@/lib/content'
+import {getPage, getReviewDraftPage, getSettings, type PageKey} from '@/lib/content'
 import {formatDate} from '@/lib/page-data'
 import {pageKeyRoute} from '@/lib/routes'
 import {buildMetadata} from '@/lib/seo/metadata'
@@ -14,9 +14,11 @@ import {homeCrumb, pageGraph} from '@/lib/seo/page-graph'
 type LegalKey = Extract<PageKey, 'privacy-policy' | 'terms' | 'accessibility'>
 
 export async function legalMetadata(key: LegalKey, fallbackTitle: string): Promise<Metadata> {
-  const [page, settings] = await Promise.all([getPage(key), getSettings()])
+  const [published, settings] = await Promise.all([getPage(key), getSettings()])
+  const page = published ?? (await getReviewDraftPage(key))
   if (!page) return {}
   return buildMetadata({
+    noindex: !published,
     path: pageKeyRoute[key]!,
     seo: page.seo,
     fallbackTitle,
@@ -25,10 +27,15 @@ export async function legalMetadata(key: LegalKey, fallbackTitle: string): Promi
   })
 }
 
-/** Legal and simple text pages. 404 until the page is published (privacy/terms await legal review). */
+/**
+ * Legal and simple text pages. On the live site: 404 until published (privacy and terms await
+ * legal review). On review deployments the draft shows, marked as a draft, so links to it work.
+ */
 export async function LegalPage({pageKey}: {pageKey: LegalKey}) {
-  const page = await getPage(pageKey)
+  const published = await getPage(pageKey)
+  const page = published ?? (await getReviewDraftPage(pageKey))
   if (!page) notFound()
+  const draft = !published
   const path = pageKeyRoute[pageKey]!
   const title = page.heroHeadline ?? page.title ?? ''
   const crumbs = [homeCrumb, {name: title}]
@@ -42,6 +49,12 @@ export async function LegalPage({pageKey}: {pageKey: LegalKey}) {
         meta={updated ? <span>Last updated {updated}</span> : null}
       />
       <Section>
+        {draft ? (
+          <p className="mb-6 max-w-prose rounded-sm border-2 border-ink-900 bg-cream p-4 font-semibold">
+            Draft for review: this text is awaiting legal review and is not yet published on the
+            live site.
+          </p>
+        ) : null}
         <RichText value={page.body} />
       </Section>
     </>

@@ -5,6 +5,7 @@
  */
 import {cache} from 'react'
 
+import {isLiveSite, isSanityConfigured} from '@/lib/env'
 import {sanityQuery} from '@/lib/sanity/fetch'
 import {
   amcPlansQuery,
@@ -61,6 +62,21 @@ export const getService = cache((slug: string) =>
 export const getPage = cache((key: PageKey) =>
   sanityQuery(pageQuery, {key}, {tags: ['page', 'project', 'service']}),
 )
+/**
+ * Pages that may be previewed as drafts on a non-live site (review deployment, local), so
+ * links to them work while they wait for sign-off: the privacy policy and terms (legal review,
+ * PLACEHOLDERS A23). Never on production or staging, and never other drafts (they may hold
+ * unconfirmed claims).
+ */
+export const reviewDraftKeys = ['privacy-policy', 'terms'] as const
+
+export const getReviewDraftPage = cache(async (key: PageKey) => {
+  if (isLiveSite() || isSanityConfigured) return null
+  if (!(reviewDraftKeys as readonly string[]).includes(key)) return null
+  const {evaluateFixture} = await import('@/lib/sanity/fixtures')
+  return evaluateFixture<Awaited<ReturnType<typeof getPage>>>(pageQuery, {key}, {drafts: true})
+})
+
 export const getPublishedPageKeys = cache(
   async () => new Set(await sanityQuery(publishedPageKeysQuery, {}, {tags: ['page']})),
 )

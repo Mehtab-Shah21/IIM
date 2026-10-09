@@ -102,6 +102,27 @@ export function getServerEnv() {
 
 export type ServerEnv = ReturnType<typeof getServerEnv>
 
+/**
+ * Review mode: a non-live site (no SITE_ENV=production/staging) with no lead delivery
+ * configured, e.g. a Vercel preview for the client. Forms then accept submissions, log the
+ * reference only, and the thank-you page says nothing was sent. Live sites can never be in
+ * this mode: getServerEnv() refuses to start without a webhook and owner email there.
+ */
+export function isDemoLeadMode(env: ServerEnv = getServerEnv()): boolean {
+  const live = env.SITE_ENV === 'production' || env.SITE_ENV === 'staging'
+  return (
+    !live &&
+    !(env.LEAD_WEBHOOK_URL && env.LEAD_WEBHOOK_SECRET) &&
+    !env.OWNER_EMAIL &&
+    !env.SMTP_HOST
+  )
+}
+
+/** Production or staging. Anything else (local, CI, a Vercel review deployment) is not live. */
+export function isLiveSite(): boolean {
+  return process.env.SITE_ENV === 'production' || process.env.SITE_ENV === 'staging'
+}
+
 /** True when a Sanity project is configured; otherwise the site reads local fixtures. */
 export const isSanityConfigured = Boolean(publicEnv.NEXT_PUBLIC_SANITY_PROJECT_ID)
 

@@ -6,6 +6,7 @@ import {ArrowLink, ButtonLink} from '@/components/ui/Button'
 import {Section} from '@/components/ui/Layout'
 import {getPage, getSettings} from '@/lib/content'
 import {whatsappHref} from '@/lib/contact'
+import {isDemoLeadMode} from '@/lib/env'
 import {REFERENCE_PATTERN} from '@/lib/forms/reference-pattern'
 import {routes} from '@/lib/routes'
 import {buildMetadata} from '@/lib/seo/metadata'
@@ -24,6 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ThankYouPage({searchParams}: Props) {
   const params = await searchParams
+  const demo = isDemoLeadMode()
   const [page, settings] = await Promise.all([getPage('thank-you'), getSettings()])
   const rawRef = Array.isArray(params.ref) ? params.ref[0] : params.ref
   const ref = rawRef && REFERENCE_PATTERN.test(rawRef) ? rawRef : null
@@ -42,6 +44,15 @@ export default async function ThankYouPage({searchParams}: Props) {
       />
       <Section>
         <div className="grid max-w-prose gap-6">
+          {demo ? (
+            <div className="flex items-start gap-3 rounded-sm border-2 border-ink-900 bg-cream p-4 font-medium text-ink-900">
+              <Icon name="info" size="sm" className="mt-1" />
+              <span>
+                Review copy of the website: this form works, but requests are not sent to IIM yet
+                and no email goes out. On the live site they reach the team straight away.
+              </span>
+            </div>
+          ) : null}
           <div
             role="status"
             className="flex items-start gap-3 rounded-sm bg-success-bg p-4 font-medium text-success"

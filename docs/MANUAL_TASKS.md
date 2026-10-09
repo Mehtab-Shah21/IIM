@@ -98,3 +98,23 @@ The CSP ships in Report-Only mode. After a week of normal use on staging, includ
 
 1. Run PageSpeed Insights (mobile) on `/`, `/services/plumbing-services-dubai/`, `/get-a-quote/` and `/contact/`. Send the developer the LCP and performance score of each.
 2. After launch, check Search Console → **Core Web Vitals** monthly. If mobile LCP is "Needs improvement" or "Poor", tell the developer: the next step is system fonts for body text (ADR-005).
+
+## T15. Vercel review deployment (for the client to click through)
+
+The repository deploys to Vercel as it is. Nothing needs to be configured to get a working review copy.
+
+1. Sign in at vercel.com with GitHub, then **Add New → Project** and import `Mehtab-Shah21/IIM`.
+2. **Root Directory:** `frontend` (Edit → choose the `frontend` folder). Vercel then reads `frontend/vercel.json`: Next.js, installed from the monorepo root.
+3. **Environment variables:** none needed for review. Do **not** set `SITE_ENV` to `production` or `staging` yet: those modes require the live keys and refuse to start without them.
+4. **Deploy.** Each push to `main` redeploys automatically.
+
+What the review copy does:
+
+- It runs on the built-in seed content (no Sanity account needed).
+- It is hidden from search engines (`noindex`, and robots.txt blocks everything).
+- Canonical, share-image and sitemap links use the Vercel address.
+- **Forms work end to end:** the visitor reaches the thank-you page with a reference number. Nothing is sent to anyone (no webhook, no email), and the thank-you page says so.
+- The privacy policy and terms show their drafts with a "Draft for review" banner, so the consent links on the forms work. The live site shows them only once published (PLACEHOLDERS A23).
+- `npm run check:links --workspace=frontend -- <url>` re-checks that every link and button leads somewhere, against any running copy.
+
+**Later, for the real launch:** keep hosting on Hostinger as planned (RUNBOOK), or move production to Vercel. On Vercel, set the variables in RUNBOOK §2 with `SITE_ENV=production`. Then add the domain in Vercel → Settings → Domains, with `www` as primary and the apex redirecting to it.

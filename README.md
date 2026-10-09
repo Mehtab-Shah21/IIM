@@ -28,21 +28,24 @@ The site runs at http://localhost:3000 on local seed content: no Sanity account 
 
 ## Commands (from the root)
 
-| Command                                           | Does                                                                                       |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `npm run dev` / `npm run build` / `npm run start` | Next.js development server / production build / serve the build                            |
-| `npm run lint`                                    | ESLint plus the design-token check                                                         |
-| `npm run typecheck`                               | TypeScript, both workspaces                                                                |
-| `npm test`                                        | Unit tests (Vitest)                                                                        |
-| `npm run test:e2e`                                | Playwright: journeys, layout at 8 widths, axe, SEO, CSP, redirects (after `npm run build`) |
-| `npm run check:budgets --workspace=frontend`      | JS/CSS/page-weight budgets (after a build)                                                 |
-| `npm run check:contrast --workspace=frontend`     | WCAG contrast of every approved colour pair                                                |
-| `npm run lhci --workspace=frontend`               | Lighthouse CI, mobile (after a build)                                                      |
-| `npm run typegen`                                 | Re-extract the Sanity schema and regenerate `frontend/sanity.types.ts`                     |
-| `npm run seed:export`                             | Seed content → `studio/seed/seed.ndjson` for the first Sanity import                       |
-| `npm run format`                                  | Prettier                                                                                   |
+| Command                                             | Does                                                                                       |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `npm run dev` / `npm run build` / `npm run start`   | Next.js development server / production build / serve the build                            |
+| `npm run lint`                                      | ESLint plus the design-token check                                                         |
+| `npm run typecheck`                                 | TypeScript, both workspaces                                                                |
+| `npm test`                                          | Unit tests (Vitest)                                                                        |
+| `npm run test:e2e`                                  | Playwright: journeys, layout at 8 widths, axe, SEO, CSP, redirects (after `npm run build`) |
+| `npm run check:budgets --workspace=frontend`        | JS/CSS/page-weight budgets (after a build)                                                 |
+| `npm run check:contrast --workspace=frontend`       | WCAG contrast of every approved colour pair                                                |
+| `npm run lhci --workspace=frontend`                 | Lighthouse CI, mobile (after a build)                                                      |
+| `npm run check:links --workspace=frontend -- <url>` | Crawl a running site: every link and button must lead somewhere                            |
+| `npm run typegen`                                   | Re-extract the Sanity schema and regenerate `frontend/sanity.types.ts`                     |
+| `npm run seed:export`                               | Seed content → `studio/seed/seed.ndjson` for the first Sanity import                       |
+| `npm run format`                                    | Prettier                                                                                   |
 
 CI (`.github/workflows/ci.yml`) runs all of these on every pull request.
+
+**Review deployment:** import the repository into Vercel with Root Directory `frontend`; no environment variables are needed. Details: `docs/MANUAL_TASKS.md` T15.
 
 ## Documents
 

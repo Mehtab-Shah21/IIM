@@ -6,7 +6,7 @@
  *   only server-renders the 404 page for unmatched routes; a notFound() thrown inside a page is
  *   rendered on the client, which would leave no-JS visitors and crawlers with a blank page.
  */
-import {isSanityConfigured} from '@/lib/env'
+import {isLiveSite, isSanityConfigured} from '@/lib/env'
 import {routingQuery} from '@/lib/sanity/queries'
 
 import {buildRedirectMap, type RedirectMap, type RedirectRule} from './matcher'
@@ -36,7 +36,10 @@ async function load(): Promise<Raw> {
     return makeClient().fetch<Raw>(routingQuery, {}, {cache: 'no-store'})
   }
   const {evaluateFixture} = await import('@/lib/sanity/fixtures')
-  return evaluateFixture<Raw>(routingQuery)
+  const raw = await evaluateFixture<Raw>(routingQuery)
+  // Review deployments preview the legal drafts (lib/content getReviewDraftPage).
+  if (!isLiveSite()) raw.pages = [...new Set([...(raw.pages ?? []), 'privacy-policy', 'terms'])]
+  return raw
 }
 
 function build(raw: Raw): RoutingData {

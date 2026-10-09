@@ -94,11 +94,24 @@ test.describe('desktop', () => {
 })
 
 test('404 pages are server-rendered with the layout and a 404 status', async ({request}) => {
-  for (const path of ['/no-such-page/', '/services/no-such-service/', '/privacy-policy/']) {
+  for (const path of ['/no-such-page/', '/services/no-such-service/']) {
     const res = await request.get(path)
     expect(res.status(), path).toBe(404)
     const html = await res.text()
     expect(html, path).toContain('<header')
     expect(html, path).toContain('We could not find that page')
+  }
+})
+
+test('legal drafts open on review sites, marked as drafts and kept out of search', async ({
+  request,
+}) => {
+  // Live sites (SITE_ENV production/staging) still 404 until the pages are published.
+  for (const path of ['/privacy-policy/', '/terms/']) {
+    const res = await request.get(path)
+    expect(res.status(), path).toBe(200)
+    const html = await res.text()
+    expect(html, path).toContain('Draft for review')
+    expect(html, path).toMatch(/<meta name="robots" content="noindex/)
   }
 })
