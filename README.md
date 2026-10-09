@@ -12,6 +12,10 @@ This repo replaces the Wix site at www.iimtechnicalservices.com with a custom Wo
 
 ## Quick start
 
+No Docker? `npm install && npm run local` starts a seeded local site at http://127.0.0.1:9400 (WordPress Playground, PHP 8.3; admin login `admin` / `password`; the site is rebuilt fresh on every start).
+
+With Docker:
+
 ```bash
 npm install && npm run build
 docker compose up -d                                 # http://localhost:8080, finish the WP install

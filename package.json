@@ -8,13 +8,14 @@
     "build": "node build.mjs",
     "watch": "node build.mjs --watch",
     "budget": "node build.mjs --budget-only",
-    "package": "node build.mjs && node scripts/package.mjs"
+    "local": "node tools/local.mjs"
   },
   "devDependencies": {
     "@fontsource-variable/inter": "^5.1.0",
     "@fontsource-variable/plus-jakarta-sans": "^5.1.0",
     "esbuild": "^0.24.0",
     "lucide-static": "^0.460.0",
-    "simple-icons": "^13.17.0"
+    "simple-icons": "^13.17.0",
+    "@wp-playground/cli": "3.1.57"
   }
 }
